@@ -24,7 +24,7 @@ public class Index extends javax.swing.JDialog {
         setSize(950,650);
         setLocationRelativeTo(rootPane);
         jLabel1.requestFocus();
-        System.out.print("hola mundo Diego");
+        System.out.print("santiago es loca");
     }
 
     /**
