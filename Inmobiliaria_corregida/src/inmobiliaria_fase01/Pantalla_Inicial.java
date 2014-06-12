@@ -4,6 +4,7 @@
  */
 package inmobiliaria_fase01;
 
+import Cartera_y_caja.Cartera;
 import Cartera_y_caja.Index;
 
 /**
@@ -58,6 +59,11 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
         jButton2.setBounds(150, 240, 290, 140);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/CONTABILIDAD.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton3);
         jButton3.setBounds(440, 240, 290, 140);
 
@@ -68,12 +74,18 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
             Conexion.dialog();
             java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Index dialog = new Index(new javax.swing.JFrame(), true);
+                //Index dialog = new Index(new javax.swing.JFrame(), true);
+                  Cartera dialog = new Cartera(new javax.swing.JFrame(), true);
+                
                 dialog.setVisible(true);
             }
         });
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -39,6 +39,7 @@ public class Index extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton19 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
@@ -66,7 +67,7 @@ public class Index extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Inmobiliaria", 0, 0, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Inmobiliaria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
         jPanel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.setLayout(null);
 
@@ -77,7 +78,7 @@ public class Index extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(20, 90, 140, 40);
+        jButton1.setBounds(20, 130, 140, 40);
 
         jButton3.setText("Tablas Basicas");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -88,6 +89,15 @@ public class Index extends javax.swing.JDialog {
         jPanel1.add(jButton3);
         jButton3.setBounds(20, 50, 140, 40);
 
+        jButton19.setText("Cartera");
+        jButton19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton19ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton19);
+        jButton19.setBounds(20, 90, 140, 40);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(30, 30, 180, 410);
 
@@ -95,7 +105,7 @@ public class Index extends javax.swing.JDialog {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(570, 440, 470, 210);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Recaudos", 0, 0, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Recaudos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
         jPanel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel2.setLayout(null);
 
@@ -138,7 +148,7 @@ public class Index extends javax.swing.JDialog {
         getContentPane().add(jPanel2);
         jPanel2.setBounds(250, 30, 180, 410);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Procesos", 0, 0, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Procesos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
         jPanel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel3.setLayout(null);
 
@@ -166,7 +176,7 @@ public class Index extends javax.swing.JDialog {
         getContentPane().add(jPanel3);
         jPanel3.setBounds(470, 30, 180, 410);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Informes", 0, 0, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Informes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
         jPanel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel4.setLayout(null);
 
@@ -302,6 +312,16 @@ public class Index extends javax.swing.JDialog {
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
+        Conexion.dialog();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Cartera dialog = new Cartera(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });        
+    }//GEN-LAST:event_jButton19ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -317,6 +337,7 @@ public class Index extends javax.swing.JDialog {
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
