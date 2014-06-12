@@ -75,8 +75,48 @@ public class Conexion{
         catch(Exception e){
             System.out.println("PROBLEMA CON EL UPDATE");
     }
+          
+     }
+     
+        //Metodos  Diego
+     
+     public int Dactualizar(String ActualizarQuery){
+          Statement s = null;
+          int vupdate = 0;
+          try{
+            s = conexion.createStatement();
+            s.executeUpdate(ActualizarQuery);
+              System.out.println("Actualizado Correctamente!");
+            System.out.println("Update Sucess");
+            vupdate=1;
+            return vupdate;
+          }
+        catch(Exception e){
+            System.out.println("PROBLEMA CON EL UPDATE");
+            vupdate=0;
+            return vupdate ;
+        }
                  
      }
+
+     public int Dinsertar(String insertarQuery){
+          Statement s = null;
+          int vinsert = 0;
+          try {
+            s = conexion.createStatement();
+            s.executeUpdate(insertarQuery);            
+            System.out.println("Guardado Correcto");
+            vinsert = 1;
+            return vinsert;
+            
+         } catch (Exception e) {
+             System.out.println("Problemas con el Insert");
+             return vinsert;
+         }
+          
+          
+     }     
+     
      public static void JOptionShowMessage (String tamaño,String alineacion,String mensaje){   
                      JOptionPane.showMessageDialog(null,"<html><font size="+tamaño+" face='Tahoma'><h3 align='"+alineacion+"'>"+mensaje+"</h3></font></html>");
         }
