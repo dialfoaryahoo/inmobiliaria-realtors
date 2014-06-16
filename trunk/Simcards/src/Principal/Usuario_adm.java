@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package simcards;
+package Principal;
 
+import simcards.*;
 import Models.Render;
 import java.sql.ResultSet;
 import javax.naming.spi.DirStateFactory;
@@ -13,16 +14,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Usuario
  */
-public class Crear_Operador extends javax.swing.JDialog {
+public class Usuario_adm extends javax.swing.JDialog {
 
     /**
      * Creates new form Crear_Operador
      */
     private DefaultTableModel modeloDeMiJTable; 
-    public Crear_Operador(java.awt.Frame parent, boolean modal) {
+    public Usuario_adm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setSize(660,430);
+        setSize(660,500);
         setTitle("CREAR OPERADOR");
         setLocationRelativeTo(rootPane);
         modeloDeMiJTable = new DefaultTableModel() { 
@@ -38,31 +39,19 @@ public class Crear_Operador extends javax.swing.JDialog {
 
         };
         
-        modeloDeMiJTable.addColumn("COD");
-        modeloDeMiJTable.addColumn("OPERADOR");
-        modeloDeMiJTable.addColumn("N° CONSECUTIVO");
+        modeloDeMiJTable.addColumn("Nombre");
+        modeloDeMiJTable.addColumn("Usuario");
+        modeloDeMiJTable.addColumn("Categoria");
         jTable1.setModel(modeloDeMiJTable);
         int[] anchos = {20, 200, 70};
         for(int i = 0; i < jTable1.getColumnCount(); i++) {
             jTable1.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }
         
-        llenartabla();
+
         jTable1.setDefaultRenderer (Object.class, new Render());
     }
-    public void llenartabla(){
-
-        conn.establecer_conexion();
-        String consulta="select * from operador";
-        ResultSet n=conn.consulta(consulta);
-        try{
-        
-            while(n.next()){
-        modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3)});
-        }
-        }
-        catch(Exception e){}
-    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,48 +65,52 @@ public class Crear_Operador extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jTextField_nombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField_consecutivo = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField_nombre1 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jPasswordField2 = new javax.swing.JPasswordField();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Nombre Operador");
+        jLabel1.setText("Contraseña");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 30, 190, 30);
+        jLabel1.setBounds(210, 130, 110, 30);
 
-        jTextField_nombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField_nombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         getContentPane().add(jTextField_nombre);
-        jTextField_nombre.setBounds(190, 30, 260, 30);
+        jTextField_nombre.setBounds(310, 50, 310, 30);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setText("OPERADORES EXISTENTES");
+        jLabel2.setText("Usuarios Existentes");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(20, 120, 610, 30);
-
-        jTextField_consecutivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        getContentPane().add(jTextField_consecutivo);
-        jTextField_consecutivo.setBounds(190, 70, 150, 30);
+        jLabel2.setBounds(20, 210, 610, 40);
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1402870079_floppy.png"))); // NOI18N
-        jButton1.setText("Guardar");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514213_Remove.png"))); // NOI18N
+        jButton1.setText("Eliminar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(470, 20, 160, 40);
+        jButton1.setBounds(30, 90, 160, 40);
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(0, 0, 102));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -129,31 +122,40 @@ public class Crear_Operador extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(20, 150, 610, 230);
+        jScrollPane1.setBounds(20, 250, 610, 160);
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setText("N° Consecutivo");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 70, 190, 30);
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setText("Nombre");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(210, 10, 190, 30);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setText("Usuario");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(210, 50, 190, 30);
+
+        jTextField_nombre1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        getContentPane().add(jTextField_nombre1);
+        jTextField_nombre1.setBounds(310, 10, 310, 30);
+
+        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Administrador", "Usuario" }));
+        getContentPane().add(jComboBox1);
+        jComboBox1.setBounds(310, 90, 310, 30);
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514213_Remove.png"))); // NOI18N
-        jButton2.setText("Eliminar");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1402870079_floppy.png"))); // NOI18N
+        jButton2.setText("Guardar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(470, 100, 160, 40);
+        jButton2.setBounds(460, 200, 160, 30);
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396515201_document-edit.png"))); // NOI18N
@@ -164,15 +166,38 @@ public class Crear_Operador extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButton3);
-        jButton3.setBounds(470, 60, 160, 40);
+        jButton3.setBounds(30, 50, 160, 40);
+        getContentPane().add(jPasswordField1);
+        jPasswordField1.setBounds(410, 130, 210, 30);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setText("Nivel");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(210, 90, 190, 30);
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setText("Confirmar Contraseña");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(210, 160, 210, 30);
+        getContentPane().add(jPasswordField2);
+        jPasswordField2.setBounds(410, 160, 210, 30);
+
+        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514185_Add.png"))); // NOI18N
+        jButton4.setText("Crear");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton4);
+        jButton4.setBounds(30, 10, 160, 40);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    String insert="insert into operador (nombre,consecutivo) values ('"+jTextField_nombre.getText().toUpperCase()+"',"+jTextField_consecutivo.getText()+")";
-    conn.insertar(insert);
-    llenartabla();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -183,11 +208,9 @@ public class Crear_Operador extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-      int row=jTable1.getSelectedRow();
-      jTextField_nombre.setText(jTable1.getValueAt(row, 1).toString());
-      jTextField_consecutivo.setText(jTable1.getValueAt(row, 2).toString());
-    }//GEN-LAST:event_jTable1MouseClicked
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,12 +220,19 @@ public class Crear_Operador extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField_consecutivo;
     private javax.swing.JTextField jTextField_nombre;
+    private javax.swing.JTextField jTextField_nombre1;
     // End of variables declaration//GEN-END:variables
 }
