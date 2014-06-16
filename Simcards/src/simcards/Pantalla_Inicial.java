@@ -4,6 +4,11 @@
  */
 package simcards;
 
+import Models.Usuario;
+import Principal.Datos_Clientes;
+import Principal.Datos_Empresa;
+import Principal.Usuario_adm;
+
 /**
  *
  * @author Usuario
@@ -17,6 +22,7 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
         initComponents();
         setSize(1200,720);
         setLocationRelativeTo(null);
+
     }
 
     /**
@@ -33,9 +39,18 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel_user = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -75,10 +90,73 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
         getContentPane().add(jButton5);
         jButton5.setBounds(40, 230, 310, 60);
 
-        jMenu1.setText("File");
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel1.setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Nivel:");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(480, 0, 110, 30);
+
+        jLabel_user.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jLabel_user.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_user.setText("Usuario:");
+        jPanel1.add(jLabel_user);
+        jLabel_user.setBounds(80, 0, 120, 30);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Hora Acceso:");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(230, 0, 110, 30);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Usuario:");
+        jPanel1.add(jLabel4);
+        jLabel4.setBounds(10, 0, 80, 30);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(490, 0, 710, 30);
+
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/data.png"))); // NOI18N
+        jMenu1.setText("Principal");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setText("Datos de la Empresa");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Usuarios");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Especiales");
+
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
+        jMenuItem3.setText("Administracion de Terceros");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setText("jMenuItem4");
+        jMenu2.add(jMenuItem4);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -115,6 +193,36 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    Conexion.dialog();
+    java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Datos_Empresa dialog = new Datos_Empresa(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    Conexion.dialog();
+    java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Usuario_adm dialog = new Usuario_adm(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    Conexion.dialog();
+    java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Datos_Clientes dialog = new Datos_Clientes(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,8 +264,17 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel_user;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

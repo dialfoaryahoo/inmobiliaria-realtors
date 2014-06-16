@@ -154,7 +154,7 @@ public class Crear_Plan extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(20, 380, 960, 150);
+        jScrollPane1.setBounds(20, 340, 960, 150);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Datos del Plan", 3, 0, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
         jPanel1.setLayout(null);
@@ -277,10 +277,10 @@ public class Crear_Plan extends javax.swing.JDialog {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("TOTAL PLANES");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(690, 530, 200, 50);
+        jLabel2.setBounds(690, 490, 200, 50);
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514344_Refresh.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396515201_document-edit.png"))); // NOI18N
         jButton1.setText("EDITAR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -299,18 +299,18 @@ public class Crear_Plan extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButton_ELIMINAR);
-        jButton_ELIMINAR.setBounds(20, 550, 160, 40);
+        jButton_ELIMINAR.setBounds(20, 510, 160, 40);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setText("PLANES EXISTENTES");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(20, 350, 960, 30);
+        jLabel5.setBounds(20, 310, 960, 30);
 
         jTextField_cant.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextField_cant.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         getContentPane().add(jTextField_cant);
-        jTextField_cant.setBounds(870, 540, 100, 30);
+        jTextField_cant.setBounds(870, 500, 100, 30);
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514185_Add.png"))); // NOI18N
