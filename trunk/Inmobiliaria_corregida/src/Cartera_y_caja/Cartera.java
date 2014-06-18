@@ -6,6 +6,8 @@
 
 package Cartera_y_caja;
 
+import autocompletar.ajTextField;
+import autocompletar.autoComplete;
 import inmobiliaria_fase01.Conexion;
 import java.sql.ResultSet;
 import java.util.Calendar;
@@ -853,6 +855,7 @@ public void CodeudorBuscar(){
         jText_ADMdireccion = new javax.swing.JTextField();
         jLabel111 = new javax.swing.JLabel();
         jText_ADMcedpro = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox();
         jLabel103 = new javax.swing.JLabel();
         jPanelInmuebles = new javax.swing.JPanel();
         jButton_INMagregar = new javax.swing.JButton();
@@ -1742,7 +1745,7 @@ public void CodeudorBuscar(){
             }
         });
         jPanelAdmInm.add(jText_ADMbuscar);
-        jText_ADMbuscar.setBounds(340, 90, 220, 40);
+        jText_ADMbuscar.setBounds(340, 140, 220, 40);
 
         jButton_Plimpiar1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton_Plimpiar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396849974_trash yellow.png"))); // NOI18N
@@ -1853,6 +1856,15 @@ public void CodeudorBuscar(){
         jText_ADMcedpro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanelAdmInm.add(jText_ADMcedpro);
         jText_ADMcedpro.setBounds(360, 290, 410, 40);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        jPanelAdmInm.add(jComboBox1);
+        jComboBox1.setBounds(340, 90, 220, 40);
 
         jLabel103.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPanelAdmInm.add(jLabel103);
@@ -3034,6 +3046,11 @@ public void CodeudorBuscar(){
         if (posicion==2) {
             System.out.println("pasopor aqui");
         }
+        if(posicion==3){
+            autoComplete.setAutoComplete(jComboBox1, "select  (nombres || ' ' || primer_apellido || ' ' || segundo_apellido) AS nombrecompleto from propietarios");
+            new ajTextField.autocompleterText(jText_ADMbuscar, "nombres", "propietarios");
+            //jComboBox1.setSelectedItem("");
+        }
 
     }//GEN-LAST:event_jTabbedPane5MouseClicked
 
@@ -3157,6 +3174,10 @@ public void CodeudorBuscar(){
         // TODO add your handling code here:
     }//GEN-LAST:event_jText_INMdireccionActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -3241,6 +3262,7 @@ public void CodeudorBuscar(){
     private javax.swing.JButton jButton_Plimpiar1;
     private javax.swing.JButton jButton_Pmodificar;
     private javax.swing.JCheckBox jCheckBox_INMdisponible;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox_INMclase;
     private javax.swing.JComboBox jComboBox_INMmes;
     private javax.swing.JComboBox jComboBox_INMregimen;
