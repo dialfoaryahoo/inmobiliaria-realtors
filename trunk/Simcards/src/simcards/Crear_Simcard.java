@@ -73,8 +73,8 @@ public class Crear_Simcard extends javax.swing.JDialog {
          while(resultado.next()){
              cliente.addElement(resultado.getString(1));
          }
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(cliente));
-        jPanel1.add(jComboBox1);
+        jComboBox_operador.setModel(new javax.swing.DefaultComboBoxModel(cliente));
+        jPanel1.add(jComboBox_operador);
         }catch(Exception e){
             
         }
@@ -95,7 +95,7 @@ public class Crear_Simcard extends javax.swing.JDialog {
         catch(Exception e){}
         jTextField_cant.setText(String.valueOf(jTable1.getRowCount()));
         Vector plan= new Vector();
-      String operador=jComboBox1.getSelectedItem().toString();
+      String operador=jComboBox_operador.getSelectedItem().toString();
       String consulta2="select nombre from empresa";
       plan.addElement("Seleccione una Empresa");
       ResultSet n2= conn.consulta(consulta2);
@@ -124,7 +124,7 @@ public class Crear_Simcard extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jTextField_nlinea = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jComboBox_operador = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jTextField_codigo = new javax.swing.JTextField();
@@ -138,7 +138,7 @@ public class Crear_Simcard extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
         jTextField_serial = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
-        jComboBox2 = new javax.swing.JComboBox();
+        jComboBox_plan = new javax.swing.JComboBox();
         jComboBox3 = new javax.swing.JComboBox();
         jLabel9 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -182,7 +182,7 @@ public class Crear_Simcard extends javax.swing.JDialog {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(20, 340, 960, 150);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Datos del Plan", 3, 0, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Datos del Plan", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
         jPanel1.setLayout(null);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -204,20 +204,20 @@ public class Crear_Simcard extends javax.swing.JDialog {
         jPanel1.add(jLabel1);
         jLabel1.setBounds(10, 40, 110, 30);
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jComboBox_operador.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jComboBox_operador.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_operador.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboBox1MouseClicked(evt);
+                jComboBox_operadorMouseClicked(evt);
             }
         });
-        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+        jComboBox_operador.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox1ItemStateChanged(evt);
+                jComboBox_operadorItemStateChanged(evt);
             }
         });
-        jPanel1.add(jComboBox1);
-        jComboBox1.setBounds(120, 40, 210, 30);
+        jPanel1.add(jComboBox_operador);
+        jComboBox_operador.setBounds(120, 40, 210, 30);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setText("Empresa");
@@ -240,7 +240,7 @@ public class Crear_Simcard extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Serial");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(340, 100, 200, 30);
+        jLabel4.setBounds(340, 100, 80, 30);
 
         jTextField_vlrcliente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.add(jTextField_vlrcliente);
@@ -284,10 +284,10 @@ public class Crear_Simcard extends javax.swing.JDialog {
         jPanel1.add(jButton3);
         jButton3.setBounds(20, 170, 160, 40);
 
-        jComboBox2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un plan" }));
-        jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(120, 70, 210, 30);
+        jComboBox_plan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jComboBox_plan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un plan" }));
+        jPanel1.add(jComboBox_plan);
+        jComboBox_plan.setBounds(120, 70, 210, 30);
 
         jComboBox3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Asignada", "Disponible" }));
@@ -406,7 +406,13 @@ public class Crear_Simcard extends javax.swing.JDialog {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Object [] validar = {jTextField_cant.getText()};
+        //Object [] validar = {jTextField_cant.getText()};
+        String insert = "INSERT INTO simcards2(operador, plan, nlinea, empresa, codigo, corte, serial, estado, vlr_cliente, vrl_bolsa, vrl_plan, min, ref_pago, saldo) values "
+                + "('"+jComboBox_operador.getSelectedItem()+"', "+jComboBox_operador.getSelectedIndex()+", '"+jTextField_nlinea.getText().toUpperCase()+"', '"+jTextField_serial.getText().toUpperCase()+"',)";
+        
+        
+        System.out.println(jComboBox_operador.getSelectedItem());
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -417,17 +423,17 @@ public class Crear_Simcard extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
+    private void jComboBox_operadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox_operadorMouseClicked
  
-    }//GEN-LAST:event_jComboBox1MouseClicked
+    }//GEN-LAST:event_jComboBox_operadorMouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
       
     }//GEN-LAST:event_jLabel1MouseClicked
 
-    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+    private void jComboBox_operadorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_operadorItemStateChanged
       Vector plan= new Vector();
-      String operador=jComboBox1.getSelectedItem().toString();
+      String operador=jComboBox_operador.getSelectedItem().toString();
       String consulta="select nombre from plan where operador=(select id from operador where nombre='"+operador+"');";
       plan.addElement("Seleccione un plan");
       ResultSet n= conn.consulta(consulta);
@@ -438,8 +444,8 @@ public class Crear_Simcard extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(Crear_Simcard.class.getName()).log(Level.SEVERE, null, ex);
         }
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(plan));
-    }//GEN-LAST:event_jComboBox1ItemStateChanged
+        jComboBox_plan.setModel(new javax.swing.DefaultComboBoxModel(plan));
+    }//GEN-LAST:event_jComboBox_operadorItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -450,10 +456,10 @@ public class Crear_Simcard extends javax.swing.JDialog {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton_ELIMINAR;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JComboBox jComboBox4;
+    private javax.swing.JComboBox jComboBox_operador;
+    private javax.swing.JComboBox jComboBox_plan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
