@@ -5,7 +5,7 @@
 package Principal;
 
 import simcards.*;
-import Models.Render;
+import Models.Renderito;
 import java.sql.ResultSet;
 import javax.naming.spi.DirStateFactory;
 import javax.swing.JOptionPane;
@@ -51,7 +51,7 @@ public class Usuario_adm extends javax.swing.JDialog {
         }
         
 
-        jTable1.setDefaultRenderer (Object.class, new Render());
+        jTable1.setDefaultRenderer (Object.class, new Renderito());
     }
    
         public int validar(Object[] datos) { 

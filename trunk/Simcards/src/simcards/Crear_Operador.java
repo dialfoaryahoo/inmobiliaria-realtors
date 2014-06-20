@@ -4,7 +4,7 @@
  */
 package simcards;
 
-import Models.Render;
+import Models.Renderito;
 import java.sql.ResultSet;
 import javax.naming.spi.DirStateFactory;
 import javax.swing.table.DefaultTableModel;
@@ -48,7 +48,7 @@ public class Crear_Operador extends javax.swing.JDialog {
         }
         
         llenartabla();
-        jTable1.setDefaultRenderer (Object.class, new Render());
+
     }
     public void llenartabla(){
 

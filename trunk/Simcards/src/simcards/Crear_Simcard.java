@@ -4,6 +4,7 @@
  */
 package simcards;
 
+import Models.Renderito;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -54,7 +55,7 @@ public class Crear_Simcard extends javax.swing.JDialog {
         modeloDeMiJTable.addColumn("SALDO");
         modeloDeMiJTable.addColumn("REF PAGO");
         jTable1.setModel(modeloDeMiJTable);
-        int[] anchos = {10, 10, 30,30,30,10,30,50,30,30,30};
+        int[] anchos = {5, 20, 10,30,30,10,30,50,40,20,30};
         for(int i = 0; i < jTable1.getColumnCount(); i++) {
             jTable1.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }
@@ -74,10 +75,12 @@ public class Crear_Simcard extends javax.swing.JDialog {
              cliente.addElement(resultado.getString(1));
          }
         jComboBox_operador.setModel(new javax.swing.DefaultComboBoxModel(cliente));
+        jComboBox_operador1.setModel(new javax.swing.DefaultComboBoxModel(cliente));
         jPanel1.add(jComboBox_operador);
         }catch(Exception e){
             
         }
+        jTable1.setDefaultRenderer (Object.class, new Renderito());
     }
     public void llenartabla(){
 
@@ -86,14 +89,16 @@ public class Crear_Simcard extends javax.swing.JDialog {
         ResultSet n=conn.consulta(consulta);
         try{
         while(n.next()){
-            ResultSet m=conn.consulta("select nombre from operador where id="+n.getString(3));
-            while(m.next()){
-            modeloDeMiJTable.addRow(new Object[]{n.getString(2),m.getString(1),n.getString(4),n.getString(5),n.getString(6),n.getString(7),n.getString(8)});
+            
+            modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(8),n.getString(2),n.getString(4),n.getString(11),n.getString(7),n.getString(9),n.getString(3),n.getString(5),n.getString(14),n.getString(13)});
+            if(n.getString(9).equals("Disponible")){
+                contdisponible++;
             }
         }
         }
         catch(Exception e){}
         jTextField_cant.setText(String.valueOf(jTable1.getRowCount()));
+        jTextField_cant1.setText(""+contdisponible);
         Vector plan= new Vector();
       String operador=jComboBox_operador.getSelectedItem().toString();
       String consulta2="select nombre from empresa";
@@ -106,7 +111,15 @@ public class Crear_Simcard extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(Crear_Simcard.class.getName()).log(Level.SEVERE, null, ex);
         }
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(plan));
+        jComboBox_empresa.setModel(new javax.swing.DefaultComboBoxModel(plan));
+        jComboBox_empresa1.setModel(new javax.swing.DefaultComboBoxModel(plan));
+    }
+    public void limpiartabla(){
+              DefaultTableModel modelo=(DefaultTableModel) jTable1.getModel();
+            int filas=jTable1.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                modelo.removeRow(0);
+              }
     }
     
     /**
@@ -143,24 +156,32 @@ public class Crear_Simcard extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jTextField_vlrbolsa = new javax.swing.JTextField();
-        jComboBox4 = new javax.swing.JComboBox();
+        jComboBox_empresa = new javax.swing.JComboBox();
         jTextField_saldo = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jTextField_refpago = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jButton_ELIMINAR = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jTextField_cant = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        jComboBox_operador1 = new javax.swing.JComboBox();
+        jTextField_numerobuscar = new javax.swing.JTextField();
+        jComboBox_empresa1 = new javax.swing.JComboBox();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField_cant1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -180,9 +201,9 @@ public class Crear_Simcard extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(20, 340, 960, 150);
+        jScrollPane1.setBounds(20, 360, 960, 180);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Datos del Plan", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Datos del Plan", 3, 0, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
         jPanel1.setLayout(null);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -244,12 +265,12 @@ public class Crear_Simcard extends javax.swing.JDialog {
 
         jTextField_vlrcliente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.add(jTextField_vlrcliente);
-        jTextField_vlrcliente.setBounds(680, 40, 270, 30);
+        jTextField_vlrcliente.setBounds(680, 70, 270, 30);
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel15.setText("Vlr Cliente");
         jPanel1.add(jLabel15);
-        jLabel15.setBounds(580, 40, 130, 30);
+        jLabel15.setBounds(580, 70, 130, 30);
 
         jTextField_vlrplan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.add(jTextField_vlrplan);
@@ -282,10 +303,15 @@ public class Crear_Simcard extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jButton3);
-        jButton3.setBounds(20, 170, 160, 40);
+        jButton3.setBounds(680, 40, 270, 30);
 
         jComboBox_plan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jComboBox_plan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione un plan" }));
+        jComboBox_plan.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_planItemStateChanged(evt);
+            }
+        });
         jPanel1.add(jComboBox_plan);
         jComboBox_plan.setBounds(120, 70, 210, 30);
 
@@ -309,19 +335,10 @@ public class Crear_Simcard extends javax.swing.JDialog {
         jPanel1.add(jLabel13);
         jLabel13.setBounds(340, 130, 200, 30);
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel16.setText("Vlr Bolsa");
-        jPanel1.add(jLabel16);
-        jLabel16.setBounds(580, 70, 130, 30);
-
-        jTextField_vlrbolsa.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPanel1.add(jTextField_vlrbolsa);
-        jTextField_vlrbolsa.setBounds(680, 70, 270, 30);
-
-        jComboBox4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione una Empresa" }));
-        jPanel1.add(jComboBox4);
-        jComboBox4.setBounds(120, 130, 210, 30);
+        jComboBox_empresa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jComboBox_empresa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione una Empresa" }));
+        jPanel1.add(jComboBox_empresa);
+        jComboBox_empresa.setBounds(120, 130, 210, 30);
 
         jTextField_saldo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.add(jTextField_saldo);
@@ -341,14 +358,16 @@ public class Crear_Simcard extends javax.swing.JDialog {
         jPanel1.add(jLabel17);
         jLabel17.setBounds(580, 130, 240, 30);
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 40, 970, 230);
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("TOTAL PLANES");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(690, 530, 200, 50);
+        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1402870079_floppy.png"))); // NOI18N
+        jButton4.setText("GUARDAR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton4);
+        jButton4.setBounds(630, 180, 160, 40);
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396515201_document-edit.png"))); // NOI18N
@@ -358,8 +377,17 @@ public class Crear_Simcard extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(820, 280, 160, 40);
+        jPanel1.add(jButton1);
+        jButton1.setBounds(790, 180, 160, 40);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(10, 40, 970, 230);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("TOTAL SIM CARD");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(700, 570, 200, 50);
 
         jButton_ELIMINAR.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton_ELIMINAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514213_Remove.png"))); // NOI18N
@@ -372,27 +400,87 @@ public class Crear_Simcard extends javax.swing.JDialog {
         getContentPane().add(jButton_ELIMINAR);
         jButton_ELIMINAR.setBounds(20, 550, 160, 40);
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel5.setText("SIMCARDS EXISTENTES");
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Empresa");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(20, 310, 960, 30);
+        jLabel5.setBounds(640, 290, 210, 20);
 
         jTextField_cant.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextField_cant.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         getContentPane().add(jTextField_cant);
-        jTextField_cant.setBounds(870, 540, 100, 30);
+        jTextField_cant.setBounds(880, 580, 100, 30);
 
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1402870079_floppy.png"))); // NOI18N
-        jButton4.setText("GUARDAR");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel16.setText("SIMCARDS EXISTENTES");
+        getContentPane().add(jLabel16);
+        jLabel16.setBounds(20, 270, 220, 20);
+
+        jComboBox_operador1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jComboBox_operador1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_operador1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBox_operador1MouseClicked(evt);
             }
         });
-        getContentPane().add(jButton4);
-        jButton4.setBounds(660, 280, 160, 40);
+        jComboBox_operador1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_operador1ItemStateChanged(evt);
+            }
+        });
+        getContentPane().add(jComboBox_operador1);
+        jComboBox_operador1.setBounds(140, 310, 230, 30);
+        getContentPane().add(jTextField_numerobuscar);
+        jTextField_numerobuscar.setBounds(390, 310, 220, 30);
+
+        jComboBox_empresa1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jComboBox_empresa1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione una Empresa" }));
+        getContentPane().add(jComboBox_empresa1);
+        jComboBox_empresa1.setBounds(620, 310, 230, 30);
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel18.setText("  Buscar:");
+        jLabel18.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        getContentPane().add(jLabel18);
+        jLabel18.setBounds(20, 290, 960, 60);
+
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("Operador");
+        getContentPane().add(jLabel19);
+        jLabel19.setBounds(140, 290, 210, 20);
+
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setText("Numero");
+        getContentPane().add(jLabel20);
+        jLabel20.setBounds(390, 290, 210, 20);
+
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(860, 310, 100, 30);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("TOTAL SIM CARD DISPONIBLES");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(580, 540, 320, 50);
+
+        jTextField_cant1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField_cant1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        getContentPane().add(jTextField_cant1);
+        jTextField_cant1.setBounds(880, 550, 100, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -402,17 +490,18 @@ public class Crear_Simcard extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton_ELIMINARActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
- 
+        
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        Object [] validar = {jTextField_cant.getText(),jTextField_codigo};
+
         //Object [] validar = {jTextField_cant.getText()};
-        String insert = "INSERT INTO simcards2(operador, plan, nlinea, empresa, codigo, corte, serial, estado, vlr_cliente, vrl_bolsa, vrl_plan, min, ref_pago, saldo) values "
-                + "('"+jComboBox_operador.getSelectedItem()+"', "+jComboBox_operador.getSelectedIndex()+", '"+jTextField_nlinea.getText().toUpperCase()+"', '"+jTextField_serial.getText().toUpperCase()+"',)";
-        
-        
-        System.out.println(jComboBox_operador.getSelectedItem());
-        
+        String insert = "INSERT INTO simcard (operador, plan, nlinea, empresa, codigo, corte, serial, estadointerno, vlr_cliente, vrl_plan, min, ref_pago, saldo,estado) values "
+                + "('"+jComboBox_operador.getSelectedItem()+"', '"+jComboBox_plan.getSelectedItem()+"', '"+jTextField_nlinea.getText().toUpperCase()+"','"+jComboBox_empresa.getSelectedItem()+"', '"+jTextField_codigo.getText().toUpperCase()+"','"+jTextField_corte.getText().toUpperCase()+"','"+jTextField_serial.getText().toUpperCase()+"','"+jComboBox3.getSelectedItem()+"',"+jTextField_vlrcliente.getText()+","+jTextField_vlrplan.getText()+","+jTextField_min.getText()+","+jTextField_refpago.getText()+","+jTextField_saldo.getText()+",1)";
+        System.out.println(insert);
+        conn.insertar(insert);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -447,18 +536,108 @@ public class Crear_Simcard extends javax.swing.JDialog {
         jComboBox_plan.setModel(new javax.swing.DefaultComboBoxModel(plan));
     }//GEN-LAST:event_jComboBox_operadorItemStateChanged
 
+    private void jComboBox_planItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_planItemStateChanged
+    String plan=jComboBox_plan.getSelectedItem().toString();
+    String consulta="select * from plan where nombre='"+plan+"'";
+    ResultSet n= conn.consulta(consulta);
+    int a=0;
+        try {
+            while(n.next()){
+                jTextField_vlrcliente.setText(n.getString(7));
+                jTextField_vlrplan.setText(n.getString(4));
+                jTextField_min.setText(n.getString(5));                
+                a++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Crear_Simcard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(a==0){
+            jTextField_vlrcliente.setText("");
+                jTextField_vlrplan.setText("");
+                jTextField_min.setText("");  
+        }
+    }//GEN-LAST:event_jComboBox_planItemStateChanged
+
+    private void jComboBox_operador1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox_operador1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_operador1MouseClicked
+
+    private void jComboBox_operador1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_operador1ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_operador1ItemStateChanged
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+      String consulta="";
+        if(jComboBox_operador1.getSelectedIndex()==0){
+          if(jTextField_numerobuscar.getText().equals("")){
+              if(jComboBox_empresa1.getSelectedIndex()==0){
+                  Conexion.JOptionShowMessage("+1", null, "DEBE INGRESAR ALGUN PARAMETRO DE BUSQUEDA");
+              }else{
+                  limpiartabla();
+                  consulta="select * from simcard where empresa='"+jComboBox_empresa1.getSelectedItem()+"'";
+              }
+          }else{
+              if(jComboBox_empresa1.getSelectedIndex()==0){
+                  limpiartabla();
+                  consulta="select * from simcard where nlinea ='"+jTextField_numerobuscar.getText()+"'";
+              }else{
+                  limpiartabla();
+                  consulta="select * from simcard where empresa='"+jComboBox_empresa1.getSelectedItem()+"' and nlinea ='"+jTextField_numerobuscar.getText()+"'";
+              }
+          }
+      }else{
+           if(jTextField_numerobuscar.getText().equals("")){
+              if(jComboBox_empresa1.getSelectedIndex()==0){
+                 limpiartabla();
+                 consulta="select * from simcard where operador='"+jComboBox_operador1.getSelectedItem()+"'";
+              }else{
+                  limpiartabla();
+                  consulta="select * from simcard where empresa='"+jComboBox_empresa1.getSelectedItem()+"' and operador='"+jComboBox_operador1.getSelectedItem()+"'";
+              }
+          }else{
+              if(jComboBox_empresa1.getSelectedIndex()==0){
+                  limpiartabla();
+                  consulta="select * from simcard where nlinea ='"+jTextField_numerobuscar.getText()+"' and operador='"+jComboBox_operador1.getSelectedItem()+"'";
+              }else{
+                  limpiartabla();
+                  consulta="select * from simcard where empresa='"+jComboBox_empresa1.getSelectedItem()+"' and nlinea ='"+jTextField_numerobuscar.getText()+"' and operador='"+jComboBox_operador1.getSelectedItem()+"'";
+              }
+          } 
+        }
+        ResultSet n=conn.consulta(consulta);
+        try{
+        while(n.next()){
+            
+            modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(8),n.getString(2),n.getString(4),n.getString(11),n.getString(7),n.getString(9),n.getString(3),n.getString(5),n.getString(14),n.getString(13)});
+            if(n.getString(9).equals("Disponible")){
+                contdisponible++;
+            }
+        }
+        }
+        catch(Exception e){}
+        jTextField_cant.setText(String.valueOf(jTable1.getRowCount()));
+        jTextField_cant1.setText(""+contdisponible);
+        if(jTable1.getRowCount()==0){
+            Conexion.JOptionShowMessage("+1", null, "LA BUSQUEDA NO ARROJO RESULTADOS");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     Conexion conn = new Conexion();
+    int contdisponible=0;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton_ELIMINAR;
     private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox4;
+    private javax.swing.JComboBox jComboBox_empresa;
+    private javax.swing.JComboBox jComboBox_empresa1;
     private javax.swing.JComboBox jComboBox_operador;
+    private javax.swing.JComboBox jComboBox_operador1;
     private javax.swing.JComboBox jComboBox_plan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -469,7 +648,11 @@ public class Crear_Simcard extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -480,14 +663,15 @@ public class Crear_Simcard extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField_cant;
+    private javax.swing.JTextField jTextField_cant1;
     private javax.swing.JTextField jTextField_codigo;
     private javax.swing.JTextField jTextField_corte;
     private javax.swing.JTextField jTextField_min;
     private javax.swing.JTextField jTextField_nlinea;
+    private javax.swing.JTextField jTextField_numerobuscar;
     private javax.swing.JTextField jTextField_refpago;
     private javax.swing.JTextField jTextField_saldo;
     private javax.swing.JTextField jTextField_serial;
-    private javax.swing.JTextField jTextField_vlrbolsa;
     private javax.swing.JTextField jTextField_vlrcliente;
     private javax.swing.JTextField jTextField_vlrplan;
     // End of variables declaration//GEN-END:variables
