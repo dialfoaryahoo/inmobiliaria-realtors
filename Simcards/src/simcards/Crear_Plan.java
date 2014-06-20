@@ -366,6 +366,10 @@ public class Crear_Plan extends javax.swing.JDialog {
      jTextField_vlrmincliente.setText(jTable1.getValueAt(row, 6).toString());
      jTextField_vlrplancliente.setText(jTable1.getValueAt(row, 5).toString());
      jComboBox1.setSelectedItem(jTable1.getValueAt(row, 1).toString());
+     jTextField_utilidadmin.setText("NA");
+     jTextField_minadicional.setText("NA");
+     jTextField_tipo.setText("NA");
+     jTextField_utilidadplan.setText("NA");
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -373,8 +377,9 @@ public class Crear_Plan extends javax.swing.JDialog {
     Object[] datos = {jTextField_nombre.getText(),jTextField_costominutos.getText(),jTextField_costoplan.getText(),jTextField_minadicional.getText(),jTextField_nminutos.getText(),jTextField_tipo.getText(),jTextField_utilidadmin.getText(),jTextField_utilidadplan.getText(),jTextField_vlrmincliente.getText(),jTextField_vlrplancliente.getText(),}; 
     boolean seguir=Conexion.validar(datos);
     if(seguir){
-        String insertar="insert into plan (nombre,operador,valor,minutos,costomin,venta,vlrmincli) values ('"+jTextField_nombre.getText()+"',(select id from operador where nombre='"+jComboBox1.getSelectedItem()+"'),"+jTextField_costoplan.getText()+","+jTextField_nminutos.getText()+","+jTextField_costominutos.getText()+","+jTextField_vlrplancliente.getText()+","+jTextField_vlrmincliente.getText()+")";
+        String insertar="insert into plan (nombre,operador,valor,minutos,costomin,venta,vlrmincli,estado) values ('"+jTextField_nombre.getText()+"',(select id from operador where nombre='"+jComboBox1.getSelectedItem()+"'),"+jTextField_costoplan.getText()+","+jTextField_nminutos.getText()+","+jTextField_costominutos.getText()+","+jTextField_vlrplancliente.getText()+","+jTextField_vlrmincliente.getText()+",1)";
         System.out.println(insertar);
+        conn.insertar(insertar);
         
     }
     }else{

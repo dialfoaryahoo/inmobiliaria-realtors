@@ -5,7 +5,7 @@
 package Principal;
 
 import simcards.*;
-import Models.Render;
+import Models.Renderito;
 import java.sql.ResultSet;
 import javax.naming.spi.DirStateFactory;
 import javax.swing.JOptionPane;
