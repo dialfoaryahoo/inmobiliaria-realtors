@@ -21,6 +21,7 @@ import javax.swing.ButtonModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.StyledEditorKit;
 
 /**
  *
@@ -65,13 +66,13 @@ public class Cartera extends javax.swing.JDialog {
         modeloDeMiJTable.addColumn("PROPIETARIO");
         modeloDeMiJTable.addColumn("DIRECCION");
         modeloDeMiJTable.addColumn("BARRIO");        
-        jTable1.setModel(modeloDeMiJTable);
+        jTable_ADM.setModel(modeloDeMiJTable);
         int[] anchos = {20, 20, 50, 150, 50};
-        for(int i = 0; i < jTable1.getColumnCount(); i++) {
-            jTable1.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+        for(int i = 0; i < jTable_ADM.getColumnCount(); i++) {
+            jTable_ADM.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }
         llenartabla();
-        jTable1.setDefaultRenderer (Object.class, new Render());        
+        jTable_ADM.setDefaultRenderer (Object.class, new Render());        
         
         
     }
@@ -82,7 +83,8 @@ public class Cartera extends javax.swing.JDialog {
         conn.establecer_conexion();
         String consulta="select inm.codigo, pro.cedula, (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) AS nombrecompleto "
                 + ",inm.direccion, inm.barrio "
-                + "from inmuebles as inm inner join propietarios as pro on inm.cod_propietario = pro.cod_propietario  limit 6 ";
+                + "from inmuebles as inm inner join propietarios as pro on inm.cod_propietario = pro.cod_propietario  "
+                + "where inm.estado = 1 order by inm.codinmueble desc limit 6 ";
                 //+ "where "+campo+" = '"+buscar+"'";
         System.out.println(consulta);
         ResultSet n=conn.consulta(consulta);
@@ -98,22 +100,27 @@ public class Cartera extends javax.swing.JDialog {
     public void llenartablaparametros(String campo, String buscar){        
 
         conn.establecer_conexion();
+        limpiarTabla(jTable_ADM);
 //        String consulta="select inm.codigo, pro.cedula, (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) AS nombrecompleto "
 //                + ",inm.direccion, inm.barrio, inm.uso "
 //                + "from propietarios as pro inner join  inmuebles as inm on pro.cod_propietario = inm.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  "
 //                + "where "+campo+" = '"+buscar+"'"+" and arr.estado=1";
         
-        String consulta ="select inm.codigo as inmcodigo, pro.cedula as procedula, pro.codigo as procodigo, (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) AS pronombrecompleto, inq.codigo as inqcodigo, inq.cedula as inqcedula,(inq.nombres|| ' ' || inq.primer_apellido || ' ' || inq.segundo_apellido) AS inqnombrecompleto, "
-                + "inm.direccion, inm.barrio, inm.municipio, inm.dia_causacion, inm.regimen, inm.inmueble_disponible "
+        String consulta ="select inm.codigo , pro.cedula , (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) AS pronombrecompleto, inm.direccion, inm.barrio "
                 + "from propietarios as pro inner join  inmuebles as inm on pro.cod_propietario = inm.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  "
-                + "where pro.cedula = '123' and arr.estado=1";    
+                + "where "+campo+" = '"+buscar+"' and inm.estado = 1 and arr.estado = 1 order by inm.codinmueble desc " ;    
         System.out.println(consulta);
         ResultSet n=conn.consulta(consulta);
         try{
         
             while(n.next()){
-        modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3),n.getString(4),n.getString(5),n.getString(6),n.getString(7),n.getString(8),n.getString(9),n.getString(10),n.getString(11),n.getString(12),n.getString(13)});
+                contadorconsulta ++;
+                modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3),n.getString(4),n.getString(5)});
         }
+              if(contadorconsulta == 0){
+                    Conexion.JOptionShowMessage("+1", null, "LA BUSQUEDA NO ARROJO RESULTADOS");
+                }            
+              contadorconsulta = 0;
         }
         catch(Exception e){}
     }    
@@ -148,6 +155,10 @@ public void limpiarTabla(JTable tabla){
         INMpropietarioedit(falso, falso, falso, falso, falso, falso);
         INMinmueblevacio();
         INMpropietariovacio();
+        //Adm inmuebles
+        ADMBTN_iniciales(falso, falso, falso, falso);
+        ADMinmueblesedit(falso, falso, falso);
+      
     }
     
 //    public void listener(){
@@ -622,12 +633,74 @@ public void CodeudorBuscar(){
         jText_INM_ARbanco.setEditable(e);
         jText_INM_ARncuenta.setEditable(f);
     }    
+    public void ADMinmueblesedit (Boolean a, Boolean b, Boolean c){
+        jText_ADMbuscar.setEditable(a);
+        jText_ADMbuscar.setEnabled(a);
+        jComboBox1.setEnabled(a);
+        jTable_ADM.setVisible(a);
+        
+        jText_ADM_codinm.setEditable(b);
+        jText_ADM_cedpro.setEditable(b);
+        jText_ADM_nompro.setEditable(b);
+        jText_ADM_direccion.setEditable(b);
+        jText_ADM_barrio.setEditable(b);
+        jText_ADM_codpro.setEditable(b);
+        jText_ADM_cedinq.setEditable(b);
+        jText_ADM_codinq.setEditable(b);
+        jText_ADM_nominq.setEditable(b);
+        jText_ADM_municipio.setEditable(b);
+        jText_ADM_diacausacion.setEditable(b);
+        jText_ADM_regimen.setEditable(b);
+        jText_ADM_inmdisponible.setEditable(b);
+        
+        
+        jText_ADM_codinm.setEnabled(c);
+        jText_ADM_cedpro.setEnabled(c);
+        jText_ADM_nompro.setEnabled(c);
+        jText_ADM_direccion.setEnabled(c);
+        jText_ADM_barrio.setEnabled(c);
+        jText_ADM_codpro.setEnabled(c);
+        jText_ADM_cedinq.setEnabled(c);
+        jText_ADM_codinq.setEnabled(c);
+        jText_ADM_nominq.setEnabled(c);
+        jText_ADM_municipio.setEnabled(c);
+        jText_ADM_diacausacion.setEnabled(c);
+        jText_ADM_regimen.setEnabled(c);
+        jText_ADM_inmdisponible.setEnabled(c);
+        
+    }
+    public void ADMinmueble_vacio(){
+        jText_ADMbuscar.setText("");
+        jText_ADM_codinm.setText("");
+        jText_ADM_cedpro.setText("");
+        jText_ADM_nompro.setText("");
+        jText_ADM_direccion.setText("");
+        jText_ADM_barrio.setText("");
+        jText_ADM_codpro.setText("");
+        jText_ADM_cedinq.setText("");
+        jText_ADM_codinq.setText("");
+        jText_ADM_nominq.setText("");
+        jText_ADM_municipio.setText("");
+        jText_ADM_diacausacion.setText("");
+        jText_ADM_regimen.setText("");
+        jText_ADM_inmdisponible.setText("");
+        jComboBox1.setSelectedIndex(0);
+    }
 
+    public void ADMBTN_iniciales(Boolean a, Boolean b,Boolean c, Boolean d){
+        jButton_ADM_buscar.setSelected(a);
+        jButton_ADM_eliminar.setSelected(b);
+        jButton_ADM_eliminar.setVisible(c);
+        jButton_ADM_informe.setSelected(d);
+        jButton_ADM_informe.setVisible(c);
+        INMaccion = 0;
+    }    
     public void INMBTN_iniciales(Boolean a, Boolean b){
         jButton_INMagregar.setSelected(a);
         jButton_INMmodificar.setSelected(b);
         INMaccion = 1;
     }
+    
     
     public int INMvalidarcampos(){
         int validar = 0;
@@ -926,9 +999,9 @@ public void CodeudorBuscar(){
         jLabel47 = new javax.swing.JLabel();
         jPanelAdmInm = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
-        jButton_Ibuscar2 = new javax.swing.JButton();
-        jButton_Ieliminar2 = new javax.swing.JButton();
-        jButton_Iinforme3 = new javax.swing.JButton();
+        jButton_ADM_buscar = new javax.swing.JButton();
+        jButton_ADM_eliminar = new javax.swing.JButton();
+        jButton_ADM_informe = new javax.swing.JButton();
         jText_ADMbuscar = new javax.swing.JTextField();
         jButton_Plimpiar1 = new javax.swing.JButton();
         jLabel109 = new javax.swing.JLabel();
@@ -939,7 +1012,7 @@ public void CodeudorBuscar(){
         jText_ADM_direccion = new javax.swing.JTextField();
         jLabel112 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable_ADM = new javax.swing.JTable();
         jComboBox1 = new javax.swing.JComboBox();
         jLabel114 = new javax.swing.JLabel();
         jText_ADM_cedpro = new javax.swing.JTextField();
@@ -1815,28 +1888,33 @@ public void CodeudorBuscar(){
         jPanelAdmInm.add(jLabel22);
         jLabel22.setBounds(0, 20, 210, 25);
 
-        jButton_Ibuscar2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton_Ibuscar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514242_Search.png"))); // NOI18N
-        jButton_Ibuscar2.setText("Buscar");
-        jButton_Ibuscar2.addActionListener(new java.awt.event.ActionListener() {
+        jButton_ADM_buscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton_ADM_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514242_Search.png"))); // NOI18N
+        jButton_ADM_buscar.setText("Buscar");
+        jButton_ADM_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Ibuscar2ActionPerformed(evt);
+                jButton_ADM_buscarActionPerformed(evt);
             }
         });
-        jPanelAdmInm.add(jButton_Ibuscar2);
-        jButton_Ibuscar2.setBounds(30, 60, 140, 60);
+        jPanelAdmInm.add(jButton_ADM_buscar);
+        jButton_ADM_buscar.setBounds(30, 60, 140, 60);
 
-        jButton_Ieliminar2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton_Ieliminar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514213_Remove.png"))); // NOI18N
-        jButton_Ieliminar2.setText("Eliminar");
-        jPanelAdmInm.add(jButton_Ieliminar2);
-        jButton_Ieliminar2.setBounds(30, 130, 140, 60);
+        jButton_ADM_eliminar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton_ADM_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514213_Remove.png"))); // NOI18N
+        jButton_ADM_eliminar.setText("Eliminar");
+        jButton_ADM_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ADM_eliminarActionPerformed(evt);
+            }
+        });
+        jPanelAdmInm.add(jButton_ADM_eliminar);
+        jButton_ADM_eliminar.setBounds(30, 130, 140, 60);
 
-        jButton_Iinforme3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton_Iinforme3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514254_Copy v2.png"))); // NOI18N
-        jButton_Iinforme3.setText("Informe");
-        jPanelAdmInm.add(jButton_Iinforme3);
-        jButton_Iinforme3.setBounds(30, 200, 140, 60);
+        jButton_ADM_informe.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton_ADM_informe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514254_Copy v2.png"))); // NOI18N
+        jButton_ADM_informe.setText("Informe");
+        jPanelAdmInm.add(jButton_ADM_informe);
+        jButton_ADM_informe.setBounds(30, 200, 140, 60);
 
         jText_ADMbuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jText_ADMbuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -1891,12 +1969,12 @@ public void CodeudorBuscar(){
         jText_ADM_direccion.setBounds(370, 410, 450, 40);
 
         jLabel112.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel112.setText("Direccion");
+        jLabel112.setText("Direccion Inmueble");
         jPanelAdmInm.add(jLabel112);
         jLabel112.setBounds(230, 410, 160, 40);
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_ADM.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable_ADM.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -1907,12 +1985,12 @@ public void CodeudorBuscar(){
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTable_ADM.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                jTable_ADMMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTable_ADM);
 
         jPanelAdmInm.add(jScrollPane1);
         jScrollPane1.setBounds(230, 80, 610, 130);
@@ -2918,9 +2996,11 @@ public void CodeudorBuscar(){
         Propietariovacio();
     }//GEN-LAST:event_jButton_PlimpiarActionPerformed
 
-    private void jButton_Ibuscar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Ibuscar2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_Ibuscar2ActionPerformed
+    private void jButton_ADM_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ADM_buscarActionPerformed
+        ADMinmueblesedit(verdadero, falso, falso);
+        ADMBTN_iniciales(verdadero, falso, falso, falso);
+        ADM_accion = 1;
+    }//GEN-LAST:event_jButton_ADM_buscarActionPerformed
 
     private void jButton_INMagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_INMagregarActionPerformed
         INMinmueblevacio();
@@ -3086,13 +3166,8 @@ public void CodeudorBuscar(){
     }//GEN-LAST:event_jRadio_INMbancoActionPerformed
 
     private void jCheckBox_INMdisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_INMdisponibleActionPerformed
-        if(jCheckBox_INMdisponible.isSelected()==true){
-            inmdisponible = 1;
-        }
-        else {
-            inmdisponible = 0;
-        }
-        System.out.print(inmdisponible);
+
+        
     }//GEN-LAST:event_jCheckBox_INMdisponibleActionPerformed
 
     private void jText_INM_PROcedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_INM_PROcedulaActionPerformed
@@ -3145,7 +3220,12 @@ public void CodeudorBuscar(){
         conn.establecer_conexion();
         String prueba, codpropietario="";
         int validar = 0, validarpro=0;
-
+            if(jCheckBox_INMdisponible.isSelected()==true){
+                inmdisponible = 1;
+            }
+            else {
+                inmdisponible = 2;
+            }
         switch(INMaccion){
             case 1:
                 
@@ -3290,40 +3370,15 @@ public void CodeudorBuscar(){
                 mensaje = "Escoje una opcion para Buscar";
                 JOptionShowMessage("+1", "", mensaje);
             }else{
-                conn.establecer_conexion();
-                limpiarTabla(jTable1);
-//            System.out.println(ADM_radiobuscar);
                 String campo = ADM_jcombobuscar;
                 String buscar = jText_ADMbuscar.getText().toUpperCase();
-            llenartablaparametros(campo, buscar);
+                llenartablaparametros(campo, buscar);
             }
-//            if(!ADM_radiobuscar.equals("")){
-//                String consulta = "select inm.codigo, inm.direccion, pro.cedula, pro.nombres  "
-//                        + "from propietarios as pro INNER JOIN inmuebles as inm on inm.cod_propietario = pro.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  "
-//                        + "where "+ADM_radiobuscar+" = '"+jText_ADMbuscar.getText().trim().toUpperCase()+"'";
-//                System.out.println(consulta);
-//                ResultSet query = conn.consulta(consulta);
-//                try {
-//                    while(query.next()){
-//                        jText_ADMcodinm.setText(query.getString(1));
-//                        jText_ADMdireccion.setText(query.getString(2));
-//                        jText_ADMcedpro.setText(query.getString(3));
-//                        jText_ADMnompro.setText(query.getString(4));
-//    //                    jText_ADMcedinq.setText(query.getString(inq.codigo));
-//    //                    jText_ADMnominq.setText(query.getString(inm.codigo));
-//                        System.out.println("entro");
-//                    }
-//                } catch (Exception e) {
-//                }
-//            }   
-//            else{
-//                mensaje = "Selecciona un Tipo De Busqueda";
-//                JOptionShowMessage("+1", "center", mensaje);
-//            }
+
     }//GEN-LAST:event_jText_ADMbuscarActionPerformed
 
     private void jButton_Plimpiar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Plimpiar1ActionPerformed
-        limpiarTabla(jTable1);
+        limpiarTabla(jTable_ADM);
     }//GEN-LAST:event_jButton_Plimpiar1ActionPerformed
 
     private void jComboBox_INMregimenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_INMregimenActionPerformed
@@ -3376,23 +3431,56 @@ public void CodeudorBuscar(){
         // TODO add your handling code here:
     }//GEN-LAST:event_jText_INMdireccionActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int row=jTable1.getSelectedRow();
-        jText_ADM_codinm.setText(jTable1.getValueAt(row, 2).toString());
-        jText_ADM_cedpro.setText(jTable1.getValueAt(row, 1).toString());
-        //jText_ADM_codpro.setText(jTable1.getValueAt(row, 3).toString());
-//        jText_ADM_nompro.setText(jTable1.getValueAt(row, 4).toString());
-//        jText_ADM_cedinq.setText(jTable1.getValueAt(row, 5).toString());
-//        jText_ADM_codinq.setText(jTable1.getValueAt(row, 6).toString());
-//        jText_ADM_nominq.setText(jTable1.getValueAt(row, 7).toString());
-//        jText_ADM_direccion.setText(jTable1.getValueAt(row, 8).toString());
-//        jText_ADM_barrio.setText(jTable1.getValueAt(row, 9).toString());
-//        jText_ADM_municipio.setText(jTable1.getValueAt(row, 10).toString());
-//        jText_ADM_diacausacion.setText(jTable1.getValueAt(row, 11).toString());
-//        jText_ADM_regimen.setText(jTable1.getValueAt(row, 12).toString());
-//        jText_ADM_inmdisponible.setText(jTable1.getValueAt(row, 13).toString());
+    private void jTable_ADMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_ADMMouseClicked
+        int row=jTable_ADM.getSelectedRow();
         
-    }//GEN-LAST:event_jTable1MouseClicked
+        jText_ADM_codinm.setText(jTable_ADM.getValueAt(row, 0).toString());
+        jText_ADM_cedpro.setText(jTable_ADM.getValueAt(row, 1).toString());
+        jText_ADM_nompro.setText(jTable_ADM.getValueAt(row, 2).toString());        
+        jText_ADM_direccion.setText(jTable_ADM.getValueAt(row, 3).toString());
+        jText_ADM_barrio.setText(jTable_ADM.getValueAt(row, 4).toString());
+        
+        if(!jText_ADM_codinm.getText().equals("")){
+            String consulta = "select pro.codigo as procodigo, inq.codigo as inqcodigo, inq.cedula as inqcedula,(inq.nombres|| ' ' || inq.primer_apellido || ' ' || inq.segundo_apellido) AS inqnombrecompleto, inm.municipio, inm.dia_causacion, inm.regimen, inm.inmueble_disponible from propietarios as pro inner join  inmuebles as inm on pro.cod_propietario = inm.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  where inm.codigo= '"+jText_ADM_codinm.getText()+"' and arr.estado=1 and inm.estado = 1;";
+            System.out.println(consulta);
+            ResultSet query = conn.consulta(consulta);
+            try {
+                int vinmdisponible = 0;
+                String inmdisponible= "";
+                while (query.next()) {
+                    jText_ADM_codpro.setText(query.getString("procodigo"));        
+                    jText_ADM_cedinq.setText(query.getString("inqcedula"));
+                    jText_ADM_codinq.setText(query.getString("inqcodigo"));
+                    jText_ADM_nominq.setText(query.getString("inqnombrecompleto"));
+                    jText_ADM_municipio.setText(query.getString("municipio"));
+                    jText_ADM_diacausacion.setText(query.getString("dia_causacion"));
+                    jText_ADM_regimen.setText(query.getString("regimen"));
+                    vinmdisponible= (query.getInt("inmueble_disponible"));  
+                    switch (vinmdisponible){
+                        case 1:
+                            jText_ADM_inmdisponible.setText("Disponible");                            
+                            break;
+                        case 2:
+                            jText_ADM_inmdisponible.setText("No Disponible");
+                            break;
+                        default:
+                            jText_ADM_inmdisponible.setText("Error, contacte con soporte tecnico.");
+                            break;                            
+                    }
+                    
+                    //activando el boton eliminar
+                    ADMBTN_iniciales(falso, falso, verdadero, falso);
+                    ADMinmueblesedit(verdadero, falso, verdadero);
+                }                
+            } catch (Exception e) {
+            }
+
+            
+        }
+        
+
+        
+    }//GEN-LAST:event_jTable_ADMMouseClicked
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         switch(jComboBox1.getSelectedIndex()){
@@ -3456,6 +3544,45 @@ public void CodeudorBuscar(){
         // TODO add your handling code here:
     }//GEN-LAST:event_jText_ADM_nomproActionPerformed
 
+    private void jButton_ADM_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ADM_eliminarActionPerformed
+        
+        if(!jText_ADM_codinm.getText().equals("")){
+            jButton_ADM_eliminar.setSelected(true);
+            String select = "select inm.codinmueble, inm.codigo, arr.estado  "
+                    + "from inmuebles as inm inner join arrienda as arr on inm.codinmueble = arr.cod_inmueble "
+                    + "where inm.codigo= '"+jText_ADM_codinm.getText()+"' and arr.estado = 1 and arr.cod_inquilino = 1";
+            System.out.println(select);
+            ResultSet query = conn.consulta(select);
+            int validar = 0;
+            try {
+                while(query.next()){
+                    validar++;
+                    
+                }
+            } catch (Exception e) {
+            }
+            if(validar==0){
+                JOptionShowMessage("+1", "", "Inmuebles en Arriendo, No pueden ser Eliminados.");
+            }else{            
+                int seletedvalue = JOptionPane.showConfirmDialog(rootPane, "Estas Seguro de Eliminar el Inmueble?", "Eliminar Inmueble", JOptionPane.OK_CANCEL_OPTION);
+                if(seletedvalue ==JOptionPane.YES_OPTION ){                                
+                    if(validar==1){
+                        String update = "update inmuebles set estado = 2 where codigo = '"+jText_ADM_codinm.getText()+"'";
+                        if(conn.Dactualizar(update, "Inmueble Eliminado con Exito")==1){
+                            jButton_ADM_eliminar.setSelected(false);
+                            ADMinmueble_vacio();
+                            limpiarTabla(jTable_ADM);
+                        }
+                    }
+                }
+            }
+        }
+        else{
+                JOptionShowMessage("+1", "", "Debes Seleccionar un inmueble para eliminar");
+            }
+            
+    }//GEN-LAST:event_jButton_ADM_eliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -3500,6 +3627,7 @@ public void CodeudorBuscar(){
 
 //Variables Diego
     int admon_estado =0, INMaccion=0, INMcod_propietario=0, inmdisponible=0, INMvalidconsulta=0, Paccion=0, returnquery=0, Pcod_propietario=0, Caccion=0, Ccod_codeudor, Iaccion=0, Icod_Inquilino = 0, INMcod_arrendatario = 0, INMcod_inmueble = 0, INMcod_arrendatarioant = 0, INMcod_propietarioant;
+    int contadorconsulta = 0, ADM_accion=0;    
     String ADM_jcombobuscar = "";
     String INMmetodo_pago = "", mensaje = "" ;
     Boolean verdadero=true;
@@ -3517,6 +3645,9 @@ public void CodeudorBuscar(){
     private javax.swing.ButtonGroup Grupo_INMRecoje;
     private javax.swing.ButtonGroup Grupo_INMincluida;
     private datechooser.beans.DateChooserCombo dateChooserCombo_INMfechaini;
+    private javax.swing.JButton jButton_ADM_buscar;
+    private javax.swing.JButton jButton_ADM_eliminar;
+    private javax.swing.JButton jButton_ADM_informe;
     private javax.swing.JButton jButton_Cagregar;
     private javax.swing.JButton jButton_Cbuscar;
     private javax.swing.JButton jButton_Celiminar;
@@ -3529,12 +3660,9 @@ public void CodeudorBuscar(){
     private javax.swing.JButton jButton_INMmodificar;
     private javax.swing.JButton jButton_Iagregar;
     private javax.swing.JButton jButton_Ibuscar;
-    private javax.swing.JButton jButton_Ibuscar2;
     private javax.swing.JButton jButton_Ieliminar;
-    private javax.swing.JButton jButton_Ieliminar2;
     private javax.swing.JButton jButton_Iguardar;
     private javax.swing.JButton jButton_Iinforme;
-    private javax.swing.JButton jButton_Iinforme3;
     private javax.swing.JButton jButton_Ilimpiar;
     private javax.swing.JButton jButton_Imodificar;
     private javax.swing.JButton jButton_Pagregar;
@@ -3674,7 +3802,7 @@ public void CodeudorBuscar(){
     private javax.swing.JRadioButton jRadio_INMtransferencia;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane5;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable_ADM;
     private javax.swing.JTextField jText_ADM_barrio;
     private javax.swing.JTextField jText_ADM_cedinq;
     private javax.swing.JTextField jText_ADM_cedpro;
