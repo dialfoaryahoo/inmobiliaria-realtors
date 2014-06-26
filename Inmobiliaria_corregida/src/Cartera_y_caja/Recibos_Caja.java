@@ -6,7 +6,11 @@ package Cartera_y_caja;
 
 import inmobiliaria_fase01.Conexion;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -107,6 +111,12 @@ public void buscar_CONCEPTOS(){
             
         }
     }
+
+///////////////////////////////////////////////////
+///////////////7JTABLE
+//////////////////////////////////////////////////
+
+      
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -215,7 +225,7 @@ public void buscar_CONCEPTOS(){
         getContentPane().add(jButton_imprimir);
         jButton_imprimir.setBounds(570, 20, 150, 50);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Detalle Recibo", 3, 0, new java.awt.Font("Segoe UI", 0, 20))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Detalle Recibo", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 20))); // NOI18N
         jPanel1.setLayout(null);
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -227,6 +237,12 @@ public void buscar_CONCEPTOS(){
         jLabel15.setText("Recibo N°");
         jPanel1.add(jLabel15);
         jLabel15.setBounds(10, 20, 80, 40);
+
+        jTextField_concepto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_conceptoActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextField_concepto);
         jTextField_concepto.setBounds(90, 90, 360, 30);
 
@@ -315,7 +331,7 @@ public void buscar_CONCEPTOS(){
         getContentPane().add(jPanel1);
         jPanel1.setBounds(410, 110, 470, 230);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Detalle Persona", 3, 0, new java.awt.Font("Segoe UI", 0, 20))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Detalle Persona", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 20))); // NOI18N
         jPanel2.setLayout(null);
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -324,9 +340,9 @@ public void buscar_CONCEPTOS(){
         jLabel20.setBounds(10, 60, 50, 30);
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel21.setText("Codigo");
+        jLabel21.setText("Cedula/Cod");
         jPanel2.add(jLabel21);
-        jLabel21.setBounds(10, 90, 60, 30);
+        jLabel21.setBounds(10, 90, 80, 30);
 
         jTextField_codigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -334,32 +350,32 @@ public void buscar_CONCEPTOS(){
             }
         });
         jPanel2.add(jTextField_codigo);
-        jTextField_codigo.setBounds(70, 90, 210, 30);
+        jTextField_codigo.setBounds(90, 90, 210, 30);
 
-        jComboBox_destino.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Arrendatario", "Propietario", "Otro" }));
+        jComboBox_destino.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Inquilino", "Propietario", "Otro" }));
         jComboBox_destino.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_destinoItemStateChanged(evt);
             }
         });
         jPanel2.add(jComboBox_destino);
-        jComboBox_destino.setBounds(70, 60, 160, 30);
+        jComboBox_destino.setBounds(90, 60, 160, 30);
         jPanel2.add(jTextField_nombre);
-        jTextField_nombre.setBounds(70, 120, 260, 30);
+        jTextField_nombre.setBounds(90, 120, 260, 30);
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel22.setText("Nombre");
         jPanel2.add(jLabel22);
         jLabel22.setBounds(10, 120, 60, 30);
         jPanel2.add(jTextField_direccion);
-        jTextField_direccion.setBounds(70, 150, 260, 30);
+        jTextField_direccion.setBounds(90, 150, 260, 30);
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel23.setText("Dirección");
         jPanel2.add(jLabel23);
         jLabel23.setBounds(10, 150, 60, 30);
         jPanel2.add(jTextField_saldo);
-        jTextField_saldo.setBounds(70, 180, 260, 30);
+        jTextField_saldo.setBounds(90, 180, 260, 30);
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel24.setText("Saldo");
@@ -421,8 +437,12 @@ botones(false, false, false,true);
     }//GEN-LAST:event_jButton_imprimirActionPerformed
 
     private void jButton_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_confirmarActionPerformed
-       modeloDeMiJTable.addRow(new Object[]{jTextField_codigo.getText(),jComboBox_codigo.getSelectedItem().toString(),"NA",jTextField_concepto.getText(),jTextField_valor.getText(),jComboBox_nit.getSelectedItem()});
+        if (jTextField_concepto.equals("")) {
+            Conexion.JOptionShowMessage("+1", "", "El pago es por concepto de?");
+        }else{
+        modeloDeMiJTable.addRow(new Object[]{jTextField_codigo.getText(),jComboBox_codigo.getSelectedItem().toString(),"NA",jTextField_concepto.getText(),jTextField_valor.getText(),jComboBox_nit.getSelectedItem()});
        jButton_confirmar1.setVisible(true);
+       }
     }//GEN-LAST:event_jButton_confirmarActionPerformed
 
     private void jComboBox_destinoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_destinoItemStateChanged
@@ -430,21 +450,83 @@ botones(false, false, false,true);
     }//GEN-LAST:event_jComboBox_destinoItemStateChanged
 
     private void jTextField_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_codigoActionPerformed
-     if(destino==1){
-        conn.establecer_conexion();
-        String consulta="select nombres, direccion_casa,saldo from inquilinos where codigo='"+jTextField_codigo.getText()+"'";
-        ResultSet n=conn.consulta(consulta);
-        try{
-        while(n.next()){
-        jTextField_nombre.setText(n.getString(1));
-        jTextField_direccion.setText(n.getString(2));
-        jTextField_saldo.setText(n.getString(3));
-        panelrecibo(true);
-        jButton_confirmar.setVisible(true);
+        if(destino==1){
+            conn.establecer_conexion();
+            String datos = jTextField_codigo.getText().toUpperCase();
+            String consulta="";
+
+            if(datos.trim().matches(".*\\D+.*")){
+                System.out.println("NO ES NUMERO O CODIGO");
+                consulta="select nombres, direccion_casa,saldo from inquilinos where codigo='"+jTextField_codigo.getText().toUpperCase()+"'";
+            }
+            else{
+                System.out.println("SI ES NUMERO =D O CEDULA");
+                consulta="select nombres, direccion_casa,saldo from inquilinos where cedula='"+jTextField_codigo.getText().toUpperCase()+"'";        
+            }
+            System.out.println(consulta);
+            ResultSet n=conn.consulta(consulta);
+            try{
+            while(n.next()){
+            jTextField_nombre.setText(n.getString(1));
+            jTextField_direccion.setText(n.getString(2));
+            jTextField_saldo.setText(n.getString(3));
+            panelrecibo(true);
+            jButton_confirmar.setVisible(true);
+            }
+            }
+            catch(Exception e){
+            }
+        }   
+        if(destino==2){
+            conn.establecer_conexion();
+            String datos = jTextField_codigo.getText().toUpperCase();
+            String consulta="";
+
+            if(datos.trim().matches(".*\\D+.*")){
+                consulta="select nombres, direccion_casa,saldo from propietarios where codigo='"+jTextField_codigo.getText().toUpperCase()+"'";
+            }
+            else{
+                consulta="select nombres, direccion_casa,saldo from propietarios where cedula='"+jTextField_codigo.getText().toUpperCase()+"'";        
+            }
+            System.out.println(consulta);
+            ResultSet n=conn.consulta(consulta);
+            try{
+            while(n.next()){
+            jTextField_nombre.setText(n.getString(1));
+            jTextField_direccion.setText(n.getString(2));
+            jTextField_saldo.setText(n.getString(3));
+            panelrecibo(true);
+            jButton_confirmar.setVisible(true);
+            }
+            }
+            catch(Exception e){
+            }
         }
-        }
-        catch(Exception e){}
-     }   
+        if(destino==3){
+            conn.establecer_conexion();
+            
+            String datos = jTextField_codigo.getText().toUpperCase();
+            String consulta="select nombre_completo, direccion from otros_usuarios";
+            if(datos.trim().matches(".*\\D+.*")){
+                consulta="select nombres, direccion_casa,saldo from propietarios where codigo='"+jTextField_codigo.getText().toUpperCase()+"'";
+            }
+            else{
+                consulta="select nombres, direccion_casa,saldo from propietarios where cedula='"+jTextField_codigo.getText().toUpperCase()+"'";        
+            }
+            System.out.println(consulta);
+            ResultSet n=conn.consulta(consulta);
+            try{
+            while(n.next()){
+            jTextField_nombre.setText(n.getString(1));
+            jTextField_direccion.setText(n.getString(2));
+            jTextField_saldo.setText(n.getString(3));
+            panelrecibo(true);
+            jButton_confirmar.setVisible(true);
+            }
+            }
+            catch(Exception e){
+            }
+     }        
     }//GEN-LAST:event_jTextField_codigoActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -452,8 +534,25 @@ botones(false, false, false,true);
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton_confirmar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_confirmar1ActionPerformed
-        // TODO add your handling code here:
+        conn.establecer_conexion();
+        String insert="insert into factura_caja (tipo_factura, tipo_usuario, cod_usuario, tipo_pago, ncheque) values (caja, '"+jComboBox_destino.getSelectedItem()+"', 'A123', 'efectivo', '')";
+        System.out.println(insert);
+
+        System.out.println(modeloDeMiJTable.getRowCount()-1);
+        for(int i=0;i<modeloDeMiJTable.getRowCount();i++){
+            System.out.println(i);
+            String update="update articulo set nombre='"+modeloDeMiJTable.getValueAt(i, 1).toString().toUpperCase()+"', precio="+modeloDeMiJTable.getValueAt(i, 2)+", cantidad="+modeloDeMiJTable.getValueAt(i, 3)+" where id="+modeloDeMiJTable.getValueAt(i, 0);
+            //conn.actualizar(update);
+            update="update articulo set nombre="+modeloDeMiJTable.getValueAt(i, 1).toString().toUpperCase()+", precio="+modeloDeMiJTable.getValueAt(i, 2)+", cantidad="+modeloDeMiJTable.getValueAt(i, 3)+" where id="+modeloDeMiJTable.getValueAt(i, 0);
+            //String insert="insert into sentenciasql (sentencia,fecha) values ('"+update+"',localtimestamp)";
+            conn.insertar_venta(insert);
+        }        
+        
     }//GEN-LAST:event_jButton_confirmar1ActionPerformed
+
+    private void jTextField_conceptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_conceptoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_conceptoActionPerformed
 
     /**
      * @param args the command line arguments

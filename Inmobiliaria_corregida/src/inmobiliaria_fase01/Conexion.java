@@ -1,6 +1,7 @@
 
 package inmobiliaria_fase01;
 import java.awt.Dialog;
+import java.net.ConnectException;
 import java.sql.*;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -539,6 +540,8 @@ public class Conexion{
         //fin modificacion
         return;
     }     
+    
+ 
     
     
      //////////////////////////
