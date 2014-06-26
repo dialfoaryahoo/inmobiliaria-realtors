@@ -6,6 +6,11 @@ package Cartera_y_caja;
 
 import inmobiliaria_fase01.Conexion;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -23,11 +28,14 @@ public class Conceptos extends javax.swing.JDialog {
         initComponents();
         setSize(750,500);
         setLocationRelativeTo(rootPane);
+        setTitle("Conceptos");
         conn.establecer_conexion();
+        buscar_operador();
         modeloDeMiJTable = new DefaultTableModel() { 
         @Override 
         public Class getColumnClass(int c) { 
         return getValueAt(0, c).getClass(); 
+        
         } 
 
         @Override 
@@ -63,7 +71,7 @@ public class Conceptos extends javax.swing.JDialog {
    private void inicializar(Boolean a, Boolean b){
        jTextField_cod.setEnabled(a);
        jTextField_nombre.setEnabled(b);
-       jComboBox1.setEnabled(b);
+       jCombo_contable.setEnabled(b);
    }
        public void llenartabla(){
 
@@ -78,8 +86,44 @@ public class Conceptos extends javax.swing.JDialog {
         }
         catch(Exception e){}
     }
+       
+       public void combo(){
+       //limpio el combobox
+        jCombo_contable.removeAllItems();
+           try {
+               conn.establecer_conexion();
+                String consulta = "select detalle_cuenta from cuentas_contables";
+                ResultSet query = conn.consulta(consulta);
+                while(query.next()){
+                jCombo_contable.addItem(query.getObject("detalle_cuenta"));
+                }
+                
+               
+           } catch (Exception e) {
+               JOptionPane.showMessageDialog(null,"Error sql no se pueden leer datos");
+           }
+       }
 
-
+       
+    public void buscar_operador(){
+        Vector cliente = new Vector();
+        System.out.println("paso por aqui");
+        try{
+         conn.establecer_conexion();
+         String sql="select nombre from operador";
+         ResultSet resultado = conn.consulta(sql);
+         cliente.addElement("Seleccione un Operador");
+         while(resultado.next()){
+             cliente.addElement(resultado.getString(1));
+         }
+        jCombo_contable.setModel(new javax.swing.DefaultComboBoxModel(cliente));
+        jCombo_contable.setModel(new javax.swing.DefaultComboBoxModel(cliente));
+        //jPanel1.add(jComboBox_operador);
+        }catch(Exception e){
+            
+        }
+        //jTable1.setDefaultRenderer (Object.class, new Renderito());
+    }       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,7 +143,7 @@ public class Conceptos extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jTextField_nombre = new javax.swing.JTextField();
         jTextField_cod = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox();
+        jCombo_contable = new javax.swing.JComboBox();
         jButton_confirmar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -161,9 +205,19 @@ public class Conceptos extends javax.swing.JDialog {
         getContentPane().add(jTextField_cod);
         jTextField_cod.setBounds(510, 110, 170, 30);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione Codigo" }));
-        getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(540, 190, 140, 30);
+        jCombo_contable.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione Codigo" }));
+        jCombo_contable.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCombo_contableItemStateChanged(evt);
+            }
+        });
+        jCombo_contable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCombo_contableActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jCombo_contable);
+        jCombo_contable.setBounds(540, 190, 140, 30);
 
         jButton_confirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirm.png"))); // NOI18N
         jButton_confirmar.setText("sin texto");
@@ -227,7 +281,7 @@ public class Conceptos extends javax.swing.JDialog {
 
     private void jButton_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_confirmarActionPerformed
         if(jButton_confirmar.getText().equals("GUARDAR")){
-        String insrt="insert into conceptos (nombRes,cod_referencia) values ('"+jTextField_nombre.getText()+"','"+jComboBox1.getSelectedItem()+"')";
+        String insrt="insert into conceptos (nombRes,cod_referencia) values ('"+jTextField_nombre.getText()+"','"+jCombo_contable.getSelectedItem()+"')";
         conn.insertar(insrt);
         }else if(jButton_confirmar.getText().equals("ELIMINAR")){
             int opcion= JOptionPane.showConfirmDialog(rootPane,"SEGURO DESEA ELIMINAR ESTE CODIGO?","ADVERTENCIA",JOptionPane.OK_CANCEL_OPTION);
@@ -237,6 +291,14 @@ public class Conceptos extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_jButton_confirmarActionPerformed
+
+    private void jCombo_contableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_contableActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCombo_contableActionPerformed
+
+    private void jCombo_contableItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCombo_contableItemStateChanged
+
+    }//GEN-LAST:event_jCombo_contableItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -249,7 +311,7 @@ public class Conceptos extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton_confirmar;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jCombo_contable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

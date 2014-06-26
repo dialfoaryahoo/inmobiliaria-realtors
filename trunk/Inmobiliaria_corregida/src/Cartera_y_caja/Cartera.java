@@ -2290,6 +2290,11 @@ public void CodeudorBuscar(){
         jLabel39.setBounds(30, 210, 70, 30);
 
         jText_INMcanon.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jText_INMcanon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_INMcanonActionPerformed(evt);
+            }
+        });
         jText_INMcanon.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jText_INMcanonKeyTyped(evt);
@@ -2299,6 +2304,11 @@ public void CodeudorBuscar(){
         jText_INMcanon.setBounds(100, 210, 170, 30);
 
         jText_INMadmon.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jText_INMadmon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_INMadmonActionPerformed(evt);
+            }
+        });
         jText_INMadmon.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jText_INMadmonKeyTyped(evt);
@@ -3582,6 +3592,14 @@ public void CodeudorBuscar(){
             }
             
     }//GEN-LAST:event_jButton_ADM_eliminarActionPerformed
+
+    private void jText_INMcanonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_INMcanonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_INMcanonActionPerformed
+
+    private void jText_INMadmonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_INMadmonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_INMadmonActionPerformed
 
     /**
      * @param args the command line arguments

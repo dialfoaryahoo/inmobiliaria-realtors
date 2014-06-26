@@ -6,7 +6,15 @@ package Cartera_y_caja;
 
 import inmobiliaria_fase01.Conexion;
 import inmobiliaria_fase01.Pantalla_Inicial;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
 /**
@@ -58,6 +66,7 @@ public class Index extends javax.swing.JDialog {
         jButton14 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
+        jButton20 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -78,25 +87,25 @@ public class Index extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(20, 130, 140, 40);
+        jButton1.setBounds(20, 90, 140, 40);
 
-        jButton3.setText("Tablas Basicas");
+        jButton3.setText("Reportes ");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton3);
-        jButton3.setBounds(20, 50, 140, 40);
+        jButton3.setBounds(20, 130, 140, 40);
 
-        jButton19.setText("Cartera");
+        jButton19.setText("Tablas Basicas");
         jButton19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton19ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton19);
-        jButton19.setBounds(20, 90, 140, 40);
+        jButton19.setBounds(20, 50, 140, 40);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(30, 30, 180, 410);
@@ -157,6 +166,11 @@ public class Index extends javax.swing.JDialog {
         jButton4.setBounds(20, 170, 140, 40);
 
         jButton9.setText("Facturacion");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton9);
         jButton9.setBounds(20, 90, 140, 40);
 
@@ -180,9 +194,14 @@ public class Index extends javax.swing.JDialog {
         jPanel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel4.setLayout(null);
 
-        jButton8.setText("Facturas");
+        jButton8.setText("Recibos de Caja");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton8);
-        jButton8.setBounds(20, 250, 140, 40);
+        jButton8.setBounds(20, 290, 140, 40);
 
         jButton12.setText("Ingresos");
         jPanel4.add(jButton12);
@@ -203,6 +222,15 @@ public class Index extends javax.swing.JDialog {
         jButton16.setText("Directorio");
         jPanel4.add(jButton16);
         jButton16.setBounds(20, 210, 140, 40);
+
+        jButton20.setText("Facturas");
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton20);
+        jButton20.setBounds(20, 250, 140, 40);
 
         getContentPane().add(jPanel4);
         jPanel4.setBounds(690, 30, 180, 410);
@@ -309,7 +337,23 @@ public class Index extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Conexion conn = new Conexion();
+        conn.establecer_conexion();
         
+        String path="D:/Proyecto/Inmobiliaria_corregida/src/Reportes/report1.jasper";
+        JasperReport jr = null;
+        try {
+            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint jp = JasperFillManager.fillReport(jr,null,conn.establecer_conexion());
+            JasperViewer jv = new JasperViewer(jp);
+            jv.setVisible(true);
+            jv.setTitle(path);
+            
+            
+            
+        } catch (JRException ex) {
+            Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
@@ -321,6 +365,24 @@ public class Index extends javax.swing.JDialog {
             }
         });        
     }//GEN-LAST:event_jButton19ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+                Conexion.dialog();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Informes_Recibos_Caja dialog = new Informes_Recibos_Caja(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton20ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -339,6 +401,7 @@ public class Index extends javax.swing.JDialog {
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

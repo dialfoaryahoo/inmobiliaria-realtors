@@ -74,8 +74,8 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
             Conexion.dialog();
             java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //Index dialog = new Index(new javax.swing.JFrame(), true);
-                  Cartera dialog = new Cartera(new javax.swing.JFrame(), true);
+                Index dialog = new Index(new javax.swing.JFrame(), true);
+                  //Cartera dialog = new Cartera(new javax.swing.JFrame(), true);
                 
                 dialog.setVisible(true);
             }
