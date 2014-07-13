@@ -71,6 +71,10 @@ public class Crear_Plan extends javax.swing.JDialog {
         }catch(Exception e){
             
         }
+        jTextField_costominutos.setEnabled(false);
+            
+        jTextField_vlrmincliente.setEnabled(false);
+        jTextField_utilidadplan.setEnabled(false);
     }
     public void llenartabla(){
 
@@ -87,6 +91,13 @@ public class Crear_Plan extends javax.swing.JDialog {
         }
         catch(Exception e){}
         jTextField_cant.setText(String.valueOf(jTable1.getRowCount()));
+    }
+    public void limpiartabla(){
+              DefaultTableModel modelo=(DefaultTableModel) jTable1.getModel();
+            int filas=jTable1.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                modelo.removeRow(0);
+              }
     }
     
     /**
@@ -111,10 +122,6 @@ public class Crear_Plan extends javax.swing.JDialog {
         jTextField_nminutos = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jTextField_costominutos = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField_utilidadmin = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField_tipo = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jTextField_utilidadplan = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -134,7 +141,7 @@ public class Crear_Plan extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -162,102 +169,94 @@ public class Crear_Plan extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Nombre Plan");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(10, 50, 190, 30);
+        jLabel3.setBounds(10, 50, 130, 30);
 
         jTextField_nombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.add(jTextField_nombre);
-        jTextField_nombre.setBounds(140, 50, 420, 30);
+        jTextField_nombre.setBounds(140, 50, 460, 30);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setText("Costo Plan");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(10, 80, 240, 30);
+        jLabel6.setBounds(10, 110, 130, 30);
 
         jTextField_costoplan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.add(jTextField_costoplan);
-        jTextField_costoplan.setBounds(140, 80, 140, 30);
+        jTextField_costoplan.setBounds(140, 110, 140, 30);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Operador");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(600, 50, 200, 30);
+        jLabel1.setBounds(10, 80, 180, 30);
 
         jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBox1);
-        jComboBox1.setBounds(720, 50, 210, 30);
+        jComboBox1.setBounds(140, 80, 460, 30);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setText("N° Minutos");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(10, 110, 240, 30);
+        jLabel7.setBounds(10, 140, 130, 30);
 
         jTextField_nminutos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField_nminutos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_nminutosFocusLost(evt);
+            }
+        });
         jPanel1.add(jTextField_nminutos);
-        jTextField_nminutos.setBounds(140, 110, 140, 30);
+        jTextField_nminutos.setBounds(140, 140, 140, 30);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel8.setText("Costo Minutos");
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(290, 80, 230, 30);
+        jLabel8.setBounds(640, 80, 140, 30);
 
         jTextField_costominutos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.add(jTextField_costominutos);
-        jTextField_costominutos.setBounds(430, 80, 130, 30);
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel9.setText("Utilidad/Min");
-        jPanel1.add(jLabel9);
-        jLabel9.setBounds(290, 110, 230, 30);
-
-        jTextField_utilidadmin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPanel1.add(jTextField_utilidadmin);
-        jTextField_utilidadmin.setBounds(430, 110, 130, 30);
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setText("Tipo");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(600, 80, 200, 30);
-
-        jTextField_tipo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPanel1.add(jTextField_tipo);
-        jTextField_tipo.setBounds(790, 80, 140, 30);
+        jTextField_costominutos.setBounds(780, 80, 130, 30);
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel15.setText("Utilidad/Plan");
         jPanel1.add(jLabel15);
-        jLabel15.setBounds(600, 110, 230, 30);
+        jLabel15.setBounds(640, 50, 140, 30);
 
         jTextField_utilidadplan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.add(jTextField_utilidadplan);
-        jTextField_utilidadplan.setBounds(790, 110, 140, 30);
+        jTextField_utilidadplan.setBounds(780, 50, 130, 30);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel10.setText("Vlr Plan Cliente");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(600, 140, 240, 30);
+        jLabel10.setBounds(320, 110, 150, 30);
 
         jTextField_vlrplancliente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField_vlrplancliente.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_vlrplanclienteFocusLost(evt);
+            }
+        });
         jPanel1.add(jTextField_vlrplancliente);
-        jTextField_vlrplancliente.setBounds(790, 140, 140, 30);
+        jTextField_vlrplancliente.setBounds(470, 110, 130, 30);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel11.setText("Vlr Min Cliente");
         jPanel1.add(jLabel11);
-        jLabel11.setBounds(600, 170, 240, 30);
+        jLabel11.setBounds(640, 110, 140, 30);
 
         jTextField_vlrmincliente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.add(jTextField_vlrmincliente);
-        jTextField_vlrmincliente.setBounds(790, 170, 140, 30);
+        jTextField_vlrmincliente.setBounds(780, 110, 130, 30);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel12.setText("Min Adicional");
         jPanel1.add(jLabel12);
-        jLabel12.setBounds(290, 140, 230, 30);
+        jLabel12.setBounds(330, 140, 140, 30);
 
         jTextField_minadicional.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.add(jTextField_minadicional);
-        jTextField_minadicional.setBounds(430, 140, 130, 30);
+        jTextField_minadicional.setBounds(470, 140, 130, 30);
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396849974_trash yellow.png"))); // NOI18N
@@ -268,7 +267,7 @@ public class Crear_Plan extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jButton3);
-        jButton3.setBounds(20, 170, 160, 40);
+        jButton3.setBounds(760, 160, 160, 40);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(10, 40, 970, 230);
@@ -344,9 +343,9 @@ public class Crear_Plan extends javax.swing.JDialog {
      jTextField_costominutos.setText(null);
      jTextField_costoplan.setText(null);
      jTextField_minadicional.setText(null);
-     jTextField_tipo.setText(null);
+
      jTextField_nminutos.setText(null);
-     jTextField_utilidadmin.setText(null);
+
      jTextField_utilidadplan.setText(null);
      jTextField_vlrmincliente.setText(null);
      jTextField_vlrplancliente.setText(null);
@@ -359,28 +358,29 @@ public class Crear_Plan extends javax.swing.JDialog {
      jTextField_costominutos.setText(jTable1.getValueAt(row, 4).toString());
      jTextField_costoplan.setText(jTable1.getValueAt(row, 2).toString());
      jTextField_minadicional.setText(null);
-     jTextField_tipo.setText(null);
+
      jTextField_nminutos.setText(jTable1.getValueAt(row, 3).toString());
-     jTextField_utilidadmin.setText(null);
+
      jTextField_utilidadplan.setText(null);
      jTextField_vlrmincliente.setText(jTable1.getValueAt(row, 6).toString());
      jTextField_vlrplancliente.setText(jTable1.getValueAt(row, 5).toString());
      jComboBox1.setSelectedItem(jTable1.getValueAt(row, 1).toString());
-     jTextField_utilidadmin.setText("NA");
+
      jTextField_minadicional.setText("NA");
-     jTextField_tipo.setText("NA");
+
      jTextField_utilidadplan.setText("NA");
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
      if(jComboBox1.getSelectedIndex()!=0){
-    Object[] datos = {jTextField_nombre.getText(),jTextField_costominutos.getText(),jTextField_costoplan.getText(),jTextField_minadicional.getText(),jTextField_nminutos.getText(),jTextField_tipo.getText(),jTextField_utilidadmin.getText(),jTextField_utilidadplan.getText(),jTextField_vlrmincliente.getText(),jTextField_vlrplancliente.getText(),}; 
+    Object[] datos = {jTextField_nombre.getText(),jTextField_costominutos.getText(),jTextField_costoplan.getText(),jTextField_minadicional.getText(),jTextField_nminutos.getText(),jTextField_utilidadplan.getText(),jTextField_vlrmincliente.getText(),jTextField_vlrplancliente.getText(),}; 
     boolean seguir=Conexion.validar(datos);
     if(seguir){
         String insertar="insert into plan (nombre,operador,valor,minutos,costomin,venta,vlrmincli,estado) values ('"+jTextField_nombre.getText()+"',(select id from operador where nombre='"+jComboBox1.getSelectedItem()+"'),"+jTextField_costoplan.getText()+","+jTextField_nminutos.getText()+","+jTextField_costominutos.getText()+","+jTextField_vlrplancliente.getText()+","+jTextField_vlrmincliente.getText()+",1)";
         System.out.println(insertar);
         conn.insertar(insertar);
-        
+        limpiartabla();
+        llenartabla();
     }
     }else{
         Conexion.JOptionShowMessage("+1", null, "DEBE SELECCIONAR UN OPERADOR");
@@ -390,6 +390,22 @@ public class Crear_Plan extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField_nminutosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_nminutosFocusLost
+        try{ int vlrm=Integer.parseInt(jTextField_costoplan.getText())/Integer.parseInt(jTextField_nminutos.getText());
+            jTextField_costominutos.setText(""+vlrm);
+            vlrm=Integer.parseInt(jTextField_vlrplancliente.getText())/Integer.parseInt(jTextField_nminutos.getText());
+            jTextField_vlrmincliente.setText(""+vlrm);
+        }
+        catch(Exception e){}
+    }//GEN-LAST:event_jTextField_nminutosFocusLost
+
+    private void jTextField_vlrplanclienteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_vlrplanclienteFocusLost
+        try{ int vlrm=-1*(Integer.parseInt(jTextField_costoplan.getText())-Integer.parseInt(jTextField_vlrplancliente.getText()));
+            jTextField_utilidadplan.setText(""+vlrm);
+        }
+        catch(Exception e){}
+    }//GEN-LAST:event_jTextField_vlrplanclienteFocusLost
 
     /**
      * @param args the command line arguments
@@ -408,12 +424,10 @@ public class Crear_Plan extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
@@ -423,8 +437,6 @@ public class Crear_Plan extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField_minadicional;
     private javax.swing.JTextField jTextField_nminutos;
     private javax.swing.JTextField jTextField_nombre;
-    private javax.swing.JTextField jTextField_tipo;
-    private javax.swing.JTextField jTextField_utilidadmin;
     private javax.swing.JTextField jTextField_utilidadplan;
     private javax.swing.JTextField jTextField_vlrmincliente;
     private javax.swing.JTextField jTextField_vlrplancliente;

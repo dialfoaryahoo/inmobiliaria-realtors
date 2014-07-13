@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Nuevo_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a5ff95a9-f7c9-442e-94a3-9ca4c953f6b9">
+	<property name="ireport.zoom" value="1.6105100000000012"/>
+	<property name="ireport.x" value="86"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="559422b5-84f0-44f3-9a3b-faf7be3f867d"/>
+	<parameter name="NOMBRE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FECHA" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select simcard.nlinea, simcard.saldo, simcard.corte, simcard.min, simcard.serial from simcard,clientes,asignacion where clientes.cod_cliente=asignacion.cod_cliente and asignacion.cod_simcard=simcard.cod_simcards and clientes.nombrecompleto=$P{NOMBRE}AND asignacion.fecha::DATE=$P{FECHA}]]>
+	</queryString>
+	<field name="nlinea" class="java.lang.String"/>
+	<field name="saldo" class="java.math.BigDecimal"/>
+	<field name="corte" class="java.lang.String"/>
+	<field name="min" class="java.math.BigDecimal"/>
+	<field name="serial" class="java.lang.String"/>
+	<title>
+		<band height="50">
+			<staticText>
+				<reportElement x="13" y="0" width="532" height="33" uuid="597734a5-9e46-4ea7-be02-c61041d3e10d"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTA: ME HAGO RESPONSABE DE LAS LLAMADAS INTERNACIONES Y MENSAJES DE TEXTO QUE SALGAN DE ESTAS LINEAS MIENTRAS LAS TENGA EN CALIDAD DE ALQUILER, EL VALOR DEL ALQUILER CORRESPONDE A GASTOS DE PAPELERIA.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="33" width="490" height="17" uuid="18f6081c-c89f-48ba-9ed8-2ce033a7ef75"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RELACION SIMCARD]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement x="31" y="0" width="100" height="18" uuid="038fd763-549a-43de-b133-70392a4354a3"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° LINEA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="131" y="0" width="100" height="18" uuid="362b1725-8292-4304-8f97-e165044cabfe"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="231" y="0" width="100" height="18" uuid="f9cf2aab-7097-45ac-8e87-6dc487761ee5"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CORTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="331" y="0" width="100" height="18" uuid="7dad9e99-43aa-491a-9473-42fc4fc93e3d"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="413" y="0" width="100" height="18" uuid="c0c17241-7c8c-44c5-8a5f-c13dfd47f5ec"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERIAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="31" y="0" width="100" height="12" uuid="ea33083d-7673-4cc0-8f9f-a1fb9e15ce1d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nlinea}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="131" y="0" width="100" height="12" uuid="152a4fe3-6c6f-499b-98f9-c611965df7ef"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="242" y="0" width="79" height="12" uuid="0169f004-3144-4622-a318-3cf69c748796"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{corte}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="353" y="0" width="60" height="12" uuid="fd2a7dd0-10e6-4936-b369-373ca9a9655c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{min}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="0" width="100" height="12" uuid="c0d42554-2750-46f9-a213-2fb287ac7910"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{serial}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="131" y="0" width="1" height="12" uuid="cc76cd64-458d-404c-92e5-dda7fad3e16e"/>
+			</line>
+			<line>
+				<reportElement x="321" y="0" width="1" height="12" uuid="11cfa609-39ed-4d5b-bf97-b3f6edd686ed"/>
+			</line>
+			<line>
+				<reportElement x="231" y="0" width="1" height="12" uuid="f015bb23-3550-4312-956c-00f6fd1b9b83"/>
+			</line>
+			<line>
+				<reportElement x="412" y="0" width="1" height="12" uuid="72b0374e-3df7-48b0-bcb0-a2760bdea0e3"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

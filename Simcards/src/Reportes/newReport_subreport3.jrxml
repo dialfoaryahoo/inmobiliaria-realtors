@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="newReport_subreport3" language="groovy" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4d444a9e-7b0f-449a-bc3e-4a5900c2d0d6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nombre" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{NOMBRE_COMPLETO}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select simcard.nlinea, simcard.saldo, simcard.corte, simcard.min, simcard.serial from simcard,clientes,asignacion where clientes.cod_cliente=asignacion.cod_cliente and asignacion.cod_simcard=simcard.cod_simcards and clientes.nombrecompleto=$P{nombre}]]>
+	</queryString>
+	<field name="nlinea" class="java.lang.String"/>
+	<field name="saldo" class="java.math.BigDecimal"/>
+	<field name="corte" class="java.lang.String"/>
+	<field name="min" class="java.math.BigDecimal"/>
+	<field name="serial" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="16"/>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement uuid="123d9e8f-5f8e-4d4a-886e-f17d21676da8" x="-20" y="20" width="595" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement uuid="686ffa4f-a8c1-4610-8aa1-8cf11cc9aa42" mode="Opaque" x="0" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[nlinea]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9ba6bd22-142a-4809-bbd2-263fb9d88f47" mode="Opaque" x="111" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[saldo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fe6778f7-716f-4888-be8e-dfc617d08865" mode="Opaque" x="222" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[corte]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b0d2ee57-abf6-4e46-ad6c-d9b2d101049f" mode="Opaque" x="333" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[min]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cc4df03c-3c41-4d0b-b453-653cb4c6146d" mode="Opaque" x="444" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[serial]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement uuid="9c0119a1-1ac7-4207-9631-8775febe31fa" positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="268e736e-2a75-46dc-be30-1e7c4c267311" x="0" y="0" width="111" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nlinea}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="cd9e31ef-ec42-4516-aab4-0e640ff2a5b9" x="111" y="0" width="111" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="e7c4eef2-b328-4beb-a9b0-2e152f263c49" x="222" y="0" width="111" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{corte}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="d2f87350-4913-47d4-9782-25c258dc1d36" x="333" y="0" width="111" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{min}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0bde6828-c7eb-49ae-aad2-047178207cae" x="444" y="0" width="111" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{serial}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement uuid="0939b62e-77c2-4918-9079-9a2e5669dcf9" mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="588eb7b2-437e-462a-b54e-14568a8d8240" mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="2e563525-bf0f-4af0-a200-e343c1512c32" x="0" y="4" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

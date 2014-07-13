@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Nuevo" language="groovy" pageWidth="595" pageHeight="411" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c898161e-20c0-4d67-b2d2-8506203c6521">
+	<property name="ireport.zoom" value="0.8264462809917359"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="NOMBRE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FECHA" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM CLIENTES WHERE NOMBRECOMPLETO=$P{NOMBRE}]]>
+	</queryString>
+	<field name="cod_cliente" class="java.lang.Integer"/>
+	<field name="cedula" class="java.math.BigDecimal"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="primero_apellido" class="java.lang.String"/>
+	<field name="segundo_apellido" class="java.lang.String"/>
+	<field name="direccion" class="java.lang.String"/>
+	<field name="ciudad" class="java.lang.String"/>
+	<field name="barrio" class="java.lang.String"/>
+	<field name="fijo" class="java.lang.String"/>
+	<field name="celular" class="java.lang.String"/>
+	<field name="credito" class="java.math.BigDecimal"/>
+	<field name="cupo_max" class="java.math.BigDecimal"/>
+	<field name="cartera" class="java.math.BigDecimal"/>
+	<field name="estado_cliente" class="java.math.BigDecimal"/>
+	<field name="fecha_reg" class="java.sql.Timestamp"/>
+	<field name="nombrecompleto" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<staticText>
+				<reportElement x="298" y="0" width="257" height="20" uuid="0c694ce4-0665-44ff-bbdb-0a18dfa5a5c2"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FORMATO DE ACEPTACION Y RESPONSABILIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="213" height="20" uuid="16ba62e5-383d-4b2f-b874-9721cfa3da82"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DECLARACION DE RESPONSABILIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="18" height="20" uuid="2d4a7bfa-a970-417a-a6eb-2795e6bbfe38"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[YO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="18" y="31" width="166" height="19" uuid="07fcd571-0711-46fe-9aaf-25f1497b3bac"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrecompleto}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="184" y="30" width="245" height="20" uuid="4d8df066-5b71-42a8-ba49-fc9254830e6b"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[IDENTIFICADO CON CEDULA DE CIUDADANIA NO.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="429" y="30" width="126" height="20" uuid="fddf721d-0067-4554-a60b-37cb3c86bd9e"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="50" width="555" height="59" uuid="75ad7977-47ca-4ca5-8cab-fe53b1e5891a"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[SOY RESPONSABLE DE LAS LLAMADAS DE LAS LINEAS QUE SE ESPECIFICAN, HACIENDO EL USO DEBIDO PARA LO CUAL LAS ALQUILO. IGUALMENTE RESPONDO POR LOS MENSAJES DE TEXTO, LLAMADAS INTERNACIONALES O CUALQUIER OTRO GRAVAMEN ADICIONAL AL PLAN, LOS CUALES DEBEN SER CANCELADOR DE MANERA ADICIONAL, EXIMO A LA EMPRESA A LA CUAL PERTENECEN LAS LINEAS DE CUALQUIER RESPONSABILIDAD, YA SEA PENAL, CIVIL O COMERCIAL DE CUALQUIER PROBLEMA QUE SE PRESENTE CON LLAMADAS O MENSAJES DE TEXTO REALIZADOS DESDE DICHAS LINEAS DESDE LA FECHA.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="109" width="114" height="14" uuid="07f1e2f2-d3e7-4b83-bbcb-291b858048df"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[FECHA DE LA ENTREGA]]></text>
+			</staticText>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
+				<reportElement x="114" y="109" width="147" height="14" uuid="6ec29a78-1e83-45ac-a2f0-3622a9640791"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="261" y="109" width="114" height="14" uuid="5bdfe937-a456-4239-9a71-2b98f447987e"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[DIRECCION]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="375" y="109" width="100" height="14" uuid="7d63e439-9c18-472d-9fb1-44a6d0ccd941"/>
+				<textFieldExpression><![CDATA[$F{direccion}.toUpperCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="105" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="5" width="544" height="100" uuid="e4584efd-6183-49e4-b685-1efd025e4c88"/>
+				<subreportParameter name="NOMBRE">
+					<subreportParameterExpression><![CDATA[$P{NOMBRE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FECHA">
+					<subreportParameterExpression><![CDATA[$P{FECHA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["D:\\Proyecto\\Simcards\\src\\Reportes\\NuevoSUB1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="80" splitType="Stretch">
+			<line>
+				<reportElement x="18" y="29" width="164" height="1" uuid="420e6400-2a3b-44df-b9f4-efaef6ba0859"/>
+			</line>
+			<staticText>
+				<reportElement x="18" y="30" width="221" height="16" uuid="441cd4ea-8500-427f-8505-059438442316"/>
+				<text><![CDATA[FIRMO ACEPTANDO EN CONFORMIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="46" width="221" height="27" uuid="f8fad2ac-3fbf-4b56-a7f3-7f7cd3d7a463"/>
+				<text><![CDATA[C.C. No. _______________________________ TEL:   ______________________________]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="286" y="0" width="69" height="80" uuid="e6847431-4e8e-49ec-9aa3-e36cc038b6a0"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="375" y="15" width="110" height="15" uuid="c05a98f8-5e32-40e4-9c62-a669a33f1036"/>
+				<text><![CDATA[DIRECCION DE USO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="31" width="110" height="15" uuid="659c39a0-77a4-4e6b-b981-b09b7eba6ac8"/>
+				<text><![CDATA[TELEFONO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="46" width="110" height="15" uuid="c4ffecc6-05c2-4d58-919a-b3ae39786a26"/>
+				<text><![CDATA[CIUDAD:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>
