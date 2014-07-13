@@ -63,7 +63,13 @@ public class Crear_Operador extends javax.swing.JDialog {
         }
         catch(Exception e){}
     }
-
+public void limpiartabla(){
+              DefaultTableModel modelo=(DefaultTableModel) jTable1.getModel();
+            int filas=jTable1.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                modelo.removeRow(0);
+              }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,7 +123,7 @@ public class Crear_Operador extends javax.swing.JDialog {
         getContentPane().add(jButton1);
         jButton1.setBounds(470, 20, 160, 40);
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -172,6 +178,7 @@ public class Crear_Operador extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     String insert="insert into operador (nombre,consecutivo) values ('"+jTextField_nombre.getText().toUpperCase()+"',"+jTextField_consecutivo.getText()+")";
     conn.insertar(insert);
+    limpiartabla();
     llenartabla();
     }//GEN-LAST:event_jButton1ActionPerformed
 

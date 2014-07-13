@@ -50,8 +50,7 @@ public class Datos_Empresa extends javax.swing.JDialog {
         jTextField_Enit.setText("");
         jTextField_Edireccion.setText("");
         jTextField_Etelefono.setText("");
-        jTextField_Eciudad.setText("");
-        jTextField_Epais.setText("");
+
         jTextField_Eemail.setText("");
         }
     
@@ -66,8 +65,7 @@ public class Datos_Empresa extends javax.swing.JDialog {
                     jTextField_Enit.setText(query.getString("nit"));
                     jTextField_Edireccion.setText(query.getString("direccion"));
                     jTextField_Etelefono.setText(query.getString("telefono"));
-                    jTextField_Eciudad.setText(query.getString("ciudad"));
-                    jTextField_Epais.setText(query.getString("pais"));
+
                     jTextField_Eemail.setText(query.getString("email"));                    
                 }
             } catch (Exception e) {
@@ -81,33 +79,26 @@ public class Datos_Empresa extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField_Epais = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jTextField_Erazonsocial = new javax.swing.JTextField();
         jTextField_Enit = new javax.swing.JTextField();
         jTextField_Edireccion = new javax.swing.JTextField();
         jTextField_Etelefono = new javax.swing.JTextField();
-        jTextField_Eciudad = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jTextField_Eemail = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Empresa");
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Razon Social");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 40, 190, 30);
-
-        jTextField_Epais.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        getContentPane().add(jTextField_Epais);
-        jTextField_Epais.setBounds(210, 240, 400, 30);
+        jLabel1.setBounds(20, 20, 190, 30);
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396515201_document-edit.png"))); // NOI18N
@@ -118,52 +109,38 @@ public class Datos_Empresa extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(460, 280, 160, 30);
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setText("Pais");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 240, 190, 30);
+        jButton1.setBounds(430, 140, 180, 30);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("Nit");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(20, 80, 190, 30);
+        jLabel4.setBounds(20, 50, 190, 30);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setText("Dirección");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(20, 120, 190, 30);
+        jLabel5.setBounds(20, 80, 190, 30);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setText("Telefonos");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(20, 160, 190, 30);
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setText("Ciudad");
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(20, 200, 190, 30);
+        jLabel6.setBounds(20, 110, 190, 30);
 
         jTextField_Erazonsocial.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         getContentPane().add(jTextField_Erazonsocial);
-        jTextField_Erazonsocial.setBounds(210, 40, 400, 30);
+        jTextField_Erazonsocial.setBounds(210, 20, 400, 30);
 
         jTextField_Enit.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         getContentPane().add(jTextField_Enit);
-        jTextField_Enit.setBounds(210, 80, 400, 30);
+        jTextField_Enit.setBounds(210, 50, 400, 30);
 
         jTextField_Edireccion.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         getContentPane().add(jTextField_Edireccion);
-        jTextField_Edireccion.setBounds(210, 120, 400, 30);
+        jTextField_Edireccion.setBounds(210, 80, 400, 30);
 
         jTextField_Etelefono.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         getContentPane().add(jTextField_Etelefono);
-        jTextField_Etelefono.setBounds(210, 160, 400, 30);
-
-        jTextField_Eciudad.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        getContentPane().add(jTextField_Eciudad);
-        jTextField_Eciudad.setBounds(210, 200, 400, 30);
+        jTextField_Etelefono.setBounds(210, 110, 400, 30);
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1402870079_floppy.png"))); // NOI18N
@@ -174,29 +151,29 @@ public class Datos_Empresa extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(40, 310, 160, 30);
+        jButton2.setBounds(430, 170, 180, 30);
 
         jTextField_Eemail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         getContentPane().add(jTextField_Eemail);
-        jTextField_Eemail.setBounds(210, 280, 220, 30);
+        jTextField_Eemail.setBounds(210, 140, 220, 30);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setText("Email");
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(20, 280, 190, 30);
+        jLabel8.setBounds(20, 140, 190, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         conn.establecer_conexion();
-        Object [] datos = {jTextField_Erazonsocial.getText(), jTextField_Enit.getText(), jTextField_Edireccion.getText(), jTextField_Etelefono.getText(), jTextField_Eciudad, jTextField_Epais, jTextField_Eemail.getText()};
+        Object [] datos = {jTextField_Erazonsocial.getText(), jTextField_Enit.getText(), jTextField_Edireccion.getText(), jTextField_Etelefono.getText(), jTextField_Eemail.getText()};
         java.util.Date utiDate = new java.util.Date();
         long milisegundos = utiDate.getTime();
         java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(milisegundos);
         
         String insert = "INSERT INTO datos_empresa(razon_social, nit, direccion, telefono, ciudad, pais, email, estado_empresa, fecha_reg) values "
-                + "('"+jTextField_Erazonsocial.getText().toUpperCase()+"', '"+jTextField_Enit.getText().toUpperCase()+"', '"+jTextField_Edireccion.getText().toUpperCase()+"','"+jTextField_Etelefono.getText().toUpperCase()+"','"+jTextField_Eciudad.getText().toUpperCase()+"', '"+jTextField_Epais.getText().toUpperCase()+"', '"+jTextField_Eemail.getText().toUpperCase()+"', 1, '"+sqlTimestamp+"')";
+                + "('"+jTextField_Erazonsocial.getText().toUpperCase()+"', '"+jTextField_Enit.getText().toUpperCase()+"', '"+jTextField_Edireccion.getText().toUpperCase()+"','"+jTextField_Etelefono.getText().toUpperCase()+"','"+"', '"+jTextField_Eemail.getText().toUpperCase()+"', 1, '"+sqlTimestamp+"')";
         
         
         String mensaje = "Actualizado exitosamente";
@@ -221,17 +198,13 @@ public class Datos_Empresa extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField_Eciudad;
     private javax.swing.JTextField jTextField_Edireccion;
     private javax.swing.JTextField jTextField_Eemail;
     private javax.swing.JTextField jTextField_Enit;
-    private javax.swing.JTextField jTextField_Epais;
     private javax.swing.JTextField jTextField_Erazonsocial;
     private javax.swing.JTextField jTextField_Etelefono;
     // End of variables declaration//GEN-END:variables

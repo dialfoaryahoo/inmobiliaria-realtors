@@ -22,7 +22,7 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
         initComponents();
         setSize(1200,720);
         setLocationRelativeTo(null);
-
+        jLabel_user.setText(Ingreso.usuario);
     }
 
     /**
@@ -44,6 +44,7 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
         jLabel_user = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -56,6 +57,11 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         jButton1.setText("ASIGNAR SIMCARDS");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1);
         jButton1.setBounds(40, 290, 310, 60);
 
@@ -87,6 +93,11 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
         jButton4.setBounds(40, 170, 310, 60);
 
         jButton5.setText("INFORME SIMCARDS");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton5);
         jButton5.setBounds(40, 230, 310, 60);
 
@@ -120,6 +131,15 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(490, 0, 710, 30);
+
+        jButton6.setText("DEVOLUCION SIMCARD");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton6);
+        jButton6.setBounds(40, 350, 310, 60);
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/data.png"))); // NOI18N
         jMenu1.setText("Principal");
@@ -224,6 +244,36 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+     Conexion.dialog();
+    java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Informe_Simcard dialog = new Informe_Simcard(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       Conexion.dialog();
+    java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Asignar_Simcard dialog = new Asignar_Simcard(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+       Conexion.dialog();
+    java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Devolucion_Simcard dialog = new Devolucion_Simcard(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -264,6 +314,7 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

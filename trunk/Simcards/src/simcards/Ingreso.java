@@ -18,6 +18,7 @@ public class Ingreso extends javax.swing.JDialog {
     /**
      * Creates new form Ingreso_
      */
+    public static String usuario;
     public Ingreso(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -31,7 +32,7 @@ public class Ingreso extends javax.swing.JDialog {
         java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
         jlabel_fecha1.setText("Fecha: "+sqlDate);
         jlabel_fecha.setText("Hora: "+sqlTime);
-
+        
     }
 
     /**
@@ -50,6 +51,7 @@ public class Ingreso extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jlabel_fecha1 = new javax.swing.JLabel();
 
+        setTitle("Ingreso");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
@@ -112,6 +114,7 @@ public class Ingreso extends javax.swing.JDialog {
         JFrame.setDefaultLookAndFeelDecorated(true);
         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.BusinessBlackSteelSkin");
         SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceNegatedTheme");
+        usuario="badjetadlh";
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Pantalla_Inicial().setVisible(true);

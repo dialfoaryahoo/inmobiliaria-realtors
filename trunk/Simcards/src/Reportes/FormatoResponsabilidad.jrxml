@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="342" orientation="Landscape" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e014116e-2ea5-4f1c-9777-a2720d025865">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="d7c0181d-47ab-4c54-8967-0347ed0a13f2"/>
+	<subDataset name="dataset1" uuid="981bc964-cbab-4cc6-ab04-42e981bff3dd"/>
+	<subDataset name="dataset2" uuid="ee1ded5e-b1dd-4dcd-aec6-cd795adfebeb"/>
+	<parameter name="nombre_completo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select cedula, direccion, fijo, cod_cliente, nombrecompleto from clientes where nombrecompleto=$P{nombre_completo}]]>
+	</queryString>
+	<field name="cedula" class="java.math.BigDecimal"/>
+	<field name="direccion" class="java.lang.String"/>
+	<field name="fijo" class="java.lang.String"/>
+	<field name="cod_cliente" class="java.lang.Integer"/>
+	<field name="nombrecompleto" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<image>
+				<reportElement uuid="016b0fe1-6a9d-4f92-b23f-780bce6b1886" x="0" y="0" width="163" height="41"/>
+				<imageExpression><![CDATA["D:\\Proyecto\\Simcards\\src\\img\\LOGO-ACTIVA.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="a1b0dc65-65ab-4d01-906e-5e5d80eed4bd" x="187" y="21" width="368" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMATO DE ACEPTACION Y RESPONSABILIDAD]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="fb33bf3b-2da4-4281-be03-cea5323f89cd" x="2" y="0" width="24" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[YO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="fb7c0392-c98d-46e2-892b-dd2d0539465d" x="26" y="0" width="204" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fb33bf3b-2da4-4281-be03-cea5323f89cd" x="230" y="0" width="206" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[IDENTIFICADO(A) CON C.C. No.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e5b6897e-ff8f-427b-b4b7-db31da3b94d9" x="378" y="0" width="129" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="142" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="fb33bf3b-2da4-4281-be03-cea5323f89cd" x="0" y="90" width="149" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[FECHA Y HORA DE LA ENTREGA]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement uuid="af8d080d-fa79-4399-b9cc-d38a3c87600d" x="149" y="90" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fb33bf3b-2da4-4281-be03-cea5323f89cd" x="0" y="104" width="149" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[DIRECCION]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="05c3ca38-08a5-4f74-80a0-2f1c13c66844" x="149" y="104" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{direccion}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fb33bf3b-2da4-4281-be03-cea5323f89cd" x="0" y="118" width="555" height="24"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTA: ME HAGO RESPONSABE DE LAS LLAMADAS INTERNACIONES Y MENSAJES DE TEXTO QUE SALGAN DE ESTAS LINEAS MIENTRAS LAS TENGA EN CALIDAD DE ALQUILER, EL VALOR DEL ALQUILER CORRESPONDE A GASTOS DE PAPELERIA.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3acd7529-33ed-4c41-9cbe-21508374d113" x="9" y="48" width="240" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DECLARACION DE RESPONSABILIDAD]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="fb33bf3b-2da4-4281-be03-cea5323f89cd" x="0" y="0" width="149" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[RELACION DE LAS SIMCARD]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
