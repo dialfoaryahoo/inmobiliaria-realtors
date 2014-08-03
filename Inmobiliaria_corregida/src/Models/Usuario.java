@@ -57,7 +57,4 @@ public class Usuario {
         this.fecha_creacion = fecha_creacion;
     }
 
-    public Usuario() {
-    }
-   
 }

@@ -32,7 +32,6 @@ public class Index extends javax.swing.JDialog {
         setSize(950,650);
         setLocationRelativeTo(rootPane);
         jLabel1.requestFocus();
-        System.out.print("santiago es loca");
     }
 
     /**
@@ -46,8 +45,10 @@ public class Index extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton19 = new javax.swing.JButton();
+        jButton22 = new javax.swing.JButton();
+        jButton21 = new javax.swing.JButton();
+        jButton23 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
@@ -59,6 +60,7 @@ public class Index extends javax.swing.JDialog {
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
@@ -89,15 +91,6 @@ public class Index extends javax.swing.JDialog {
         jPanel1.add(jButton1);
         jButton1.setBounds(20, 90, 140, 40);
 
-        jButton3.setText("Reportes ");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton3);
-        jButton3.setBounds(20, 130, 140, 40);
-
         jButton19.setText("Tablas Basicas");
         jButton19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,12 +100,39 @@ public class Index extends javax.swing.JDialog {
         jPanel1.add(jButton19);
         jButton19.setBounds(20, 50, 140, 40);
 
+        jButton22.setText("Notas");
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton22ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton22);
+        jButton22.setBounds(20, 210, 140, 40);
+
+        jButton21.setText("Arrienda");
+        jButton21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton21ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton21);
+        jButton21.setBounds(20, 130, 140, 40);
+
+        jButton23.setText("Inmuebles En Arriendo");
+        jButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton23ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton23);
+        jButton23.setBounds(20, 170, 140, 40);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(30, 30, 180, 410);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Sin título-1.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/LOGO2.png"))); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(570, 440, 470, 210);
+        jLabel1.setBounds(470, 440, 470, 210);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Recaudos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
         jPanel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -162,8 +182,13 @@ public class Index extends javax.swing.JDialog {
         jPanel3.setLayout(null);
 
         jButton4.setText("Saldos/Cartera");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton4);
-        jButton4.setBounds(20, 170, 140, 40);
+        jButton4.setBounds(20, 90, 140, 40);
 
         jButton9.setText("Facturacion");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -172,11 +197,11 @@ public class Index extends javax.swing.JDialog {
             }
         });
         jPanel3.add(jButton9);
-        jButton9.setBounds(20, 90, 140, 40);
+        jButton9.setBounds(20, 200, 140, 40);
 
         jButton10.setText("Incrementos");
         jPanel3.add(jButton10);
-        jButton10.setBounds(20, 130, 140, 40);
+        jButton10.setBounds(20, 240, 140, 40);
 
         jButton11.setText("Causacion");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +211,15 @@ public class Index extends javax.swing.JDialog {
         });
         jPanel3.add(jButton11);
         jButton11.setBounds(20, 50, 140, 40);
+
+        jButton3.setText("Saldos");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton3);
+        jButton3.setBounds(20, 280, 140, 40);
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(470, 30, 180, 410);
@@ -286,24 +320,33 @@ public class Index extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        Conexion.dialog();
+        this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Recibos_Caja dialog = new Recibos_Caja(new javax.swing.JFrame(), true);
-                dialog.setVisible(true);
+                new Recibos_Caja().setVisible(true);
             }
         });
+//        Conexion.dialog();
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                Recibos_Caja dialog = new Recibos_Caja(new javax.swing.JFrame(), true);
+//                dialog.setVisible(true);
+//            }
+//        });
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Conexion.dialog();
+        this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Facturacion dialog = new Facturacion(new javax.swing.JFrame(), true);
-                dialog.setVisible(true);
+                new Facturas().setVisible(true);
+                
+                
             }
         });
 
+        
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -317,11 +360,10 @@ public class Index extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Conexion.dialog();
-       java.awt.EventQueue.invokeLater(new Runnable() {
+        this.setVisible(false);
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Egresos dialog = new Egresos(new javax.swing.JFrame(), true);
-                dialog.setVisible(true);
+                new Egresos_D().setVisible(true);
             }
         });
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -337,23 +379,31 @@ public class Index extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Conexion conn = new Conexion();
-        conn.establecer_conexion();
-        
-        String path="D:/Proyecto/Inmobiliaria_corregida/src/Reportes/report1.jasper";
-        JasperReport jr = null;
-        try {
-            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-            JasperPrint jp = JasperFillManager.fillReport(jr,null,conn.establecer_conexion());
-            JasperViewer jv = new JasperViewer(jp);
-            jv.setVisible(true);
-            jv.setTitle(path);
-            
-            
-            
-        } catch (JRException ex) {
-            Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    Conexion.dialog();
+       java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                reportes dialog = new reportes(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+
+//        Conexion conn = new Conexion();
+//        conn.establecer_conexion();
+//        
+//        String path="D:/Proyecto/Inmobiliaria_corregida/src/Reportes/report1.jasper";
+//        JasperReport jr = null;
+//        try {
+//            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+//            JasperPrint jp = JasperFillManager.fillReport(jr,null,conn.establecer_conexion());
+//            JasperViewer jv = new JasperViewer(jp);
+//            jv.setVisible(true);
+//            jv.setTitle(path);
+//            
+//            
+//            
+//        } catch (JRException ex) {
+//            Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
@@ -384,6 +434,46 @@ public class Index extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton20ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        Conexion.dialog();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Saldos dialog = new Saldos(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+        Conexion.dialog();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Arrienda dialog = new Arrienda(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton21ActionPerformed
+
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+        Conexion.dialog();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Notas dialog = new Notas(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton22ActionPerformed
+
+    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+        Conexion.dialog();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Arrendados dialog = new Arrendados(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton23ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -402,6 +492,9 @@ public class Index extends javax.swing.JDialog {
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
+    private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton22;
+    private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

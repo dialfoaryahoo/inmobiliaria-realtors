@@ -2058,7 +2058,7 @@
                   <Font name="Tahoma" size="14" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="7">
+                  <StringArray count="8">
                     <StringItem index="0" value="Buscar Por"/>
                     <StringItem index="1" value="Cod inmueble"/>
                     <StringItem index="2" value="Codigo Propietario"/>
@@ -2066,6 +2066,7 @@
                     <StringItem index="4" value="Codigo Inquilino"/>
                     <StringItem index="5" value="Cedula Inquilino"/>
                     <StringItem index="6" value="Barrio"/>
+                    <StringItem index="7" value="Todos"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -2882,6 +2883,7 @@
                 </Property>
               </Properties>
               <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jText_INMdiacausacionActionPerformed"/>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jText_INMdiacausacionKeyTyped"/>
               </Events>
               <Constraints>

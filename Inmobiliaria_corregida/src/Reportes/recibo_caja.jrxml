@@ -4,20 +4,20 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="cod_serial" class="java.lang.Integer"/>
+	<parameter name="tipo_factura" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select fac.cod_factura, cod_usuario, fac.total, fac.fecha, det.cod_detalle_factura, concepto, valor 
-from facturas as fac INNER JOIN detalle_factura_caja as det  on fac.serial = det.cod_factura 
-where fac.serial = $P{cod_serial};]]>
+		<![CDATA[select fac.serial, cod_usuario, fac.total, fac.fecha, concepto, valor 
+from facturas as fac INNER JOIN detalle_factura_caja as det  on fac.cod_factura = det.cod_factura 
+where fac.serial = $P{cod_serial} and fac.tipo_factura = $P{tipo_factura};]]>
 	</queryString>
-	<field name="cod_factura" class="java.lang.Integer"/>
-	<field name="cod_usuario" class="java.lang.String"/>
+	<field name="serial" class="java.math.BigDecimal"/>
+	<field name="cod_usuario" class="java.math.BigDecimal"/>
 	<field name="total" class="java.math.BigDecimal"/>
 	<field name="fecha" class="java.sql.Timestamp"/>
-	<field name="cod_detalle_factura" class="java.lang.Integer"/>
 	<field name="concepto" class="java.lang.String"/>
 	<field name="valor" class="java.math.BigDecimal"/>
 	<group name="cod_factura">
-		<groupExpression><![CDATA[$F{cod_factura}]]></groupExpression>
+		<groupExpression><![CDATA[$F{serial}]]></groupExpression>
 		<groupHeader>
 			<band height="33">
 				<staticText>
@@ -32,7 +32,7 @@ where fac.serial = $P{cod_serial};]]>
 					<textElement>
 						<font size="24" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{cod_factura}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{serial}]]></textFieldExpression>
 				</textField>
 				<line>
 					<reportElement uuid="8ec95021-6240-4e08-88a9-d32f0d407433" x="-20" y="32" width="595" height="1" forecolor="#666666"/>
@@ -175,13 +175,6 @@ where fac.serial = $P{cod_serial};]]>
 			<line>
 				<reportElement uuid="36c23586-2886-474b-819b-af900e789ed5" positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
 			</line>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="8d1720d6-f2a3-4a4b-a657-456cba343096" x="0" y="0" width="185" height="20"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cod_detalle_factura}]]></textFieldExpression>
-			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="1f4e4c1a-175c-4d83-b12e-cca4c39d4667" x="185" y="0" width="185" height="20"/>
 				<textElement>
