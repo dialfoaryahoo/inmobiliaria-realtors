@@ -142,7 +142,7 @@ public class Egresos extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("XXXX");
+        jLabel1.setText("Egresos");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 190, 50);
 
@@ -195,7 +195,7 @@ public class Egresos extends javax.swing.JDialog {
         getContentPane().add(jButton_imprimir);
         jButton_imprimir.setBounds(570, 20, 150, 50);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Detalle Recibo", 3, 0, new java.awt.Font("Segoe UI", 0, 20))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Detalle Recibo", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 20))); // NOI18N
         jPanel1.setLayout(null);
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -290,7 +290,7 @@ public class Egresos extends javax.swing.JDialog {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(410, 110, 470, 230);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Detalle Persona", 3, 0, new java.awt.Font("Segoe UI", 0, 20))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Detalle Persona", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 20))); // NOI18N
         jPanel2.setLayout(null);
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N

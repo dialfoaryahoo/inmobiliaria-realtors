@@ -4,18 +4,26 @@
  */
 package Cartera_y_caja;
 
+import Models.Metodos;
+import Models.acceso;
+import Models.dinero_caja;
 import inmobiliaria_fase01.Conexion;
+import java.awt.Dialog;
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 //import java.util.ArrayList;
 //import java.util.Iterator;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 //import java.util.regex.Matcher;
 //import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 //import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
@@ -25,24 +33,35 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import static org.apache.poi.hssf.usermodel.HeaderFooter.date;
+
 /**
  *
  * @author Usuario
  */
-public class Recibos_Caja extends javax.swing.JDialog {
+public class Recibos_Caja extends javax.swing.JFrame {
 
    private DefaultTableModel modeloDeMiJTable; 
     
-    public Recibos_Caja(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public Recibos_Caja() {
+ 
         initComponents();
         setSize(950,650);
         setLocationRelativeTo(rootPane);
         //metodos iniciados
         inactivos(falso);
+        iniciarhora();
+        
         jTextField_ncheque.setEnabled(false);        
         jPanel3.setVisible(false);
-
+        
+        
+        //no editables
+        jTextField_total.setEditable(false);
+        jTextField_vueltos.setEditable(false);
+        
         
         //Jtable
         modeloDeMiJTable = new DefaultTableModel() { 
@@ -86,11 +105,25 @@ public class Recibos_Caja extends javax.swing.JDialog {
         
     }
     
+    public void limpiarTabla(JTable tabla){
+        try {
+            DefaultTableModel modelo=(DefaultTableModel) tabla.getModel();
+            int filas=tabla.getRowCount();
+            for (int i = 0;filas>i; i++) {
+                modelo.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+        }
+    }  
+    
     private void inactivos(Boolean a){
         jLabel17.setVisible(a);
         jTextField_Ncheque2.setVisible(a);
         jRadioButton_cheque2.setVisible(a);
         jRadioButton_efectivo2.setVisible(a);
+        jRadioButton_interno.setVisible(false);
+        jRadioButton_externo.setVisible(false);
         
     }
     private void inicializar(Boolean a, Boolean b){
@@ -108,14 +141,34 @@ public class Recibos_Caja extends javax.swing.JDialog {
         jComboBox_codigo.setEnabled(a);
         //jTextField_Ncheque.setEnabled(false);
         jButton_confirmar.setEnabled(a);
-        jCheckBox1.setEnabled(a);
+        jCheck_saldo.setEnabled(a);
     }
+    
+    private void panelrecibo_vacio(){
+        jRadioButton_cheque2.setText("");
+        jRadioButton_efectivo2.setText("");
+        jRadioButton_externo.setText("");
+        jRadioButton_interno.setText("");
+        jTextField_concepto.setText("");
+        jTextField_valor.setText("");
+        jComboBox_codigo.setSelectedIndex(0);
+        //jTextField_Ncheque.setText(false);
+        jCheck_saldo.setSelected(false);
+    }    
     private void panelcliente(Boolean a,Boolean b,Boolean c,Boolean d,Boolean e){
         jComboBox_destino.setEnabled(a);
         jTextField_codigo.setEnabled(b);
         jTextField_nombre.setEnabled(c);
         jTextField_direccion.setEnabled(d);
         jTextField_saldo.setEnabled(e);
+    }
+    
+        private void panelcliente_vacio(){
+        jTextField_codigo.setText("");
+        jTextField_nombre.setText("");
+        jTextField_direccion.setText("");
+        jTextField_saldo.setText("");
+        jComboBox_destino.setSelectedIndex(0);
     }
     private void paneltotal (Boolean a){
         
@@ -124,6 +177,12 @@ public class Recibos_Caja extends javax.swing.JDialog {
        jTextField_ingreso.setEnabled(a);
        jTextField_vueltos.setEnabled(a);
     }
+    private void paneltotal_vacio(){
+       jTextField_Ncheque1.setText("");
+       jTextField_total.setText("");
+       jTextField_ingreso.setText("");
+       jTextField_vueltos.setText("");
+    }    
     private void botones (Boolean a,Boolean b,Boolean c,Boolean d){
         jButton_nuevo.setSelected(a);
         jButton_bucar.setSelected(b);
@@ -149,7 +208,7 @@ public class Recibos_Caja extends javax.swing.JDialog {
         
         private void serial(){
         conn.establecer_conexion();
-        String consultaserial = "select max(serial)+1 from facturas";
+        String consultaserial = "select max(serial)+1 from facturas where tipo_factura = 'RECIBO_CAJA'";
         ResultSet query = conn.consulta(consultaserial);
             try {
                 while(query.next()){
@@ -168,8 +227,36 @@ public class Recibos_Caja extends javax.swing.JDialog {
             jTextField_nombre.setText("");
             jTextField_direccion.setText("");
             jTextField_saldo.setText("");
+            jComboBox_destino.setSelectedIndex(0);
         }
         
+        private void detatallerecivovacio(){
+        jTextField_concepto.setText("");
+        jTextField_valor.setText("");
+        jComboBox_codigo.setSelectedIndex(0);
+        jCheck_saldo.setSelected(false);
+        }
+        
+        private void detatalletotalvacio(){
+            jTextField_ncheque.setText("");
+            jTextField_ingreso.setText("");
+            jTextField_total.setText("");
+            jTextField_vueltos.setText("");
+            efecheque.clearSelection();
+        
+        }        
+                
+        private void iniciarhora (){
+            
+        Calendar fecha = new GregorianCalendar();
+        int año = fecha.get(Calendar.YEAR);
+        int mes = fecha.get(Calendar.MONTH);
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        mes = mes+1;
+        String cadenafecha = ""+dia+"/"+mes+"/"+año+"";
+            jLabel9.setText(cadenafecha);
+        
+        }
 //        private void paneldinero(Boolean a){
 //            
 //            
@@ -210,12 +297,12 @@ public class Recibos_Caja extends javax.swing.JDialog {
         jRadioButton_externo = new javax.swing.JRadioButton();
         jRadioButton_cheque2 = new javax.swing.JRadioButton();
         jRadioButton_efectivo2 = new javax.swing.JRadioButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jComboBox_codigo = new javax.swing.JComboBox();
         jButton_confirmar = new javax.swing.JButton();
         jLabelN_Recibo = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jTextField_Ncheque2 = new javax.swing.JTextField();
+        jCheck_saldo = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -327,6 +414,12 @@ public class Recibos_Caja extends javax.swing.JDialog {
         });
         jPanel1.add(jTextField_concepto);
         jTextField_concepto.setBounds(90, 90, 360, 30);
+
+        jTextField_valor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_valorKeyTyped(evt);
+            }
+        });
         jPanel1.add(jTextField_valor);
         jTextField_valor.setBounds(90, 120, 210, 30);
 
@@ -378,17 +471,6 @@ public class Recibos_Caja extends javax.swing.JDialog {
         jPanel1.add(jRadioButton_efectivo2);
         jRadioButton_efectivo2.setBounds(240, 60, 100, 29);
 
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jCheckBox1.setText("Usar Saldo?");
-        jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jCheckBox1);
-        jCheckBox1.setBounds(300, 120, 150, 30);
-
         jPanel1.add(jComboBox_codigo);
         jComboBox_codigo.setBounds(90, 150, 210, 30);
 
@@ -416,6 +498,17 @@ public class Recibos_Caja extends javax.swing.JDialog {
         jPanel1.add(jTextField_Ncheque2);
         jTextField_Ncheque2.setBounds(90, 180, 210, 30);
 
+        jCheck_saldo.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jCheck_saldo.setText("Usar Saldo?");
+        jCheck_saldo.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jCheck_saldo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheck_saldoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jCheck_saldo);
+        jCheck_saldo.setBounds(320, 120, 100, 30);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(410, 110, 470, 230);
 
@@ -440,10 +533,15 @@ public class Recibos_Caja extends javax.swing.JDialog {
         jPanel2.add(jTextField_codigo);
         jTextField_codigo.setBounds(90, 90, 210, 30);
 
-        jComboBox_destino.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Inquilino", "Propietario", "Otro" }));
+        jComboBox_destino.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Inquilino", "Propietario", "Otros Usuarios" }));
         jComboBox_destino.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_destinoItemStateChanged(evt);
+            }
+        });
+        jComboBox_destino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_destinoActionPerformed(evt);
             }
         });
         jPanel2.add(jComboBox_destino);
@@ -500,7 +598,7 @@ public class Recibos_Caja extends javax.swing.JDialog {
         getContentPane().add(jButton_confirmar1);
         jButton_confirmar1.setBounds(700, 510, 190, 40);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Detalle Recibo", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 20))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Detalle Total", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 20))); // NOI18N
         jPanel3.setLayout(null);
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -548,7 +646,7 @@ public class Recibos_Caja extends javax.swing.JDialog {
             }
         });
         jPanel3.add(jRadioButton_efectivo);
-        jRadioButton_efectivo.setBounds(20, 30, 80, 29);
+        jRadioButton_efectivo.setBounds(10, 30, 90, 29);
 
         jPanel3.add(jComboBox_codigo1);
         jComboBox_codigo1.setBounds(90, 150, 210, 30);
@@ -616,18 +714,29 @@ public class Recibos_Caja extends javax.swing.JDialog {
         jTextField_vueltos.setBounds(490, 60, 170, 30);
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(30, 480, 670, 100);
+        jPanel3.setBounds(20, 480, 680, 100);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_nuevoActionPerformed
+
+    
+    //inactivo
     botones(true, false, false, false);
     inicializar(true, true);
     panelrecibo(false);
     panelcliente(true, true, false, false,false);
     serial();
     llenarcombocodigo();
+
+    //vacio     
+    
+    panelrecibo_vacio();
+    panelcliente_vacio();
+    paneltotal_vacio();    
+    
+    
     
     }//GEN-LAST:event_jButton_nuevoActionPerformed
 
@@ -637,37 +746,93 @@ botones(false, false, false,true);
 
     private void jButton_bucarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_bucarActionPerformed
         String recibo= JOptionPane.showInputDialog("<html><font='Arial' size=+1>Ingrese el numero del recibo a buscar</font></html>");
+        String consulta ="select serial from facturas where serial = "+recibo+" and tipo_factura = 'RECIBO_CAJA'";
+        System.out.print(consulta);
+        conn.establecer_conexion();
+        ResultSet rs=conn.consulta(consulta);
+        int contador = 0;
+        try {
+            while (rs.next()) {                    
+                seriaimp = (rs.getInt(1));
+                System.out.println(seriaimp);
+
+                int seletedvalue = JOptionPane.showConfirmDialog(rootPane, "Imprimir Recibo?" , "Imprimir Recibo", JOptionPane.OK_CANCEL_OPTION);                
+                if(seletedvalue ==JOptionPane.YES_OPTION ){                
+                    jButton_imprimirActionPerformed(evt);
+                    contador++;
+                }                
+            }
+        } catch (Exception e) {
+        }
+            if(contador==0){
+                conn.JOptionShowMessage("+1", "", "No existe ese recibo");
+            }
         botones(false, true, false, false);    // TODO add your handling code here:
     }//GEN-LAST:event_jButton_bucarActionPerformed
 
     private void jButton_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_imprimirActionPerformed
     botones(false, false, true, false);    // TODO add your handling code here:
             conn.establecer_conexion();
-            System.out.println(seriaimp);
-            
+            //System.out.println(seriaimp);
+            //seriaimp=24;
+            contimp++;
             String path="D:/Proyecto/Inmobiliaria_corregida/src/Reportes/recibo_caja.jasper";
             JasperReport jr = null;
             try {
-                Map parametro = new HashMap();
-                parametro.put("cod_serial", seriaimp);                
-                //parametro.put("parameter1", jComboBox_usuarios.getSelectedItem());
-                jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-                JasperPrint jp = JasperFillManager.fillReport(jr,parametro,conn.establecer_conexion());
-                JasperViewer jv = new JasperViewer(jp);
-                jv.setVisible(true);
-                jv.setTitle("RECIBO DE CAJA");
+                if(contimp!=0){
+                    Dialog viewer = new JDialog(new javax.swing.JFrame(),"Visualização do Relatório", true); 
+                    viewer.setSize(1000,800); 
+                    viewer.setLocationRelativeTo(null);                    
+                    Map parametro = new HashMap();
+                    parametro.put("cod_serial", seriaimp);
+                    parametro.put("tipo_factura", "RECIBO_CAJA");
+                    //parametro.put("parameter1", jComboBox_usuarios.getSelectedItem());
+                    jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+                    JasperPrint jp = JasperFillManager.fillReport(jr,parametro,conn.establecer_conexion());
+                    //JasperViewer jv = new JasperViewer(jp);
+                    JasperViewer jv = new JasperViewer(jp, false);
+                    //nuevo
+                    //viewer.getContentPane().add(jv.getContentPane());
+                    //viewer.setVisible(true);
+                    jv.toFront();
+                    jv.isActive();
+                    //this.setVisible(true);
+                    jv.setVisible(true);
+                    jv.setTitle("RECIBO DE CAJA");
+                    botones(false, false, false, false);
+                    serial();
+                    
+                    
+//                    
+//Dialog viewer = new JDialog(new javax.swing.JFrame(),"Visualização do Relatório", true); 
+//viewer.setSize(1000,800); 
+//viewer.setLocationRelativeTo(null);
+//Map parametro = new HashMap();
+//System.out.println(nombre);
+//java.util.Date utilDate = new java.util.Date(); 
+//parametro.put("NOMBRE_COMPLETO", nombre); 
+////parametro.put("FECHA", utilDate); 
+////parametro.put("parameter1", jComboBox_usuarios.getSelectedItem());
+//jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+//JasperPrint jp = JasperFillManager.fillReport(jr,parametro,conn.establecer_conexion());
+//JasperViewer jv = new JasperViewer(jp);
+//viewer.getContentPane().add(jv.getContentPane());
+//viewer.setVisible(true);
+//jv.setTitle("FORMATO DE ACEPTACION");                    
 
-                conn.cierraConexion();
+                }else{
+                    Conexion.JOptionShowMessage("+1", null, "NO HA GENERADO NINGUN RECIBO");
+                }
             } catch (JRException ex) {
                 Logger.getLogger(Informes_Recibos_Caja.class.getName()).log(Level.SEVERE, null, ex);
             }    
     }//GEN-LAST:event_jButton_imprimirActionPerformed
 
     private void jButton_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_confirmarActionPerformed
-        if (jTextField_concepto.equals("")) {
+        if (jTextField_concepto.getText().equals("")) {
             Conexion.JOptionShowMessage("+1", "", "El pago es por concepto de?");
         }
-        if (jTextField_valor.equals("")) {
+        else if (jTextField_valor.getText().equals("")) {
             Conexion.JOptionShowMessage("+1", "", "Valor a Pagar?");
         }        
         else{
@@ -698,12 +863,25 @@ botones(false, false, false,true);
             sumatoria1+=sumatoria;
         }
         jTextField_total.setText(String.valueOf(sumatoria1));
+        valor_total = sumatoria1;
+        
+        //Guardo el saldo, en una variable por si lo nesecito.
+        //saldo_total= Integer.parseInt(jTextField_saldo.getText());
+        
+        if(jComboBox_destino.getSelectedIndex()==3){
+            jCheck_saldo.setVisible(false);
+        }
+
+        //desactivo para que no puedan cambiar aquien se le haga la factura, evitar
+        jTextField_codigo.setEnabled(false);
+        jComboBox_destino.setEnabled(false);
+        
         //////////////////
         //fin  sumatoria//
         //////////////////          
    
        
-       
+       detatallerecivovacio();
        
        }
     }//GEN-LAST:event_jButton_confirmarActionPerformed
@@ -737,6 +915,8 @@ botones(false, false, false,true);
                     jTextField_nombre.setText(n.getString(1));
                     jTextField_direccion.setText(n.getString(2));
                     jTextField_saldo.setText(n.getString(3));
+                    cod_usuario =  (n.getInt(4));
+                    
                     panelrecibo(true);
                     jButton_confirmar.setVisible(true);
                     contador++;
@@ -756,26 +936,28 @@ botones(false, false, false,true);
             String consulta="";
 
             if(datos.trim().matches(".*\\D+.*")){
-                consulta="select nombres, direccion_casa,saldo from propietarios where codigo='"+jTextField_codigo.getText().toUpperCase()+"'";
+                consulta="select nombres, direccion_casa,saldo, cod_propietario from propietarios where codigo='"+jTextField_codigo.getText().toUpperCase()+"'";
             }
             else{
-                consulta="select nombres, direccion_casa,saldo from propietarios where cedula='"+jTextField_codigo.getText().toUpperCase()+"'";        
+                consulta="select nombres, direccion_casa,saldo, cod_propietario from propietarios where cedula='"+jTextField_codigo.getText().toUpperCase()+"'";        
             }
             System.out.println(consulta);
             ResultSet n=conn.consulta(consulta);
             int contador = 0;
+            
             try{
                 while(n.next()){
                     jTextField_nombre.setText(n.getString(1));
                     jTextField_direccion.setText(n.getString(2));
                     jTextField_saldo.setText(n.getString(3));
                     cod_usuario =  (n.getInt(4));
+                    
                     panelrecibo(true);
                     jButton_confirmar.setVisible(true);
                     contador++;
                 }
                 if(contador==0){
-                    conn.JOptionShowMessage("+1", "", "No existe el inquilino");
+                    conn.JOptionShowMessage("+1", "", "No existe el Propietario");
                     detallepersonavacio();
                     contador=0;
                 }            
@@ -789,10 +971,10 @@ botones(false, false, false,true);
             String datos = jTextField_codigo.getText().toUpperCase();
             String consulta="select nombre_completo, direccion from otros_usuarios";
             if(datos.trim().matches(".*\\D+.*")){
-                consulta="select nombres, direccion_casa,saldo from propietarios where codigo='"+jTextField_codigo.getText().toUpperCase()+"'";
+                consulta="select nombre_completo, direccion, cod_usuario from otros_usuarios where codigo='"+jTextField_codigo.getText().toUpperCase()+"'";
             }
             else{
-                consulta="select nombres, direccion_casa,saldo from propietarios where cedula='"+jTextField_codigo.getText().toUpperCase()+"'";        
+                consulta="select nombre_completo, direccion, cod_usuario from otros_usuarios where cedula='"+jTextField_codigo.getText().toUpperCase()+"'";        
             }
             System.out.println(consulta);
             ResultSet n=conn.consulta(consulta);
@@ -801,46 +983,167 @@ botones(false, false, false,true);
                 while(n.next()){
                     jTextField_nombre.setText(n.getString(1));
                     jTextField_direccion.setText(n.getString(2));
-                    jTextField_saldo.setText(n.getString(3));
+                    jTextField_saldo.setText("0");
                     panelrecibo(true);
                     jButton_confirmar.setVisible(true);
+                    contador++;
                 }
                 if(contador==0){
-                    conn.JOptionShowMessage("+1", "", "No existe el inquilino");
-                    detallepersonavacio();
+                    int seletedvalue = JOptionPane.showConfirmDialog(rootPane, "El usuario no existe, deseas registrarlo?" , "Crear Otro Usuario", JOptionPane.OK_CANCEL_OPTION);
+                    if(seletedvalue ==JOptionPane.YES_OPTION ){
+                        Conexion.dialog();
+                        java.awt.EventQueue.invokeLater(new Runnable() {
+                            public void run() {
+                                Crear_Otros_Usuarios dialog = new Crear_Otros_Usuarios(new javax.swing.JFrame(), true);
+                                dialog.setVisible(true);
+                            }
+                        });        
+                        
+                    }                    
                     contador=0;
                 }                    
             }
             catch(Exception e){
             }
-     }        
+        }
+        if(!jTextField_saldo.equals("")){
+            saldo_total=Integer.parseInt(jTextField_saldo.getText());
+        }
+        
     }//GEN-LAST:event_jTextField_codigoActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-       jTextField_valor.setText(jTextField_saldo.getText());
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    private void jCheck_saldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheck_saldoActionPerformed
+            int saldo = 0, total = 0;
+            
+            saldo = Integer.parseInt(jTextField_saldo.getText());
+
+       if(jCheck_saldo.isSelected()==true){        
+            saldo = Integer.parseInt(jTextField_saldo.getText());
+            jTextField_valor.setText(String.valueOf(saldo));
+            jTextField_saldo.setText("0");
+       }else{
+           jTextField_saldo.setText(String.valueOf(saldo_total));
+           jTextField_valor.setText("0");
+
+       }
+           
+
+//              
+//       if(jCheck_saldo.isSelected()==true){
+//            saldo = Integer.parseInt(jTextField_saldo.getText());
+//            total = Integer.parseInt(jTextField_total.getText());  
+//            uso_saldo = 1;
+//            
+//            if(saldo > total){
+//                int  saldoasignar = Integer.parseInt(JOptionPane.showInputDialog(rootPane, "Cuanto Saldo deseas Utilizar"));
+//                if(saldoasignar < saldo ){
+//                    total = total -saldoasignar;
+//                    saldo = saldo - saldoasignar;
+//                }
+//                else{
+//                    conn.JOptionShowMessage("+1", "", "No Tienes esa Cantidad en Saldo");
+//                    jCheck_saldo.setSelected(false);
+//                }
+//            }else{
+//                total = total - saldo;
+//            }
+//            jTextField_total.setText(String.valueOf(total));
+//            jTextField_saldo.setText(String.valueOf(saldo));
+//            
+//            
+//            
+//       }else{
+//           jTextField_total.setText(String.valueOf(valor_total));
+//           jTextField_saldo.setText(String.valueOf(saldo_total));
+//           uso_saldo = 0;
+//       }
+
+       
+       
+       
+
+       
+    }//GEN-LAST:event_jCheck_saldoActionPerformed
 
     private void jButton_confirmar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_confirmar1ActionPerformed
+
+        if(jTextField_ingreso.getText().equals("")){
+            conn.JOptionShowMessage("+1", "", "Ingrese una cantidad de dinero");
+        }
+        
+        int ingresovalid = Integer.parseInt(jTextField_ingreso.getText());
+        int totalvalid = Integer.parseInt(jTextField_total.getText());
+        
         if(!(jRadioButton_cheque.isSelected()||jRadioButton_efectivo.isSelected())){
             Conexion.JOptionShowMessage("+1", "", "Seleccione un Metodo de pago");
         }
+        else if(ingresovalid < totalvalid ){
+            Conexion.JOptionShowMessage("+1", "", "El dinero Ingresado no es suficiente para el total");
+        }        
+        
         else{
             conn.establecer_conexion();
 
-            String insertar="INSERT INTO facturas(tipo_factura, serial,tipo_usuario, cod_usuario, tipo_pago, ncheque, interno_externo, total, estado, usuarios_crear, fecha) " +
-                "VALUES ('RECIBO_CAJA', "+serial+", '"+jComboBox_destino.getSelectedItem()+"', "+cod_usuario+", '"+forma_pago+"', '"+jTextField_ncheque.getText().toUpperCase()+"', 'INTERNO', "+jTextField_total.getText()+", 1,  'JESSIKA', now())";
+            String insertar="INSERT INTO facturas(tipo_factura, serial,tipo_usuario, cod_usuario, tipo_pago, ncheque, interno_externo, total, estado, usuario, fecha) " +
+                "VALUES ('RECIBO_CAJA', "+serial+", '"+jComboBox_destino.getSelectedItem()+"', "+cod_usuario+", '"+forma_pago+"', '"+jTextField_ncheque.getText().toUpperCase()+"', 'INTERNO', "+valor_total+", 1,  '"+acc.getUsuario()+"', now())";
             seriaimp = serial;
+            System.out.print(insertar);
             conn.Dinsertar(insertar);
+            //conseguir el numero de la factura.
+            String consulta = "select max(cod_factura) from facturas";
+            ResultSet rs = conn.consulta(consulta);
+            int cod_factura=0;
+            try {
+                while (rs.next()) {
+                    cod_factura = (rs.getInt(1));
+                }
+            } catch (Exception e) {
+            }
+            if(cod_factura!=0){
                 for(int i=0;i<modeloDeMiJTable.getRowCount();i++){
                  conn.establecer_conexion();
                 String insertar2="INSERT INTO detalle_factura_caja (cod_factura, cod_concepto, concepto, valor, fecha) "
-                        + "values ("+serial+", "+modeloDeMiJTable.getValueAt(i, 0)+", '"+modeloDeMiJTable.getValueAt(i, 2).toString().toUpperCase()+"', "+modeloDeMiJTable.getValueAt(i, 3)+", now())";
+                        + "values ("+cod_factura+", "+modeloDeMiJTable.getValueAt(i, 0)+", '"+modeloDeMiJTable.getValueAt(i, 2).toString().toUpperCase()+"', "+modeloDeMiJTable.getValueAt(i, 3)+", now())";
                 System.out.println(insertar2);
 
                 conn.Dinsertar2(insertar2);
+                contimp++;
                 }
-           //reportes
-                  
+                //imprimir
+                int seletedvalue = JOptionPane.showConfirmDialog(rootPane, "Imprimir Recibo??" , "Imprimir Recibo", JOptionPane.OK_CANCEL_OPTION);
+                if(seletedvalue ==JOptionPane.YES_OPTION ){                
+                    jButton_imprimirActionPerformed(evt);
+                }
+           }
+            else{
+                conn.JOptionShowMessage("+1", "", "Error al Guardar la Factura");
+            }            
+            
+        //verificar si uso, el saldo para descontarlo.
+        if(jComboBox_destino.getSelectedIndex()==1){
+            String update = "update ";
+        }
+
+                
+            //reportes
+                 
+                
+                
+            //limpiar todo
+                
+//        detallepersonavacio();
+//        detatallerecivovacio();
+//        detatalletotalvacio();
+//        panelcliente(falso, falso, falso, falso, falso);
+//        panelrecibo(falso);
+//        paneltotal(falso);
+//        limpiarTabla(jTable1);
+        this.dispose();
+        
+        
+        
+        
+
         }
     }//GEN-LAST:event_jButton_confirmar1ActionPerformed
 
@@ -898,15 +1201,29 @@ botones(false, false, false,true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_nchequeActionPerformed
 
+    private void jTextField_valorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_valorKeyTyped
+        char car = evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_jTextField_valorKeyTyped
+
+    private void jComboBox_destinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_destinoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_destinoActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
     int[] anchos = {40, 200, 50};
-    int destino=0, serial=0, cod_usuario=0, seriaimp = 0;
+    int destino=0, serial=0, cod_usuario=0, seriaimp = 0, valor_total=0, saldo_total =0, uso_saldo=0;
     Boolean falso= false, verdadero= true;
     String forma_pago="";
     Conexion conn = new Conexion();
+    dinero_caja dinero = new dinero_caja();
+    acceso acc = new acceso();
+    Metodos met = new Metodos();
+    int contimp=0;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup efecheque;
     private javax.swing.ButtonGroup extint;
@@ -917,7 +1234,7 @@ botones(false, false, false,true);
     private javax.swing.JButton jButton_imprimir;
     private javax.swing.JButton jButton_informes;
     private javax.swing.JButton jButton_nuevo;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheck_saldo;
     private javax.swing.JComboBox jComboBox_codigo;
     private javax.swing.JComboBox jComboBox_codigo1;
     private javax.swing.JComboBox jComboBox_destino;

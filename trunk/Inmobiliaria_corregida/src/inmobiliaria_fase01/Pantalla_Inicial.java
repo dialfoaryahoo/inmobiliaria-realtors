@@ -4,8 +4,12 @@
  */
 package inmobiliaria_fase01;
 
+import Administrativo.Index_ADM;
 import Cartera_y_caja.Cartera;
+import Cartera_y_caja.Crear_Otros_Usuarios;
 import Cartera_y_caja.Index;
+import Models.acceso;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +26,18 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         jLabel1.requestFocus();
+        jButton1.setVisible(false);
+        paneladmin();
+        
+    }
+    
+    
+    public void paneladmin(){
+        int nivel = 0;
+        nivel = Integer.parseInt(acc.getNivel());
+        if(nivel==2){
+            jButton1.setVisible(true);
+        }
     }
 
     /**
@@ -46,6 +62,11 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
         jLabel1.setBounds(40, 0, 1260, 240);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ADMINISTRATIVO.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1);
         jButton1.setBounds(290, 380, 290, 140);
 
@@ -86,7 +107,22 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String variable = acc.getUsuario();
+        
+        System.out.println("Login: "+acc.getUsuario()+" Nivel: "+acc.getNivel());
+        Conexion.dialog();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Index_ADM dialog = new Index_ADM(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });           
+    }//GEN-LAST:event_jButton1ActionPerformed
    
+    acceso acc = new acceso();
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

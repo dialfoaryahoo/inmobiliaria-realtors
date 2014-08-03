@@ -81,6 +81,11 @@ public class Informes_Recibos_Caja extends javax.swing.JDialog {
         jPanel2.add(jLabel3);
         jLabel3.setBounds(30, 60, 130, 30);
 
+        jComboBox_usuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_usuariosActionPerformed(evt);
+            }
+        });
         jPanel2.add(jComboBox_usuarios);
         jComboBox_usuarios.setBounds(160, 60, 140, 30);
 
@@ -125,6 +130,10 @@ public class Informes_Recibos_Caja extends javax.swing.JDialog {
             Logger.getLogger(Informes_Recibos_Caja.class.getName()).log(Level.SEVERE, null, ex);
         }                
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_usuariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_usuariosActionPerformed
 
     /**
      * @param args the command line arguments

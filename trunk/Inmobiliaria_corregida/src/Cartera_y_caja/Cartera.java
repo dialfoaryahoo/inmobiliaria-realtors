@@ -7,6 +7,7 @@
 package Cartera_y_caja;
 
 import Models.Render;
+import Models.acceso;
 import autocompletar.ajTextField;
 import autocompletar.autoComplete;
 import inmobiliaria_fase01.Conexion;
@@ -44,6 +45,9 @@ public class Cartera extends javax.swing.JDialog {
         inicio();
         //listener();
         conn.establecer_conexion();        
+        
+        
+        
         
         
         
@@ -101,14 +105,18 @@ public class Cartera extends javax.swing.JDialog {
 
         conn.establecer_conexion();
         limpiarTabla(jTable_ADM);
-//        String consulta="select inm.codigo, pro.cedula, (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) AS nombrecompleto "
-//                + ",inm.direccion, inm.barrio, inm.uso "
-//                + "from propietarios as pro inner join  inmuebles as inm on pro.cod_propietario = inm.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  "
-//                + "where "+campo+" = '"+buscar+"'"+" and arr.estado=1";
+        String consulta ="";
         
-        String consulta ="select inm.codigo , pro.cedula , (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) AS pronombrecompleto, inm.direccion, inm.barrio "
+
+        consulta ="select inm.codigo , pro.cedula , (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) AS pronombrecompleto, inm.direccion, inm.barrio "
                 + "from propietarios as pro inner join  inmuebles as inm on pro.cod_propietario = inm.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  "
-                + "where "+campo+" = '"+buscar+"' and inm.estado = 1 and arr.estado = 1 order by inm.codinmueble desc " ;    
+                + "where "+campo+" = '"+buscar+"' and inm.estado = 1 and arr.estado = 1 order by inm.codinmueble desc " ; 
+        if(ADM_jcombobuscar.equals("todo")){
+            consulta ="select inm.codigo , pro.cedula , (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) AS pronombrecompleto, inm.direccion, inm.barrio "
+                    + "from propietarios as pro inner join  inmuebles as inm on pro.cod_propietario = inm.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  "
+                    + "where inm.estado = 1 and arr.estado = 1 order by inm.codinmueble desc " ;             
+            jText_ADMbuscar.setText("");
+        }        
         System.out.println(consulta);
         ResultSet n=conn.consulta(consulta);
         try{
@@ -152,7 +160,7 @@ public void limpiarTabla(JTable tabla){
         Propietariovacio();
         //inmuebles
         INMinmueble_enabled(falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso);
-        INMpropietarioedit(falso, falso, falso, falso, falso, falso);
+        INMpropietarioedit(falso, falso, falso, falso, falso, falso, falso);
         INMinmueblevacio();
         INMpropietariovacio();
         //Adm inmuebles
@@ -188,6 +196,7 @@ public void limpiarTabla(JTable tabla){
         jText_Isaldo.setEnabled(p);
         jButton_Iguardar.setVisible(q);
         
+        
     }
     
     public void Inquilinoacciones(Boolean a, Boolean b, Boolean c, Boolean d, Boolean e, Boolean f, Boolean g, Boolean h, Boolean i, Boolean j){
@@ -202,6 +211,10 @@ public void limpiarTabla(JTable tabla){
         jButton_Imodificar.setSelected(h);
         jButton_Ieliminar.setSelected(i);
         jButton_Iinforme.setSelected(j);
+        if(acc.getNivel().equals("1")){
+            jButton_Ieliminar.setVisible(false);
+            
+        }
     }
     
     public void Inquilinovacio(){
@@ -278,11 +291,6 @@ public void limpiarTabla(JTable tabla){
             }    
     }
     
-    
-    
-    
-
-    
     public void Propietarioenable(Boolean a, Boolean b, Boolean c, Boolean d, Boolean e, Boolean f, Boolean g, Boolean h, Boolean i, Boolean j, Boolean k, Boolean l, Boolean m, Boolean n, Boolean o, Boolean p, Boolean q){
         jText_Pcodigo.setEnabled(a);
         jText_Pcedula.setEnabled(b);
@@ -317,6 +325,11 @@ public void limpiarTabla(JTable tabla){
         jButton_Pmodificar.setSelected(h);
         jButton_Peliminar.setSelected(i);
         jButton_Pinforme.setSelected(j);
+        
+        if(acc.getNivel().equals("1")){
+            jButton_Peliminar.setVisible(false);
+            
+        }        
     }
     
     public void Propietariovacio(){
@@ -427,6 +440,11 @@ public void limpiarTabla(JTable tabla){
         jButton_Cmodificar.setSelected(h);
         jButton_Celiminar.setSelected(i);
         jButton_Cinforme.setSelected(j);
+        
+        if(acc.getNivel().equals("1")){
+            jButton_Celiminar.setVisible(false);
+            
+        }        
     }
     
     public void Codeudorvacio(){
@@ -616,16 +634,18 @@ public void CodeudorBuscar(){
         INMcod_arrendatario=0;    
     }
     
-    public void INMpropietarioedit(Boolean a, Boolean b, Boolean c, Boolean d, Boolean e, Boolean f){
-        jText_INM_PROnombre.setEditable(a);
-        jText_INM_PROcelular.setEditable(b);
-        jText_INM_PROfijo.setEditable(c);
-        jText_INM_PROemail.setEditable(d);
-        jText_INM_PRObanco.setEditable(e);
-        jText_INM_PROncuenta.setEditable(f);
+    public void INMpropietarioedit(Boolean a, Boolean b, Boolean c, Boolean d, Boolean e, Boolean f, Boolean g){
+        jText_INM_PROcedula.setEditable(a);
+        jText_INM_PROnombre.setEditable(b);
+        jText_INM_PROcelular.setEditable(c);
+        jText_INM_PROfijo.setEditable(d);
+        jText_INM_PROemail.setEditable(e);
+        jText_INM_PRObanco.setEditable(f);
+        jText_INM_PROncuenta.setEditable(g);
     }
     
     public void INMinquilinoedit(Boolean a, Boolean b, Boolean c, Boolean d, Boolean e, Boolean f){
+        jText_INM_ARcedula.setEditable(a);
         jText_INM_ARnombre.setEditable(a);
         jText_INM_ARcelular.setEditable(b);
         jText_INM_ARfijo.setEditable(c);
@@ -652,7 +672,6 @@ public void CodeudorBuscar(){
         jText_ADM_diacausacion.setEditable(b);
         jText_ADM_regimen.setEditable(b);
         jText_ADM_inmdisponible.setEditable(b);
-        
         
         jText_ADM_codinm.setEnabled(c);
         jText_ADM_cedpro.setEnabled(c);
@@ -694,11 +713,17 @@ public void CodeudorBuscar(){
         jButton_ADM_informe.setSelected(d);
         jButton_ADM_informe.setVisible(c);
         INMaccion = 0;
+        
+        if(acc.getNivel().equals("1")){
+            jButton_ADM_eliminar.setVisible(false);
+            
+        }        
     }    
     public void INMBTN_iniciales(Boolean a, Boolean b){
         jButton_INMagregar.setSelected(a);
         jButton_INMmodificar.setSelected(b);
         INMaccion = 1;
+        
     }
     
     
@@ -734,14 +759,14 @@ public void CodeudorBuscar(){
                 
 
                 
-                if(jText_INM_ARnombre.getText().trim().equals("")){
-                    int seletedvalue = JOptionPane.showConfirmDialog(rootPane, "Dejaras el Inmueble sin Inquilino?"+jText_Inombres.getText()+"?", "Advertencia Inquilino", JOptionPane.OK_CANCEL_OPTION);
-                    if(seletedvalue ==JOptionPane.YES_OPTION ){                    
-                        INMcod_arrendatario = 1;
-                        jText_INM_ARnombre.setText("Realtors");
-                    }                
-                    validar=1;
-                }
+//                if(jText_INM_ARnombre.getText().trim().equals("")){
+//                    int seletedvalue = JOptionPane.showConfirmDialog(rootPane, "Dejaras el Inmueble sin Inquilino?"+jText_Inombres.getText()+"?", "Advertencia Inquilino", JOptionPane.OK_CANCEL_OPTION);
+//                    if(seletedvalue ==JOptionPane.YES_OPTION ){                    
+//                        INMcod_arrendatario = 1;
+//                        jText_INM_ARnombre.setText("Realtors");
+//                    }
+//                    validar=1;
+//                }
                 return  validar;
     }
     //PROPIETARIOS 
@@ -1996,7 +2021,7 @@ public void CodeudorBuscar(){
         jScrollPane1.setBounds(230, 80, 610, 130);
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Buscar Por", "Cod inmueble", "Codigo Propietario", "Cedula Propietario", "Codigo Inquilino", "Cedula Inquilino", "Barrio" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Buscar Por", "Cod inmueble", "Codigo Propietario", "Cedula Propietario", "Codigo Inquilino", "Cedula Inquilino", "Barrio", "Todos" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -2379,6 +2404,11 @@ public void CodeudorBuscar(){
         jLabel43.setBounds(280, 250, 100, 30);
 
         jText_INMdiacausacion.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jText_INMdiacausacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_INMdiacausacionActionPerformed(evt);
+            }
+        });
         jText_INMdiacausacion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jText_INMdiacausacionKeyTyped(evt);
@@ -2776,9 +2806,11 @@ public void CodeudorBuscar(){
             java.util.Date utilDate = new java.util.Date(); //fecha actual
             long lnMilisegundos = utilDate.getTime();
             java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(lnMilisegundos);
-
-            String insert= "insert into inquilinos(codigo, cedula, expedida, nombres, primer_apellido, segundo_apellido, direccion_casa, direccion_oficina, celular, fijo, banco, ncuenta , email, cod_predial, cod_contable, saldo, estado_inquilino, fecha_reg) "
-            + "VALUES ('"+jText_Icodigo.getText().toUpperCase()+"', "+jText_Icedula.getText().toUpperCase()+", '"+jText_Iexpedida.getText().toUpperCase()+"', '"+jText_Inombres.getText()+"', '"+jText_Iapellido1.getText().toUpperCase()+"', '"+jText_Iapellido2.getText().toUpperCase()+"', '"+jText_Idireccioncasa.getText().toUpperCase()+"', '"+jText_Idireccionoficina.getText().toUpperCase()+"', "+jText_Icelular.getText().toUpperCase()+", "+jText_Ifijo.getText().toUpperCase()+", '"+jText_Ibanco.getText().toUpperCase()+"' , '"+jText_Icuenta.getText().toUpperCase()+"', '"+jText_Cemail.getText().toUpperCase()+"', '"+jText_Icodpredial.getText().toUpperCase()+"', '"+jText_Icodcontable.getText().toUpperCase()+"', 0, 1, '"+sqlTimestamp+"')";
+            String nombre_completo = jText_Inombres.getText().toUpperCase()+" "+jText_Iapellido1.getText().toUpperCase()+" "+jText_Iapellido2.getText().toUpperCase();
+            
+            
+            String insert= "insert into inquilinos(codigo, cedula, expedida, nombres, primer_apellido, segundo_apellido, direccion_casa, direccion_oficina, celular, fijo, banco, ncuenta , email, cod_predial, cod_contable, saldo, estado_inquilino, fecha_reg, nombre_completo) "
+            + "VALUES ('"+jText_Icodigo.getText().toUpperCase()+"', "+jText_Icedula.getText().toUpperCase()+", '"+jText_Iexpedida.getText().toUpperCase()+"', '"+jText_Inombres.getText()+"', '"+jText_Iapellido1.getText().toUpperCase()+"', '"+jText_Iapellido2.getText().toUpperCase()+"', '"+jText_Idireccioncasa.getText().toUpperCase()+"', '"+jText_Idireccionoficina.getText().toUpperCase()+"', "+jText_Icelular.getText().toUpperCase()+", "+jText_Ifijo.getText().toUpperCase()+", '"+jText_Ibanco.getText().toUpperCase()+"' , '"+jText_Icuenta.getText().toUpperCase()+"', '"+jText_Cemail.getText().toUpperCase()+"', '"+jText_Icodpredial.getText().toUpperCase()+"', '"+jText_Icodcontable.getText().toUpperCase()+"', 0, 1, '"+sqlTimestamp+"', '"+nombre_completo+"')";
             System.out.println(insert);
 
             if(validar(datos)==1){
@@ -2791,7 +2823,8 @@ public void CodeudorBuscar(){
             break;
             case 3:
             Object[] datosupdate = {jText_Icodigo.getText(), jText_Icedula.getText(), jText_Iexpedida.getText(), jText_Inombres.getText(), jText_Iapellido1.getText(), jText_Iapellido2.getText(), jText_Idireccioncasa.getText(), jText_Idireccionoficina.getText(), jText_Icodpredial.getText(), jText_Icodcontable.getText()};
-            String update = "UPDATE inquilinos SET codigo = '"+jText_Icodigo.getText().toUpperCase()+"', cedula="+jText_Icedula.getText()+", expedida='"+jText_Iexpedida.getText().toUpperCase()+"', nombres='"+jText_Inombres.getText().toUpperCase()+"', primer_apellido='"+jText_Iapellido1.getText().toUpperCase()+"', segundo_apellido='"+jText_Iapellido2.getText().toUpperCase()+"', direccion_casa='"+jText_Idireccioncasa.getText().toUpperCase()+"', direccion_oficina='"+jText_Idireccionoficina.getText().toUpperCase()+"', celular="+jText_Icelular.getText().toUpperCase()+", fijo="+jText_Ifijo.getText().toUpperCase()+", banco='"+jText_Ibanco.getText().toUpperCase()+"', ncuenta='"+jText_Icuenta.getText().toUpperCase()+"', email='"+jText_Iemail.getText().toUpperCase()+"',cod_predial='"+jText_Icodpredial.getText().toUpperCase()+"',  cod_contable='"+jText_Icodcontable.getText().toUpperCase()+"', saldo="+jText_Isaldo.getText()+" where cod_inquilino = "+Icod_Inquilino;
+            nombre_completo = jText_Inombres.getText().toUpperCase()+" "+jText_Iapellido1.getText().toUpperCase()+" "+jText_Iapellido2.getText().toUpperCase();
+            String update = "UPDATE inquilinos SET codigo = '"+jText_Icodigo.getText().toUpperCase()+"', cedula="+jText_Icedula.getText()+", expedida='"+jText_Iexpedida.getText().toUpperCase()+"', nombres='"+jText_Inombres.getText().toUpperCase()+"', primer_apellido='"+jText_Iapellido1.getText().toUpperCase()+"', segundo_apellido='"+jText_Iapellido2.getText().toUpperCase()+"', direccion_casa='"+jText_Idireccioncasa.getText().toUpperCase()+"', direccion_oficina='"+jText_Idireccionoficina.getText().toUpperCase()+"', celular="+jText_Icelular.getText().toUpperCase()+", fijo="+jText_Ifijo.getText().toUpperCase()+", banco='"+jText_Ibanco.getText().toUpperCase()+"', ncuenta='"+jText_Icuenta.getText().toUpperCase()+"', email='"+jText_Iemail.getText().toUpperCase()+"',cod_predial='"+jText_Icodpredial.getText().toUpperCase()+"',  cod_contable='"+jText_Icodcontable.getText().toUpperCase()+"', saldo="+jText_Isaldo.getText()+", nombre_completo = '"+nombre_completo+"' where cod_inquilino = "+Icod_Inquilino;
             System.out.println(update);
             if(validar(datosupdate)==1){
                 if(conn.Dactualizar(update, "Inquilino Actualizado Con Exito")==1){
@@ -3017,6 +3050,8 @@ public void CodeudorBuscar(){
         INMpropietariovacio();
         INMinquilinovacio();
         INMinmueble_enabled(verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero);
+        INMpropietarioedit(verdadero, falso, falso, falso, falso, falso, falso);
+        INMinquilinoedit(falso, falso, falso, falso, falso, falso);
         INMBTN_iniciales(verdadero, falso);
         
         jButton_INMguardar.setText("Crear");
@@ -3039,11 +3074,13 @@ public void CodeudorBuscar(){
     private void jText_INMcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_INMcodigoActionPerformed
         conn.establecer_conexion();
         if(INMaccion==2){
-            String consulta = "select direccion, uso, clase, fecha_inicio, edificio, avaluo, barrio, municipio, canon, admon, admon_estado, inmueble_disponible, comision, dia_causacion, dia_inicial, dia_final, mes, metodo_pago, regimen, iva, pro.cedula, (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) as nombrecompletopropietario, pro.email, pro.celular, pro.fijo, "
-                    + "pro.banco, pro.ncuenta, pro.cod_propietario, inq.cedula, (inq.nombres || ' ' || inq.primer_apellido || ' ' || inq.segundo_apellido) as nombrecompletoinquilino, inq.email, inq.celular, inq.fijo, inq.banco, inq.ncuenta, inq.cod_inquilino, "
-                    + "inm.codinmueble "
-                    + "from propietarios as pro INNER JOIN inmuebles as inm on inm.cod_propietario = pro.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  "
-                + "where inm.codigo = '"+jText_INMcodigo.getText().trim().toUpperCase()+"' and arr.estado = 1";
+            String consulta = "";
+            consulta = "select direccion, uso, clase, fecha_inicio, edificio, avaluo, barrio, municipio, canon, admon, admon_estado, inmueble_disponible, comision, dia_causacion, dia_inicial, dia_final, mes, metodo_pago, regimen, iva, pro.cedula, (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) as nombrecompletopropietario, pro.email, pro.celular, pro.fijo, pro.banco, pro.ncuenta, pro.cod_propietario, inm.codinmueble from propietarios as pro INNER JOIN inmuebles as inm on inm.cod_propietario = pro.cod_propietario where inm.codigo = '"+jText_INMcodigo.getText().toUpperCase()+"'";
+//            String consulta = "select direccion, uso, clase, fecha_inicio, edificio, avaluo, barrio, municipio, canon, admon, admon_estado, inmueble_disponible, comision, dia_causacion, dia_inicial, dia_final, mes, metodo_pago, regimen, iva, pro.cedula, (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) as nombrecompletopropietario, pro.email, pro.celular, pro.fijo, "
+//                    + "pro.banco, pro.ncuenta, pro.cod_propietario, inq.cedula, (inq.nombres || ' ' || inq.primer_apellido || ' ' || inq.segundo_apellido) as nombrecompletoinquilino, inq.email, inq.celular, inq.fijo, inq.banco, inq.ncuenta, inq.cod_inquilino, "
+//                    + "inm.codinmueble "
+//                    + "from propietarios as pro INNER JOIN inmuebles as inm on inm.cod_propietario = pro.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  "
+//                + "where inm.codigo = '"+jText_INMcodigo.getText().trim().toUpperCase()+"' and arr.estado = 1";
             System.out.println(consulta);
             ResultSet query3 = conn.consulta(consulta);
             String fechacombo = "";
@@ -3059,7 +3096,6 @@ public void CodeudorBuscar(){
                     radioformapago = (query3.getString(18));
                     INMmetodo_pago = radioformapago;
                     admon_estado = radioadmin;
-                    
                     switch (radioadmin){
                         case 1:
                         jRadio_INMincluida.setSelected(true);
@@ -3121,35 +3157,56 @@ public void CodeudorBuscar(){
                     jText_INM_PROncuenta.setText(query3.getString(27));
                     INMcod_propietario = (query3.getInt(28));
                     //System.out.print("codigo "+INMcod_propietario);
-                    
-                    //Inquilinos
-                    jText_INM_ARcedula.setText(query3.getString(29));
-                    jText_INM_ARnombre.setText(query3.getString(30));
-                    jText_INM_ARemail.setText(query3.getString(31));
-                    jText_INM_ARcelular.setText(query3.getString(32));
-                    jText_INM_ARfijo.setText(query3.getString(33));
-                    jText_INM_ARbanco.setText(query3.getString(34));
-                    jText_INM_ARncuenta.setText(query3.getString(35));
-                    INMcod_arrendatario = (query3.getInt(36));
-                    //System.out.print("codigo "+INMcod_propietario);
+
+//                                            //Inquilinos
+//                    jText_INM_ARcedula.setText(query3.getString(29));
+//                    jText_INM_ARnombre.setText(query3.getString(30));
+//                    jText_INM_ARemail.setText(query3.getString(31));
+//                    jText_INM_ARcelular.setText(query3.getString(32));
+//                    jText_INM_ARfijo.setText(query3.getString(33));
+//                    jText_INM_ARbanco.setText(query3.getString(34));
+//                    jText_INM_ARncuenta.setText(query3.getString(35));
+//                    INMcod_arrendatario = (query3.getInt(36));
+//                    //System.out.print("codigo "+INMcod_propietario);                    
                     
                     //Codigo inmueble
-                    INMcod_inmueble = query3.getInt(37);
+                    INMcod_inmueble = query3.getInt(29);
                     
                     //activando los botones editables
                     INMinmueble_enabled(verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero, verdadero);
-                    INMpropietarioedit(verdadero, falso, falso, falso, falso, falso);
+                    INMpropietarioedit(verdadero, falso, falso, falso, falso, falso, falso);
+                    INMinquilinoedit(falso, falso, falso, falso, falso, falso);
                     
                     //vacio la variable anterior por si algo.
                     INMcod_arrendatarioant=0;
                 }
                 
+                //verificar inquilinos arrendados
+                String consultaarrienda = "select inq.cedula, (inq.nombres || ' ' || inq.primer_apellido || ' ' || inq.segundo_apellido) as nombrecompletoinquilino, inq.email, inq.celular, inq.fijo, inq.banco, inq.ncuenta, inq.cod_inquilino \n" +
+                                            "from arrienda as arr INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  where arr.cod_inmueble = "+INMcod_inmueble+" and arr.estado = 1";
+                System.out.println(consultaarrienda);
+                ResultSet rt = conn.consulta(consultaarrienda);
+                try {
+                    while (rt.next()) {                        
+                    jText_INM_ARcedula.setText(rt.getString(1));
+                    jText_INM_ARnombre.setText(rt.getString(2));
+                    jText_INM_ARemail.setText(rt.getString(3));
+                    jText_INM_ARcelular.setText(rt.getString(4));
+                    jText_INM_ARfijo.setText(rt.getString(5));
+                    jText_INM_ARbanco.setText(rt.getString(6));
+                    jText_INM_ARncuenta.setText(rt.getString(7));
+                    INMcod_arrendatario = (rt.getInt(8));
+                    //System.out.print("codigo "+INMcod_propietario);
+                    }
+                } catch (Exception e) {
+                }
+                
+                
                 if(contador == 0){
                     JOptionPane.showMessageDialog(rootPane, "El Codigo "+jText_INMcodigo.getText()+" No Existe");
                     INMinmueblevacio();
                     INMpropietariovacio();
-                    INMinquilinovacio();                  
-                  
+                    INMinquilinovacio();
                 }
             }
             catch(Exception ee){
@@ -3176,14 +3233,13 @@ public void CodeudorBuscar(){
     }//GEN-LAST:event_jRadio_INMbancoActionPerformed
 
     private void jCheckBox_INMdisponibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_INMdisponibleActionPerformed
-
         
     }//GEN-LAST:event_jCheckBox_INMdisponibleActionPerformed
 
     private void jText_INM_PROcedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_INM_PROcedulaActionPerformed
         conn.establecer_conexion();
         ResultSet query = conn.consulta("select cod_propietario, (nombres || ' ' || primer_apellido || ' ' || segundo_apellido) as nombrecompleto, celular, fijo, email, banco, ncuenta from propietarios where cedula  = "+jText_INM_PROcedula.getText().toUpperCase()+" or cod_propietario = "+jText_INM_PROcedula.getText().toUpperCase() );
-        INMpropietarioedit(falso, falso, falso, falso, falso, falso);
+        INMpropietarioedit(verdadero, falso, falso, falso, falso, falso, falso);
         INMcod_propietarioant =  INMcod_propietario;
         try{
             while(query.next()){
@@ -3239,40 +3295,56 @@ public void CodeudorBuscar(){
         switch(INMaccion){
             case 1:
                 
-            //validar codigoarrendatario
-            if(INMvalidarcampos()==0){
-
-                String insert= "INSERT INTO inmuebles(cod_propietario, codigo, direccion, uso, clase, fecha_inicio, edificio, avaluo, barrio, municipio, canon, admon, admon_estado, inmueble_disponible, comision, dia_causacion, dia_inicial, dia_final, mes, metodo_pago, regimen, iva, estado, fecha_reg) "
-                + "VALUES ("+INMcod_propietario+", '"+jText_INMcodigo.getText().toUpperCase()+"', '"+jText_INMdireccion.getText().toUpperCase()+"', '"+jComboBox_INMuso.getSelectedItem()+"', '"+jComboBox_INMclase.getSelectedItem()+"', '"+dateChooserCombo_INMfechaini.getText()+"', '"+jText_INMedificio.getText().toUpperCase()+"', "+jText_INMavaluo.getText()+", '"+jText_INMbarrio.getText().toUpperCase()+"', '"+jText_INMmunicipio.getText().toUpperCase()+"' ,"+jText_INMcanon.getText()+" ,"+jText_INMadmon.getText()+", "+admon_estado+", "+inmdisponible+", "+jText_INMcomicion.getText()+", "+jText_INMdiacausacion.getText()+", "+jText_INMdiaini.getText()+", "+jText_INMdiafin.getText()+", '"+jComboBox_INMmes.getSelectedItem()+"', '"+INMmetodo_pago+"', '"+jComboBox_INMregimen.getSelectedItem()+"', "+jText_INMiva.getText()+", 1, now())";
-                
-                System.out.println(insert);
-                jButton_INMagregar.setSelected(false);
-
+            //validar codigoa inmueble
+                String consulta2="select codigo from inmuebles where codigo = '"+jText_INMcodigo.getText().toUpperCase()+"'";
+                int valid_codigo_inmueble = 0;
+                ResultSet rs = conn.consulta(consulta2);
                 try {
-                    if(conn.Dinsertar(insert)==1){
-                            String query = "select max(codinmueble) as codinmueble from inmuebles";
-                            ResultSet consulta = conn.consulta(query);
-                            try {
-                                while (consulta.next()) {
-                                    INMcod_inmueble = Integer.parseInt(consulta.getString(1));
-                                }
-                            } catch (Exception e) {
+                    while (rs.next()) {                        
+                        valid_codigo_inmueble++;
+                    }
+                    if(valid_codigo_inmueble!=0){
 
-                            }
-                            String insert2 = "insert into arrienda(cod_inmueble, cod_inquilino, fecha, estado) "
-                                    + "values ("+INMcod_inmueble+", "+INMcod_arrendatario+", now(), 1)";                  
-                            System.out.print(insert2);
-                            conn.Dinsertar2(insert2);
-                            INMinmueblevacio();
-                            INMinmueble_enabled(falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso);
-                            INMpropietariovacio();
-                            INMpropietarioedit(falso, falso, falso, falso, falso, falso);                        
-                            INMinquilinovacio();
-                            INMinquilinoedit(falso, falso, falso, falso, falso, falso);
                     }
                 } catch (Exception e) {
-                }                
+                }
+            //
+            if(valid_codigo_inmueble>0){
+                conn.JOptionShowMessage("+1", "", "El Codigo "+jText_INMcodigo.getText().toUpperCase()+" Ya existe");
+                jText_INMcodigo.setText("");                                        
             }
+            else if(INMvalidarcampos()==0){
+                    String insert= "INSERT INTO inmuebles(cod_propietario, codigo, direccion, uso, clase, fecha_inicio, edificio, avaluo, barrio, municipio, canon, admon, admon_estado, inmueble_disponible, comision, dia_causacion, dia_inicial, dia_final, mes, metodo_pago, regimen, iva, estado, fecha_reg) "
+                    + "VALUES ("+INMcod_propietario+", '"+jText_INMcodigo.getText().toUpperCase()+"', '"+jText_INMdireccion.getText().toUpperCase()+"', '"+jComboBox_INMuso.getSelectedItem()+"', '"+jComboBox_INMclase.getSelectedItem()+"', '"+dateChooserCombo_INMfechaini.getText()+"', '"+jText_INMedificio.getText().toUpperCase()+"', "+jText_INMavaluo.getText()+", '"+jText_INMbarrio.getText().toUpperCase()+"', '"+jText_INMmunicipio.getText().toUpperCase()+"' ,"+jText_INMcanon.getText()+" ,"+jText_INMadmon.getText()+", "+admon_estado+", "+inmdisponible+", "+jText_INMcomicion.getText()+", "+jText_INMdiacausacion.getText()+", "+jText_INMdiaini.getText()+", "+jText_INMdiafin.getText()+", '"+jComboBox_INMmes.getSelectedItem()+"', '"+INMmetodo_pago+"', '"+jComboBox_INMregimen.getSelectedItem()+"', "+jText_INMiva.getText()+", 1, now())";
+
+                    System.out.println(insert);
+                    jButton_INMagregar.setSelected(false);
+                    try {
+                        if(conn.Dinsertar(insert)==1){
+                                String query = "select max(codinmueble) as codinmueble from inmuebles";
+                                ResultSet consulta = conn.consulta(query);
+                                try {
+                                    while (consulta.next()) {
+                                        INMcod_inmueble = Integer.parseInt(consulta.getString(1));
+                                    }
+                                } catch (Exception e) {
+
+                                }
+    //                            String insert2 = "insert into arrienda(cod_inmueble, cod_inquilino, fecha, estado) "
+    //                                    + "values ("+INMcod_inmueble+", "+INMcod_arrendatario+", now(), 1)";                  
+    //                            System.out.print(insert2);
+    //                            conn.Dinsertar2(insert2);
+                                INMinmueblevacio();
+                                INMinmueble_enabled(falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso);
+                                INMpropietariovacio();
+                                INMpropietarioedit(falso, falso, falso, falso, falso, falso, falso);
+                                INMinquilinovacio();
+                                INMinquilinoedit(falso, falso, falso, falso, falso, falso);
+                        }
+                    } catch (Exception e) {
+                    }                
+                }            
+
 
             break;
             case 2:
@@ -3299,7 +3371,7 @@ public void CodeudorBuscar(){
                             INMinmueble_enabled(falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso, falso);
 
                             INMpropietariovacio();
-                            INMpropietarioedit(falso, falso, falso, falso, falso, falso);
+                            INMpropietarioedit(falso, falso, falso, falso, falso, falso, falso);
 
                             INMinquilinovacio();
                             INMinquilinoedit(falso, falso, falso, falso, falso, falso);                    
@@ -3340,27 +3412,27 @@ public void CodeudorBuscar(){
     }//GEN-LAST:event_jText_INM_ARncuentaActionPerformed
 
     private void jText_INM_ARcedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_INM_ARcedulaActionPerformed
-        conn.establecer_conexion();
-        String select = "select cod_inquilino, (nombres || ' ' || primer_apellido || ' ' || segundo_apellido) as nombrecompleto, celular, fijo, email, banco, ncuenta from inquilinos where cedula  = "+jText_INM_ARcedula.getText().toUpperCase()+" or cod_inquilino = "+jText_INM_ARcedula.getText().toUpperCase() ; 
-        System.out.print(select);
-        ResultSet query = conn.consulta(select);
-        
-        INMinquilinoedit(falso, falso, falso, falso, falso, falso);
-        INMcod_arrendatarioant =  INMcod_arrendatario;
-        try{
-            while(query.next()){
-                INMcod_arrendatario = Integer.parseInt(query.getString(1));                
-                jText_INM_ARnombre.setText(query.getString(2));
-                jText_INM_ARcelular.setText(query.getString(3));
-                jText_INM_ARfijo.setText(query.getString(4));
-                jText_INM_ARemail.setText(query.getString(5));
-                jText_INM_ARbanco.setText(query.getString(6));
-                jText_INM_ARncuenta.setText(query.getString(7));
-                
-            }
-        }
-        catch(Exception e){
-        }
+//        conn.establecer_conexion();
+//        String select = "select cod_inquilino, (nombres || ' ' || primer_apellido || ' ' || segundo_apellido) as nombrecompleto, celular, fijo, email, banco, ncuenta from inquilinos where cedula  = "+jText_INM_ARcedula.getText().toUpperCase()+" or cod_inquilino = "+jText_INM_ARcedula.getText().toUpperCase() ; 
+//        System.out.print(select);
+//        ResultSet query = conn.consulta(select);
+//        
+//        INMinquilinoedit(falso, falso, falso, falso, falso, falso);
+//        INMcod_arrendatarioant =  INMcod_arrendatario;
+//        try{
+//            while(query.next()){
+//                INMcod_arrendatario = Integer.parseInt(query.getString(1));                
+//                jText_INM_ARnombre.setText(query.getString(2));
+//                jText_INM_ARcelular.setText(query.getString(3));
+//                jText_INM_ARfijo.setText(query.getString(4));
+//                jText_INM_ARemail.setText(query.getString(5));
+//                jText_INM_ARbanco.setText(query.getString(6));
+//                jText_INM_ARncuenta.setText(query.getString(7));
+//                
+//            }
+//        }
+//        catch(Exception e){
+//        }
     }//GEN-LAST:event_jText_INM_ARcedulaActionPerformed
 
     private void jText_INM_ARcedulaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_INM_ARcedulaKeyPressed
@@ -3515,6 +3587,9 @@ public void CodeudorBuscar(){
             case 6:
                 ADM_jcombobuscar= "inm.barrio";
                 break;                
+            case 7:
+                ADM_jcombobuscar= "todo";
+                break;                                
             default:
                 JOptionPane.showMessageDialog(rootPane, "Contacte con Soporte tecnico: Error Combo ADM inmuebles");
                 break;
@@ -3601,6 +3676,10 @@ public void CodeudorBuscar(){
         // TODO add your handling code here:
     }//GEN-LAST:event_jText_INMadmonActionPerformed
 
+    private void jText_INMdiacausacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_INMdiacausacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_INMdiacausacionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -3651,7 +3730,7 @@ public void CodeudorBuscar(){
     Boolean verdadero=true;
     Boolean falso=false;
     Conexion conn = new Conexion();
-    
+    acceso acc = new acceso();
     //Jtable
 //    
 //    static ResultSet rs;

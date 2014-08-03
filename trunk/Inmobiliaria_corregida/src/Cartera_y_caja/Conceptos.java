@@ -73,6 +73,12 @@ public class Conceptos extends javax.swing.JDialog {
        jTextField_nombre.setEnabled(b);
        jCombo_contable.setEnabled(b);
    }
+   
+   private void botones_iniciales(Boolean a, boolean b){
+       jButton2.setSelected(a);
+       jButton3.setSelected(b);
+   
+   }
        public void llenartabla(){
 
         conn.establecer_conexion();
@@ -86,6 +92,18 @@ public class Conceptos extends javax.swing.JDialog {
         }
         catch(Exception e){}
     }
+       
+    public void limpiarTabla(JTable tabla){
+            try {
+                DefaultTableModel modelo=(DefaultTableModel) tabla.getModel();
+                int filas=tabla.getRowCount();
+                for (int i = 0;filas>i; i++) {
+                    modelo.removeRow(0);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
+            }
+        }       
        
        public void combo(){
        //limpio el combobox
@@ -136,7 +154,7 @@ public class Conceptos extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        jTextField_buscar = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -168,18 +186,23 @@ public class Conceptos extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(20, 100, 410, 310);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextField_buscarActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(90, 60, 340, 30);
+        getContentPane().add(jTextField_buscar);
+        jTextField_buscar.setBounds(90, 60, 340, 30);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Cod Contable");
@@ -253,43 +276,96 @@ public class Conceptos extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       inicializar(true, true);
+       inicializar(false, true);
+        botones_iniciales(true, false);
        jButton_confirmar.setVisible(true);
        jButton_confirmar.setText("GUARDAR");
+       
+       String select = "select max(cod_concepto)+1 from conceptos";
+       ResultSet query = conn.consulta(select);
+        try {
+            while (query.next()) {                
+                jTextField_cod.setText(query.getString(1));
+            }
+        } catch (Exception e) {
+        }
+               
+       
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        inicializar(true, false);
+       botones_iniciales(false, true);
        jButton_confirmar.setVisible(true);
        jButton_confirmar.setText("ELIMINAR");
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        modeloDeMiJTable.setRowCount(0);
-        String consulta="select * from conceptos where nombres like '%"+jTextField1.getText().toUpperCase()+"%'";
-        System.out.println(consulta);
-        ResultSet n=conn.consulta(consulta);
-        try{
-            while(n.next()){
-                modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3)});
-            }
-        }catch(Exception e){
-            
-        }
+    private void jTextField_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_buscarActionPerformed
+    String ele = jTextField_buscar.getText().toUpperCase();
+ 
+    for (int i = 0; i < jTable1.getRowCount(); i++) {
+        
+            if (jTable1.getValueAt(i, 1).equals(ele)) {                                           
+           //if (jTable1.getValueAt(i, 1).equals(ele)) {                                           
+                  jTable1.changeSelection(i, 1, false, false);
+                  break;
+           }
+    }
+        
+        
 
-    }//GEN-LAST:event_jTextField1ActionPerformed
+//        modeloDeMiJTable.setRowCount(0);
+//        String consulta = "";
+//        if(jTextField_buscar.getText().equals("")){
+//            consulta = "select * from conceptos";
+//        }
+//        else if(!jTextField_buscar.getText().equals("")){
+//                consulta="select * from conceptos where nombres like '%"+jTextField_buscar.getText().toUpperCase()+"%'";    
+//        }   
+//        System.out.println(consulta);
+//        ResultSet n=conn.consulta(consulta);
+//        int contador = 0;
+//        try{
+//            while(n.next()){
+//                modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3)});
+//                contador++;
+//            }
+//        }catch(Exception e){
+//            
+//        }   
+//        if(contador==0){
+//            conn.JOptionShowMessage("+1", "", "No existe el concepto");
+//        }
+    }//GEN-LAST:event_jTextField_buscarActionPerformed
 
     private void jButton_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_confirmarActionPerformed
+        int validar =1;
         if(jButton_confirmar.getText().equals("GUARDAR")){
-        String insrt="insert into conceptos (nombRes,cod_referencia) values ('"+jTextField_nombre.getText()+"','"+jCombo_contable.getSelectedItem()+"')";
-        conn.insertar(insrt);
+            String insrt="insert into conceptos (nombRes,cod_referencia) values ('"+jTextField_nombre.getText().toUpperCase()+"','"+jCombo_contable.getSelectedItem()+"')";
+            conn.insertar(insrt);
+            validar=1;
         }else if(jButton_confirmar.getText().equals("ELIMINAR")){
             int opcion= JOptionPane.showConfirmDialog(rootPane,"SEGURO DESEA ELIMINAR ESTE CODIGO?","ADVERTENCIA",JOptionPane.OK_CANCEL_OPTION);
             if(opcion== JOptionPane.YES_OPTION){
-        String delete="delete from conceptos where cod_concepto="+jTextField_cod.getText();
-        conn.actualizar(delete, "CONCEPTO ELIMINADO CON EXITO");
+                String delete="delete from conceptos where cod_concepto="+jTextField_cod.getText();
+                conn.actualizar(delete, "CONCEPTO ELIMINADO CON EXITO");
+                validar=1;
             }
         }
+        else if(jButton_confirmar.getText().equals("ACTUALIZAR")){
+            String update = "update conceptos set nombres='"+jTextField_nombre.getText().toUpperCase()+"', cod_referencia ='"+jCombo_contable.getSelectedItem()+"' where cod_concepto = 1";
+            System.out.println(update);
+            conn.Dactualizar(update, "CONCEPTO "+jTextField_nombre.getText()+"se actualizo Correctamente");
+            validar=1;            
+            inicializar(false, false);
+        }
+        if (validar==1){
+            limpiarTabla(jTable1);
+            llenartabla();
+            botones_iniciales(false, false);
+        }
+        
     }//GEN-LAST:event_jButton_confirmarActionPerformed
 
     private void jCombo_contableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_contableActionPerformed
@@ -299,6 +375,26 @@ public class Conceptos extends javax.swing.JDialog {
     private void jCombo_contableItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCombo_contableItemStateChanged
 
     }//GEN-LAST:event_jCombo_contableItemStateChanged
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row=jTable1.getSelectedRow();
+        int seletedvalue = JOptionPane.showConfirmDialog(rootPane, "Deseas Editar el concepto?", "Editar Concepto", JOptionPane.OK_CANCEL_OPTION);
+        if(seletedvalue ==JOptionPane.YES_OPTION ){                    
+            inicializar(false, true);
+            jButton_confirmar.setVisible(true);
+            jButton_confirmar.setText("ACTUALIZAR");
+            jTextField_cod.setText(jTable1.getValueAt(row, 0).toString());
+            jTextField_nombre.setText(jTable1.getValueAt(row, 1).toString());
+            
+            //ojo falta cuadrar el combo 
+            //////
+            //jTextField_nombre.setText(jTable1.getValueAt(row, 2).toString());            
+        }  
+        
+        
+        
+        
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -319,7 +415,7 @@ public class Conceptos extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField_buscar;
     private javax.swing.JTextField jTextField_cod;
     private javax.swing.JTextField jTextField_nombre;
     // End of variables declaration//GEN-END:variables

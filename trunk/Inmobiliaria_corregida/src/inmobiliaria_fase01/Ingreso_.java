@@ -4,8 +4,17 @@
  */
 package inmobiliaria_fase01;
 
+import Administrativo.Usuario_adm;
+import Models.Numero_a_Letra;
+import java.sql.ResultSet;
+import java.util.Vector;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.jvnet.substance.SubstanceLookAndFeel;
+import Models.acceso;
+import java.security.MessageDigest;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,8 +33,52 @@ public class Ingreso_ extends javax.swing.JDialog {
         setResizable(false);
         setLocationRelativeTo(null);
         
+        
+        buscar_clientes();
+        
+        
+        //cotraseña jess
+        jPasswordField1.setText("123");
+        
+        
+        
     }
 
+    public void buscar_clientes(){
+        Vector cliente = new Vector();
+        try{
+         conn.establecer_conexion();
+         String sql="select usuario from usuarios where estado = 1";
+         ResultSet resultado = conn.consulta(sql);
+//      cliente.addElement("Seleccione su Usuario");
+        cliente.addElement("JESS");         
+         while(resultado.next()){
+             cliente.addElement(resultado.getString(1));
+         }
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(cliente));
+
+        }catch(Exception e){
+            
+        }
+    }    
+    
+        private static String md5(String clear) throws Exception {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                byte[] b = md.digest(clear.getBytes());
+
+                int size = b.length;
+                StringBuffer h = new StringBuffer(size);
+                for (int i = 0; i < size; i++) {
+                    int u = b[i] & 255;
+                    if (u < 16) {
+                        h.append("0" + Integer.toHexString(u));
+                    } else {
+                        h.append(Integer.toHexString(u));
+                    }
+                }
+                return h.toString();
+        }    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,20 +103,31 @@ public class Ingreso_ extends javax.swing.JDialog {
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
         getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(350, 70, 270, 40);
+        jComboBox1.setBounds(430, 70, 220, 40);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel1.setText("Contraseña");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(350, 130, 120, 22);
+        jLabel1.setBounds(420, 130, 110, 22);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel2.setText("Usuario");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(350, 40, 120, 22);
+        jLabel2.setBounds(420, 40, 80, 20);
+
+        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jPasswordField1);
-        jPasswordField1.setBounds(350, 160, 270, 30);
+        jPasswordField1.setBounds(430, 160, 220, 30);
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jButton1.setText("Ingresar");
@@ -73,11 +137,11 @@ public class Ingreso_ extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(420, 220, 130, 30);
+        jButton1.setBounds(480, 220, 140, 30);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Sin título-1.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/LOGO2.png"))); // NOI18N
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(10, 20, 380, 240);
+        jLabel3.setBounds(0, 20, 440, 240);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -91,22 +155,72 @@ public class Ingreso_ extends javax.swing.JDialog {
     }//GEN-LAST:event_closeDialog
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.setVisible(false);
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeSilver2007Skin");
-        SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceNegatedTheme");
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Pantalla_Inicial().setVisible(true);
+        int validar = 0;
+        String pass2 = "";
+        if(jComboBox1.getSelectedIndex()==0){        
+        //if(jComboBox1.getSelectedIndex()!=0){
+            
+            char[] passchar = jPasswordField1.getPassword();
+            String pass1 = new String(passchar);
+            try {
+                pass1 = md5(pass1);
+            } catch (Exception ex) {
+                Logger.getLogger(Ingreso_.class.getName()).log(Level.SEVERE, null, ex);
             }
-        });
-
+            conn.establecer_conexion();
+            String consulta = "select contrasena, nivel from usuarios where usuario = '"+jComboBox1.getSelectedItem()+"'";
+            System.err.println(consulta);
+            ResultSet rs = conn.consulta(consulta);
+            try {
+                while (rs.next()) {                
+                    pass2 = (rs.getString(1));
+                    acc.setNivel(rs.getString(2));
+                }
+            } catch (Exception e) {
+            }
+            System.out.println(pass1);
+            System.out.println(pass2);
+            if(pass1.equals(pass2)){
+                this.setVisible(false);
+                JFrame.setDefaultLookAndFeelDecorated(true);
+                SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.OfficeSilver2007Skin");
+                SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceNegatedTheme");
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        new Pantalla_Inicial().setVisible(true);
+                        
+                        acc.setUsuario(jComboBox1.getSelectedItem().toString());
+                        acc.setSesion("ACTIVA");
+                        //String variable = "variablediego";
+                        //acc.setUsuario(variable);
+                    }
+                });            
+            }
+            else{
+                conn.JOptionShowMessage("+1", "", "Contraseña Incorrecta");
+            }            
+        }
+        else{
+            conn.JOptionShowMessage("+1", "", "Selecciona un usuario");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+       jButton1ActionPerformed(evt);
+        
+
+    }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-        
+    
+    Conexion conn = new Conexion();
+    acceso acc = new acceso();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
