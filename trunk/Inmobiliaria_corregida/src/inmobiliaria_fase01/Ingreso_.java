@@ -4,7 +4,9 @@
  */
 package inmobiliaria_fase01;
 
+import Administrativo.Buscador_Facutras;
 import Administrativo.Usuario_adm;
+import Cartera_y_caja.Pagos_Administracion;
 import Models.Numero_a_Letra;
 import java.sql.ResultSet;
 import java.util.Vector;
@@ -37,7 +39,7 @@ public class Ingreso_ extends javax.swing.JDialog {
         buscar_clientes();
         
         
-        //cotraseña jess
+//        cotraseña jess
         jPasswordField1.setText("123");
         
         
@@ -50,8 +52,8 @@ public class Ingreso_ extends javax.swing.JDialog {
          conn.establecer_conexion();
          String sql="select usuario from usuarios where estado = 1";
          ResultSet resultado = conn.consulta(sql);
-//      cliente.addElement("Seleccione su Usuario");
-        cliente.addElement("JESS");         
+//         cliente.addElement("JESS");
+       cliente.addElement("SELECCIONE UN USUARIO");         
          while(resultado.next()){
              cliente.addElement(resultado.getString(1));
          }
@@ -157,13 +159,13 @@ public class Ingreso_ extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int validar = 0;
         String pass2 = "";
-        if(jComboBox1.getSelectedIndex()==0){        
-        //if(jComboBox1.getSelectedIndex()!=0){
+//        if(jComboBox1.getSelectedIndex()==0){        
+        if(jComboBox1.getSelectedIndex()!=0){
             
             char[] passchar = jPasswordField1.getPassword();
             String pass1 = new String(passchar);
             try {
-                pass1 = md5(pass1);
+//                pass1 = md5(pass1);
             } catch (Exception ex) {
                 Logger.getLogger(Ingreso_.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -194,7 +196,7 @@ public class Ingreso_ extends javax.swing.JDialog {
                         //String variable = "variablediego";
                         //acc.setUsuario(variable);
                     }
-                });            
+                });
             }
             else{
                 conn.JOptionShowMessage("+1", "", "Contraseña Incorrecta");

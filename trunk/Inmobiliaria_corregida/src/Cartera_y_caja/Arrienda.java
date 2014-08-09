@@ -25,6 +25,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -51,30 +52,9 @@ public class Arrienda extends javax.swing.JDialog {
         buscar_municipio();
         jPanel3.setVisible(false);
 
-//        buscar_empresa();
-        
-//        jButton_reporte.setVisible(false);
-//        jTextField_NOVEDAD.setEnabled(false);
-//        jTextField_Cod_contrato.setEnabled(false);
-//        jComboBox_MOTIVO.setEnabled(false);
+
         
     }
-//    public void buscar_empresa(){
-//      Vector plan= new Vector();
-//      String consulta2="select nombre from operador";
-//      plan.addElement("Seleccione un Operador");
-//      ResultSet n= conn.consulta(consulta2);
-//        try {
-//            while(n.next()){
-//                plan.addElement(n.getString(1));
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Crear_Simcard.class.getName()).log(Level.SEVERE, null, ex);
-//            System.out.println(ex);
-//        }
-//        jComboBox_empresa.setModel(new javax.swing.DefaultComboBoxModel(plan));
-//
-//    }
     public void buscar_clientes(){
         Vector cliente = new Vector();
         try{
@@ -86,6 +66,7 @@ public class Arrienda extends javax.swing.JDialog {
              cliente.addElement(resultado.getString(1));
          }
         jComboBox_Inqulino.setModel(new javax.swing.DefaultComboBoxModel(cliente));
+        AutoCompleteDecorator.decorate(jComboBox_Inqulino);
 
         }catch(Exception e){
             
@@ -137,7 +118,6 @@ public class Arrienda extends javax.swing.JDialog {
         }
 
         };
-        
         modeloDeMiJTable.addColumn("CODIGO");
         modeloDeMiJTable.addColumn("DIRECCION");
         modeloDeMiJTable.addColumn("USO");
@@ -147,7 +127,7 @@ public class Arrienda extends javax.swing.JDialog {
         modeloDeMiJTable.addColumn("MUNICIPIO");
         modeloDeMiJTable.addColumn("CANON");
         modeloDeMiJTable.addColumn("ADMINISTRACION");
-        modeloDeMiJTable.addColumn("ESTADO");
+        modeloDeMiJTable.addColumn("ESTADO ADMIN");
         modeloDeMiJTable.addColumn("ASIGNAR");
         jTable1.setModel(modeloDeMiJTable);
         int[] anchos = {15, 30, 10,30,30,10,30,50,40,30,5};
@@ -156,10 +136,18 @@ public class Arrienda extends javax.swing.JDialog {
         }
         conn.establecer_conexion();
         String consulta="select codigo, direccion, uso, clase, edificio, barrio, municipio, canon , admon, admon_estado FROM inmuebles where inmueble_disponible = 1";
+        System.out.println(consulta);
         ResultSet n=conn.consulta(consulta);
         try{
         while(n.next()){
-            modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3),n.getString(4),n.getString(5),n.getString(6),n.getString(7),n.getString(8),n.getString(9),n.getString(10),""});
+            String estado_admon = "";
+            if(n.getInt(10)==1){
+                estado_admon="INCLUIDA";
+            }
+            else if(n.getInt(10)==2){
+                estado_admon="NO INCLUIDA";
+            }                        
+            modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3),n.getString(4),n.getString(5),n.getString(6),n.getString(7),n.getString(8),n.getString(9),estado_admon,""});
         }
         }
         catch(Exception e){}
@@ -275,6 +263,8 @@ public class Arrienda extends javax.swing.JDialog {
         dateChooserCombo_ini = new datechooser.beans.DateChooserCombo();
         jTextField_Cod_contrato = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
+        jTextField_observacion = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -521,19 +511,19 @@ public class Arrienda extends javax.swing.JDialog {
 
         dateChooserCombo_fin.setFieldFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14));
         jPanel3.add(dateChooserCombo_fin);
-        dateChooserCombo_fin.setBounds(590, 50, 155, 30);
+        dateChooserCombo_fin.setBounds(590, 70, 155, 30);
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("CODIGO CONTRATO");
         jPanel3.add(jLabel14);
-        jLabel14.setBounds(160, 20, 200, 30);
+        jLabel14.setBounds(160, 10, 200, 30);
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("INICIO");
         jPanel3.add(jLabel12);
-        jLabel12.setBounds(250, 50, 100, 30);
+        jLabel12.setBounds(250, 70, 100, 30);
 
         jButton1.setBackground(new java.awt.Color(0, 51, 51));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -545,13 +535,13 @@ public class Arrienda extends javax.swing.JDialog {
             }
         });
         jPanel3.add(jButton1);
-        jButton1.setBounds(450, 90, 140, 40);
+        jButton1.setBounds(460, 110, 140, 30);
 
         dateChooserCombo_ini.setFieldFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14));
         jPanel3.add(dateChooserCombo_ini);
-        dateChooserCombo_ini.setBounds(360, 50, 160, 30);
+        dateChooserCombo_ini.setBounds(360, 70, 160, 30);
 
-        jTextField_Cod_contrato.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField_Cod_contrato.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTextField_Cod_contrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_Cod_contratoActionPerformed(evt);
@@ -563,16 +553,36 @@ public class Arrienda extends javax.swing.JDialog {
             }
         });
         jPanel3.add(jTextField_Cod_contrato);
-        jTextField_Cod_contrato.setBounds(360, 20, 380, 26);
+        jTextField_Cod_contrato.setBounds(360, 10, 380, 28);
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("FIN");
         jPanel3.add(jLabel17);
-        jLabel17.setBounds(520, 50, 60, 30);
+        jLabel17.setBounds(520, 70, 60, 30);
+
+        jTextField_observacion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField_observacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_observacionActionPerformed(evt);
+            }
+        });
+        jTextField_observacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField_observacionKeyTyped(evt);
+            }
+        });
+        jPanel3.add(jTextField_observacion);
+        jTextField_observacion.setBounds(360, 40, 380, 30);
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("OBSERVACION");
+        jPanel3.add(jLabel15);
+        jLabel15.setBounds(160, 40, 200, 30);
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(10, 530, 970, 140);
+        jPanel3.setBounds(10, 530, 970, 150);
         jPanel3.getAccessibleContext().setAccessibleName("Asignar");
 
         pack();
@@ -627,10 +637,14 @@ public class Arrienda extends javax.swing.JDialog {
         limpiartabla();
         try{
         while(n.next()){
-            if(n.getString(9).equals("Disponible")){
-
+            String estado_admon = "";
+            if(n.getInt(10)==1){
+                estado_admon="INCLUIDA";
+            }
+            else if(n.getInt(10)==2){
+                estado_admon="NO INCLUIDA";
             }            
-            modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3),n.getString(4),n.getString(5),n.getString(6),n.getString(7),n.getString(8),n.getString(9),n.getString(10),""});
+            modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3),n.getString(4),n.getString(5),n.getString(6),n.getString(7),n.getString(8),n.getString(9),estado_admon,""});
 
         }
         }
@@ -677,7 +691,7 @@ public class Arrienda extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextField_fijoFocusLost
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(!jTextField_Cod_contrato.getText().toUpperCase().equals("")){
+        if(!jTextField_Cod_contrato.getText().toUpperCase().equals("")&&!jTextField_observacion.getText().equals("")){
             if(buscar_codigo_contrato()==0){
                 if(jComboBox_Inqulino.getSelectedIndex()!=0){
                 int crow=modeloDeMiJTable.getRowCount();
@@ -695,8 +709,8 @@ public class Arrienda extends javax.swing.JDialog {
                 if(a==0){
                 for(int i=0;i<crow;i++){
                     if(jTable1.getValueAt(i,10).equals("X")){
-                        String insert="insert into arrienda (cod_inmueble, cod_inquilino, cod_contrato, fecha, fecha_ini, fecha_fin, estado, usuario, causacion) "
-                                + "values ("+codinmueble+", "+cod_inquilino+", '"+jTextField_Cod_contrato.getText().toUpperCase()+"', now(), '"+dateChooserCombo_ini.getText()+"', '"+dateChooserCombo_fin.getText()+"', 1, '"+acc.getUsuario()+"', 1)";
+                        String insert="insert into arrienda (cod_inmueble, cod_inquilino, cod_contrato, fecha, fecha_ini, fecha_fin, estado, usuario, causacion, observacion) "
+                                + "values ("+codinmueble+", "+cod_inquilino+", '"+jTextField_Cod_contrato.getText().toUpperCase()+"', now(), '"+dateChooserCombo_ini.getText()+"', '"+dateChooserCombo_fin.getText()+"', 1, '"+acc.getUsuario()+"', 1, '"+jTextField_observacion.getText().toUpperCase()+"')";
                         String update="update inmuebles set inmueble_disponible = 2 where codinmueble = "+codinmueble;
                         conn.Dinsertar2(insert);
                         conn.Dactualizar2(update);
@@ -719,9 +733,8 @@ public class Arrienda extends javax.swing.JDialog {
             }else{
                conn.JOptionShowMessage("+1", "", "El CODIGO DE CONTRATO YA EXISTE");
                 }
-        
         }else{
-            conn.JOptionShowMessage("+1", "", "DEBE INGRESAR UN CODIGO DE CONTRATO");
+            conn.JOptionShowMessage("+1", "", "LLENAR LOS DATOS DE CODIGO DE CONTRATO Y OBSERVACION");
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -794,6 +807,14 @@ public class Arrienda extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_Cod_contratoActionPerformed
 
+    private void jTextField_observacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_observacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_observacionActionPerformed
+
+    private void jTextField_observacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_observacionKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_observacionKeyTyped
+
     int novedad=0;
     Conexion conn = new Conexion();
     acceso acc = new acceso();
@@ -824,6 +845,7 @@ public class Arrienda extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
@@ -845,6 +867,7 @@ public class Arrienda extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField_codigo;
     private javax.swing.JTextField jTextField_direccion;
     private javax.swing.JTextField jTextField_fijo;
+    private javax.swing.JTextField jTextField_observacion;
     private javax.swing.JTextField jTextField_saldo;
     // End of variables declaration//GEN-END:variables
 }

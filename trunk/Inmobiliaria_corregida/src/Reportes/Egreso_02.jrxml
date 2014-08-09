@@ -18,7 +18,7 @@
 		<![CDATA[select fac.serial, fac.tipo_usuario, fac.cod_usuario, fac.total, fac.fecha, concepto, valor, (us.nombres||' '||us.primer_apellido||' '||us.segundo_apellido) as nombrecompleto, 
 us.cedula, us.fijo, us.direccion_casa, extract(day from fac.fecha)  as dia, extract(MONTH from fac.fecha)  as mes, extract(YEAR from fac.fecha)  as año, fac.usuario
 from detalle_factura_caja as det INNER JOIN facturas as fac on fac.cod_factura = det.cod_factura 
-inner join inquilinos as us on fac.cod_usuario = us.cod_inquilino
+inner join propietarios as us on fac.cod_usuario = us.cod_propietario 
 
 where fac.serial = $P{serial} and fac.tipo_factura = $P{tipo_factura}]]>
 	</queryString>

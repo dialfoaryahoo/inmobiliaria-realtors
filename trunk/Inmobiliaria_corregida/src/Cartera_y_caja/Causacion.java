@@ -22,8 +22,9 @@ public class Causacion extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setSize(380,430);
+        setResizable(false);
         setLocationRelativeTo(rootPane);
-        inicializar(false, false);
+        inicializar(true, false);
 
     }
   public void inicializar(boolean a, boolean b){
@@ -109,7 +110,6 @@ public class Causacion extends javax.swing.JDialog {
         jRadioButton_diciembre = new javax.swing.JRadioButton();
         jRadioButton_octubre = new javax.swing.JRadioButton();
         jRadioButton_noviembre = new javax.swing.JRadioButton();
-        jRadioButton_liquidaciontotal = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -132,7 +132,7 @@ public class Causacion extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(110, 360, 170, 40);
+        jButton2.setBounds(110, 340, 170, 40);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -140,7 +140,7 @@ public class Causacion extends javax.swing.JDialog {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(80, 10, 200, 50);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Liquidacion Total", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Liquidacion Total", 2, 0, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
         jPanel1.setLayout(null);
 
         meses.add(jRadioButton_marzo);
@@ -239,19 +239,10 @@ public class Causacion extends javax.swing.JDialog {
         jPanel1.add(jRadioButton_noviembre);
         jRadioButton_noviembre.setBounds(230, 130, 110, 30);
 
-        buttonGroup1.add(jRadioButton_liquidaciontotal);
-        jRadioButton_liquidaciontotal.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jRadioButton_liquidaciontotalMouseClicked(evt);
-            }
-        });
-        jPanel1.add(jRadioButton_liquidaciontotal);
-        jRadioButton_liquidaciontotal.setBounds(80, 0, 20, 30);
-
         getContentPane().add(jPanel1);
         jPanel1.setBounds(10, 60, 360, 230);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Liquidacion Individual", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Liquidacion Individual", 2, 0, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
         jPanel2.setLayout(null);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -293,13 +284,15 @@ public class Causacion extends javax.swing.JDialog {
 
         getContentPane().add(jPanel2);
         jPanel2.setBounds(380, 60, 350, 230);
-        getContentPane().add(jTextField_nota);
-        jTextField_nota.setBounds(60, 310, 310, 30);
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField_nota.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        getContentPane().add(jTextField_nota);
+        jTextField_nota.setBounds(50, 300, 310, 30);
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Nota");
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(20, 300, 30, 50);
+        jLabel8.setBounds(10, 290, 40, 50);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -362,7 +355,6 @@ public class Causacion extends javax.swing.JDialog {
                     conn.Dinsertar2(insert1);
                     conn.Dinsertar2(insert2);
                     validar++;
-                    
                     System.out.println(update1);
                     System.out.println(update2);
                     System.out.println(update3);
@@ -373,7 +365,7 @@ public class Causacion extends javax.swing.JDialog {
                     
                 }
                 //cuando se ha causado >= 1 
-                else if(n.getInt(4)==2){
+                if(n.getInt(4)==2){
                     //Verificar si hay administracion incluida
                     if(n.getInt(9)==1){
                         admon_i = admon;
@@ -382,17 +374,17 @@ public class Causacion extends javax.swing.JDialog {
                         System.out.println(insert3);
                     }                    
                     valor_pro = canon - comision_inmueble - admon_i ;
-                    
+
                     String update2 = "update inquilinos set saldo= saldo+"+canon+" where  cod_inquilino = "+cod_inquilino;
                     String update3 = "update propietarios set saldo= saldo+"+valor_pro+" where  cod_propietario = "+cod_propietario;  
                     String insert1 = "insert into causacion (cod_arrienda, mes, fecha, valor, nota) values("+cod_arrienda+", '"+mes_causar+"', now(), "+canon+", '"+jTextField_nota.getText().toUpperCase()+"')";   
-                    String insert2 = "insert into comisiones (cod_arrienda, fecha, valor) values ("+cod_arrienda+", now(), "+comision_inmueble+")";                    
+                    String insert2 = "insert into comisiones (cod_arrienda, fecha, valor) values ("+cod_arrienda+", now(), "+comision_inmueble+")";
                     
                     conn.Dactualizar2(update2);
                     conn.Dactualizar2(update3);
                     conn.Dinsertar2(insert1);
                     conn.Dinsertar2(insert2);
-                    
+                    validar++;
                     System.out.println(update2);
                     System.out.println(update3);
                     System.out.println(insert1);
@@ -406,10 +398,6 @@ public class Causacion extends javax.swing.JDialog {
             this.dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jRadioButton_liquidaciontotalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton_liquidaciontotalMouseClicked
-       inicializar(true, false);
-    }//GEN-LAST:event_jRadioButton_liquidaciontotalMouseClicked
 
     private void jRadioButton_liquidacionindividualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_liquidacionindividualActionPerformed
         // TODO add your handling code here:
@@ -445,7 +433,6 @@ public class Causacion extends javax.swing.JDialog {
     private javax.swing.JRadioButton jRadioButton_julio;
     private javax.swing.JRadioButton jRadioButton_junio;
     private javax.swing.JRadioButton jRadioButton_liquidacionindividual;
-    private javax.swing.JRadioButton jRadioButton_liquidaciontotal;
     private javax.swing.JRadioButton jRadioButton_marzo;
     private javax.swing.JRadioButton jRadioButton_mayo;
     private javax.swing.JRadioButton jRadioButton_noviembre;

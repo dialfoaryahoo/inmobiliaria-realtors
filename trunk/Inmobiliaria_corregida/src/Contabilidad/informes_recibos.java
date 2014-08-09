@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Administrativo;
+package Contabilidad;
 
+import Administrativo.*;
 import inmobiliaria_fase01.Conexion;
 import java.awt.Rectangle;
 import java.sql.ResultSet;
@@ -250,7 +251,7 @@ private DefaultTableModel modeloDeMiJTable;
             if(validador==0){
             modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3),n.getString(4),n.getString(5)});
             }else{
-             modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(4),n.getString(5),n.getString(5)});
+             modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3),n.getString(4),n.getString(5)});
             }
         }
         }

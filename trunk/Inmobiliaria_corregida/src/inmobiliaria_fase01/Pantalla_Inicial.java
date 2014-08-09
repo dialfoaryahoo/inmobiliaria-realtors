@@ -8,6 +8,7 @@ import Administrativo.Index_ADM;
 import Cartera_y_caja.Cartera;
 import Cartera_y_caja.Crear_Otros_Usuarios;
 import Cartera_y_caja.Index;
+import Contabilidad.Index_CONTABILIDAD;
 import Models.acceso;
 import javax.swing.JOptionPane;
 
@@ -105,7 +106,19 @@ public class Pantalla_Inicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        Conexion conn = new Conexion();
+        conn.JOptionShowMessage("+1", "", "Modulo En Mantenimiento");
+
+//       Conexion.dialog();
+//            java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                Index_CONTABILIDAD dialog = new Index_CONTABILIDAD(new javax.swing.JFrame(), true);
+//                  //Cartera dialog = new Cartera(new javax.swing.JFrame(), true);
+//                
+//                dialog.setVisible(true);
+//            }
+//        });
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

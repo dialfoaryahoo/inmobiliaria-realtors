@@ -1,7 +1,6 @@
 package inmobiliaria_fase01;
 
 public class Inmobiliaria_fase01 {
-
     public static void main(String[] args) {
             Conexion.dialog();
             java.awt.EventQueue.invokeLater(new Runnable() {
