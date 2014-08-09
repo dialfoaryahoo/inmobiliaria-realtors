@@ -8,8 +8,7 @@ package Cartera_y_caja;
 
 import Models.Render;
 import Models.acceso;
-import autocompletar.ajTextField;
-import autocompletar.autoComplete;
+
 import inmobiliaria_fase01.Conexion;
 import static inmobiliaria_fase01.Conexion.JOptionShowMessage;
 import java.sql.Connection;
@@ -40,7 +39,11 @@ public class Cartera extends javax.swing.JDialog {
  
         setSize(950,720);
         setLocationRelativeTo(null);
-        setTitle("Cartera");        
+        setTitle("Cartera");
+        jButton_Cinforme.setVisible(false);
+        jButton_Iinforme.setVisible(false);
+        jButton_Pinforme.setVisible(false);
+        jButton_ADM_informe.setVisible(false);
         
         inicio();
         //listener();
@@ -107,14 +110,17 @@ public class Cartera extends javax.swing.JDialog {
         limpiarTabla(jTable_ADM);
         String consulta ="";
         
-
         consulta ="select inm.codigo , pro.cedula , (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) AS pronombrecompleto, inm.direccion, inm.barrio "
                 + "from propietarios as pro inner join  inmuebles as inm on pro.cod_propietario = inm.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  "
                 + "where "+campo+" = '"+buscar+"' and inm.estado = 1 and arr.estado = 1 order by inm.codinmueble desc " ; 
         if(ADM_jcombobuscar.equals("todo")){
+//            consulta ="select inm.codigo , pro.cedula , (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) AS pronombrecompleto, inm.direccion, inm.barrio "
+//                    + "from propietarios as pro inner join  inmuebles as inm on pro.cod_propietario = inm.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  "
+//                    + "where inm.estado = 1 and arr.estado = 1 order by inm.codinmueble desc " ;             
             consulta ="select inm.codigo , pro.cedula , (pro.nombres || ' ' || pro.primer_apellido || ' ' || pro.segundo_apellido) AS pronombrecompleto, inm.direccion, inm.barrio "
-                    + "from propietarios as pro inner join  inmuebles as inm on pro.cod_propietario = inm.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  "
-                    + "where inm.estado = 1 and arr.estado = 1 order by inm.codinmueble desc " ;             
+                    + "from propietarios as pro inner join  inmuebles as inm on pro.cod_propietario = inm.cod_propietario  "
+                    + "where inm.estado = 1 order by inm.codinmueble desc " ;                         
+            
             jText_ADMbuscar.setText("");
         }        
         System.out.println(consulta);
@@ -127,6 +133,7 @@ public class Cartera extends javax.swing.JDialog {
         }
               if(contadorconsulta == 0){
                     Conexion.JOptionShowMessage("+1", null, "LA BUSQUEDA NO ARROJO RESULTADOS");
+                    
                 }            
               contadorconsulta = 0;
         }
@@ -196,6 +203,9 @@ public void limpiarTabla(JTable tabla){
         jText_Isaldo.setEnabled(p);
         jButton_Iguardar.setVisible(q);
         
+        jText_Icodcontable.setText("123");
+        jText_Icodcontable.setVisible(false);
+        
         
     }
     
@@ -234,6 +244,9 @@ public void limpiarTabla(JTable tabla){
         jText_Icodcontable.setText("");
         jText_Iemail.setText("");
         jText_Isaldo.setText("");
+        
+        
+        jText_Icodcontable.setText("123");
     }      
 
     public void InquilinoBuscar(){
@@ -310,6 +323,9 @@ public void limpiarTabla(JTable tabla){
         jText_Psaldo.setEnabled(p);
         jButton_Pguardar.setVisible(q);
         
+        jText_Pcodcontable.setVisible(false);
+        jText_Pcodcontable.setText("123");
+        
     }
     
     
@@ -349,6 +365,9 @@ public void limpiarTabla(JTable tabla){
         jText_Pcodcontable.setText("");
         jText_Pemail.setText("");
         jText_Psaldo.setText("");
+        
+        
+        jText_Pcodcontable.setText("123");
     }      
 
     public void PropietariosBuscar(){
@@ -426,6 +445,9 @@ public void limpiarTabla(JTable tabla){
         jText_Ccartera.setEnabled(p);
         jButton_Cguardar.setVisible(q);
         
+        jText_Ccodcontable.setVisible(false);
+        jText_Ccodcontable.setText("123");
+        
     }
     
     public void Codeudoracciones(Boolean a, Boolean b, Boolean c, Boolean d, Boolean e, Boolean f, Boolean g, Boolean h, Boolean i, Boolean j){
@@ -464,6 +486,8 @@ public void limpiarTabla(JTable tabla){
         jText_Ccodcontable.setText("");
         jText_Cemail.setText("");
         jText_Ccartera.setText("");
+        
+        jText_Ccodcontable.setText("123");
     } 
 
 public void CodeudorBuscar(){
@@ -927,9 +951,9 @@ public void CodeudorBuscar(){
         jText_Icuenta = new javax.swing.JTextField();
         jText_Ibanco = new javax.swing.JTextField();
         jLabel83 = new javax.swing.JLabel();
+        jText_Icodpredial = new javax.swing.JTextField();
         jText_Icodcontable = new javax.swing.JTextField();
         jLabel84 = new javax.swing.JLabel();
-        jText_Icodpredial = new javax.swing.JTextField();
         jLabel85 = new javax.swing.JLabel();
         jText_Iemail = new javax.swing.JTextField();
         jLabel86 = new javax.swing.JLabel();
@@ -939,6 +963,7 @@ public void CodeudorBuscar(){
         jButton_Ilimpiar = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
         jPanelCodeudores = new javax.swing.JPanel();
+        jText_Ccodpredial = new javax.swing.JTextField();
         jLabel55 = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
@@ -970,7 +995,6 @@ public void CodeudorBuscar(){
         jLabel70 = new javax.swing.JLabel();
         jText_Ccuenta = new javax.swing.JTextField();
         jLabel71 = new javax.swing.JLabel();
-        jText_Ccodpredial = new javax.swing.JTextField();
         jLabel72 = new javax.swing.JLabel();
         jText_Capellido1 = new javax.swing.JTextField();
         jText_Cfijo = new javax.swing.JTextField();
@@ -981,6 +1005,7 @@ public void CodeudorBuscar(){
         jText_Cemail = new javax.swing.JTextField();
         jLabel75 = new javax.swing.JLabel();
         jPanelPropietarios = new javax.swing.JPanel();
+        jText_Pcodpredial = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -1012,7 +1037,6 @@ public void CodeudorBuscar(){
         jLabel25 = new javax.swing.JLabel();
         jText_Pcuenta = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
-        jText_Pcodpredial = new javax.swing.JTextField();
         jLabel52 = new javax.swing.JLabel();
         jText_Papellido1 = new javax.swing.JTextField();
         jText_Pfijo = new javax.swing.JTextField();
@@ -1190,6 +1214,11 @@ public void CodeudorBuscar(){
                 jText_IcedulaActionPerformed(evt);
             }
         });
+        jText_Icedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jText_IcedulaKeyTyped(evt);
+            }
+        });
         jPanelInquilinos.add(jText_Icedula);
         jText_Icedula.setBounds(340, 70, 410, 40);
 
@@ -1222,7 +1251,7 @@ public void CodeudorBuscar(){
         jButton_Iinforme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514254_Copy v2.png"))); // NOI18N
         jButton_Iinforme.setText("Informe");
         jPanelInquilinos.add(jButton_Iinforme);
-        jButton_Iinforme.setBounds(30, 340, 140, 60);
+        jButton_Iinforme.setBounds(30, 420, 140, 60);
 
         jButton_Ibuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton_Ibuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514242_Search.png"))); // NOI18N
@@ -1281,6 +1310,11 @@ public void CodeudorBuscar(){
         jText_Iapellido2.setBounds(590, 190, 160, 40);
 
         jText_Ifijo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jText_Ifijo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jText_IfijoKeyTyped(evt);
+            }
+        });
         jPanelInquilinos.add(jText_Ifijo);
         jText_Ifijo.setBounds(590, 230, 160, 40);
 
@@ -1293,6 +1327,11 @@ public void CodeudorBuscar(){
         jText_Icelular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jText_IcelularActionPerformed(evt);
+            }
+        });
+        jText_Icelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jText_IcelularKeyTyped(evt);
             }
         });
         jPanelInquilinos.add(jText_Icelular);
@@ -1344,18 +1383,29 @@ public void CodeudorBuscar(){
         jPanelInquilinos.add(jLabel83);
         jLabel83.setBounds(220, 350, 160, 40);
 
+        jText_Icodpredial.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jText_Icodpredial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_IcodpredialActionPerformed(evt);
+            }
+        });
+        jPanelInquilinos.add(jText_Icodpredial);
+        jText_Icodpredial.setBounds(340, 390, 410, 40);
+
         jText_Icodcontable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jText_Icodcontable.setText("123");
+        jText_Icodcontable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_IcodcontableActionPerformed(evt);
+            }
+        });
         jPanelInquilinos.add(jText_Icodcontable);
         jText_Icodcontable.setBounds(600, 390, 150, 40);
 
         jLabel84.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel84.setText("Cod Contable");
+        jLabel84.setText("Codeudor");
         jPanelInquilinos.add(jLabel84);
         jLabel84.setBounds(500, 390, 100, 40);
-
-        jText_Icodpredial.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPanelInquilinos.add(jText_Icodpredial);
-        jText_Icodpredial.setBounds(340, 390, 150, 40);
 
         jLabel85.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel85.setText("Cod. Predial");
@@ -1408,6 +1458,10 @@ public void CodeudorBuscar(){
         jTabbedPane5.addTab("INQUILINOS", jPanelInquilinos);
 
         jPanelCodeudores.setLayout(null);
+
+        jText_Ccodpredial.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jPanelCodeudores.add(jText_Ccodpredial);
+        jText_Ccodpredial.setBounds(340, 390, 410, 40);
 
         jLabel55.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel55.setText("Cod Contable");
@@ -1469,6 +1523,11 @@ public void CodeudorBuscar(){
                 jText_CcedulaActionPerformed(evt);
             }
         });
+        jText_Ccedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jText_CcedulaKeyTyped(evt);
+            }
+        });
         jPanelCodeudores.add(jText_Ccedula);
         jText_Ccedula.setBounds(340, 70, 410, 40);
 
@@ -1485,6 +1544,7 @@ public void CodeudorBuscar(){
         jText_Cnombres.setBounds(340, 150, 410, 40);
 
         jText_Ccodcontable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jText_Ccodcontable.setText("123");
         jPanelCodeudores.add(jText_Ccodcontable);
         jText_Ccodcontable.setBounds(600, 390, 150, 40);
 
@@ -1492,6 +1552,11 @@ public void CodeudorBuscar(){
         jText_Ccelular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jText_CcelularActionPerformed(evt);
+            }
+        });
+        jText_Ccelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jText_CcelularKeyTyped(evt);
             }
         });
         jPanelCodeudores.add(jText_Ccelular);
@@ -1592,10 +1657,6 @@ public void CodeudorBuscar(){
         jPanelCodeudores.add(jLabel71);
         jLabel71.setBounds(220, 390, 160, 40);
 
-        jText_Ccodpredial.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPanelCodeudores.add(jText_Ccodpredial);
-        jText_Ccodpredial.setBounds(340, 390, 150, 40);
-
         jLabel72.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel72.setText("Primer Apellido");
         jPanelCodeudores.add(jLabel72);
@@ -1611,6 +1672,11 @@ public void CodeudorBuscar(){
         jText_Capellido1.setBounds(340, 190, 160, 40);
 
         jText_Cfijo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jText_Cfijo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jText_CfijoKeyTyped(evt);
+            }
+        });
         jPanelCodeudores.add(jText_Cfijo);
         jText_Cfijo.setBounds(590, 230, 160, 40);
 
@@ -1657,6 +1723,10 @@ public void CodeudorBuscar(){
         jTabbedPane5.addTab("CODEUDORES", jPanelCodeudores);
 
         jPanelPropietarios.setLayout(null);
+
+        jText_Pcodpredial.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jPanelPropietarios.add(jText_Pcodpredial);
+        jText_Pcodpredial.setBounds(340, 390, 410, 40);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setText("Cod Contable");
@@ -1718,6 +1788,11 @@ public void CodeudorBuscar(){
                 jText_PcedulaActionPerformed(evt);
             }
         });
+        jText_Pcedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jText_PcedulaKeyTyped(evt);
+            }
+        });
         jPanelPropietarios.add(jText_Pcedula);
         jText_Pcedula.setBounds(340, 70, 410, 40);
 
@@ -1734,6 +1809,7 @@ public void CodeudorBuscar(){
         jText_Pnombres.setBounds(340, 150, 410, 40);
 
         jText_Pcodcontable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jText_Pcodcontable.setText("123");
         jPanelPropietarios.add(jText_Pcodcontable);
         jText_Pcodcontable.setBounds(600, 390, 150, 40);
 
@@ -1741,6 +1817,11 @@ public void CodeudorBuscar(){
         jText_Pcelular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jText_PcelularActionPerformed(evt);
+            }
+        });
+        jText_Pcelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jText_PcelularKeyTyped(evt);
             }
         });
         jPanelPropietarios.add(jText_Pcelular);
@@ -1841,10 +1922,6 @@ public void CodeudorBuscar(){
         jPanelPropietarios.add(jLabel26);
         jLabel26.setBounds(220, 390, 160, 40);
 
-        jText_Pcodpredial.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPanelPropietarios.add(jText_Pcodpredial);
-        jText_Pcodpredial.setBounds(340, 390, 150, 40);
-
         jLabel52.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel52.setText("Primer Apellido");
         jPanelPropietarios.add(jLabel52);
@@ -1860,6 +1937,11 @@ public void CodeudorBuscar(){
         jText_Papellido1.setBounds(340, 190, 160, 40);
 
         jText_Pfijo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jText_Pfijo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jText_PfijoKeyTyped(evt);
+            }
+        });
         jPanelPropietarios.add(jText_Pfijo);
         jText_Pfijo.setBounds(590, 230, 160, 40);
 
@@ -2810,7 +2892,7 @@ public void CodeudorBuscar(){
             
             
             String insert= "insert into inquilinos(codigo, cedula, expedida, nombres, primer_apellido, segundo_apellido, direccion_casa, direccion_oficina, celular, fijo, banco, ncuenta , email, cod_predial, cod_contable, saldo, estado_inquilino, fecha_reg, nombre_completo) "
-            + "VALUES ('"+jText_Icodigo.getText().toUpperCase()+"', "+jText_Icedula.getText().toUpperCase()+", '"+jText_Iexpedida.getText().toUpperCase()+"', '"+jText_Inombres.getText()+"', '"+jText_Iapellido1.getText().toUpperCase()+"', '"+jText_Iapellido2.getText().toUpperCase()+"', '"+jText_Idireccioncasa.getText().toUpperCase()+"', '"+jText_Idireccionoficina.getText().toUpperCase()+"', "+jText_Icelular.getText().toUpperCase()+", "+jText_Ifijo.getText().toUpperCase()+", '"+jText_Ibanco.getText().toUpperCase()+"' , '"+jText_Icuenta.getText().toUpperCase()+"', '"+jText_Cemail.getText().toUpperCase()+"', '"+jText_Icodpredial.getText().toUpperCase()+"', '"+jText_Icodcontable.getText().toUpperCase()+"', 0, 1, '"+sqlTimestamp+"', '"+nombre_completo+"')";
+            + "VALUES ('"+jText_Icodigo.getText().toUpperCase()+"', "+jText_Icedula.getText().toUpperCase()+", '"+jText_Iexpedida.getText().toUpperCase()+"', '"+jText_Inombres.getText().toUpperCase()+"', '"+jText_Iapellido1.getText().toUpperCase()+"', '"+jText_Iapellido2.getText().toUpperCase()+"', '"+jText_Idireccioncasa.getText().toUpperCase()+"', '"+jText_Idireccionoficina.getText().toUpperCase()+"', "+jText_Icelular.getText().toUpperCase()+", "+jText_Ifijo.getText().toUpperCase()+", '"+jText_Ibanco.getText().toUpperCase()+"' , '"+jText_Icuenta.getText().toUpperCase()+"', '"+jText_Cemail.getText().toUpperCase()+"', '"+jText_Icodpredial.getText().toUpperCase()+"', '"+jText_Icodcontable.getText().toUpperCase()+"', 0, 1, '"+sqlTimestamp+"', '"+nombre_completo+"')";
             System.out.println(insert);
 
             if(validar(datos)==1){
@@ -2868,6 +2950,7 @@ public void CodeudorBuscar(){
 
     private void jButton_CguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CguardarActionPerformed
         conn.establecer_conexion();
+        String nombre_completo = jText_Cnombres.getText().toUpperCase()+" "+jText_Capellido1.getText().toUpperCase()+" "+jText_Capellido2.getText().toUpperCase();
         switch(Caccion){
             case 1:
             break;
@@ -2876,9 +2959,9 @@ public void CodeudorBuscar(){
             java.util.Date utilDate = new java.util.Date(); //fecha actual
             long lnMilisegundos = utilDate.getTime();
             java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(lnMilisegundos);
-
-            String insert= "insert into codeudores(codigo, cedula, expedida, nombres, primer_apellido, segundo_apellido, direccion_casa, direccion_oficina, celular, fijo, banco, ncuenta , email, cod_predial, cod_contable, cartera, estado_codeudor, fecha_reg) "
-            + "VALUES ('"+jText_Ccodigo.getText().toUpperCase()+"', "+jText_Ccedula.getText().toUpperCase()+", '"+jText_Cexpedida.getText().toUpperCase()+"', '"+jText_Cnombres.getText()+"', '"+jText_Capellido1.getText().toUpperCase()+"', '"+jText_Capellido2.getText().toUpperCase()+"', '"+jText_Cdireccioncasa.getText().toUpperCase()+"', '"+jText_Cdireccionoficina.getText().toUpperCase()+"', "+jText_Ccelular.getText().toUpperCase()+", "+jText_Cfijo.getText().toUpperCase()+", '"+jText_Cbanco.getText().toUpperCase()+"' , '"+jText_Ccuenta.getText().toUpperCase()+"', '"+jText_Ccartera.getText().toUpperCase()+"', '"+jText_Ccodpredial.getText().toUpperCase()+"', '"+jText_Ccodcontable.getText().toUpperCase()+"', 0, 1, '"+sqlTimestamp+"')";
+            
+            String insert= "insert into codeudores(codigo, cedula, expedida, nombres, primer_apellido, segundo_apellido, direccion_casa, direccion_oficina, celular, fijo, banco, ncuenta , email, cod_predial, cod_contable, cartera, estado_codeudor, fecha_reg, nombre_completo) "
+            + "VALUES ('"+jText_Ccodigo.getText().toUpperCase()+"', "+jText_Ccedula.getText().toUpperCase()+", '"+jText_Cexpedida.getText().toUpperCase()+"', '"+jText_Cnombres.getText().toUpperCase()+"', '"+jText_Capellido1.getText().toUpperCase()+"', '"+jText_Capellido2.getText().toUpperCase()+"', '"+jText_Cdireccioncasa.getText().toUpperCase()+"', '"+jText_Cdireccionoficina.getText().toUpperCase()+"', "+jText_Ccelular.getText().toUpperCase()+", "+jText_Cfijo.getText().toUpperCase()+", '"+jText_Cbanco.getText().toUpperCase()+"' , '"+jText_Ccuenta.getText().toUpperCase()+"', '"+jText_Ccartera.getText().toUpperCase()+"', '"+jText_Ccodpredial.getText().toUpperCase()+"', '"+jText_Ccodcontable.getText().toUpperCase()+"', 0, 1, '"+sqlTimestamp+"', '"+nombre_completo+"')";
             System.out.println(insert);
 
             if(validar(datos)==1){
@@ -2890,8 +2973,9 @@ public void CodeudorBuscar(){
             }
             break;
             case 3:
+                
             Object[] datosupdate = {jText_Ccodigo.getText(), jText_Ccedula.getText(), jText_Cexpedida.getText(), jText_Cnombres.getText(), jText_Capellido1.getText(), jText_Capellido2.getText(), jText_Cdireccioncasa.getText(), jText_Cdireccionoficina.getText(), jText_Ccodpredial.getText(), jText_Ccodcontable.getText()};
-            String update = "UPDATE codeudores SET codigo = '"+jText_Ccodigo.getText().toUpperCase()+"', cedula="+jText_Ccedula.getText()+", expedida='"+jText_Cexpedida.getText().toUpperCase()+"', nombres='"+jText_Cnombres.getText().toUpperCase()+"', primer_apellido='"+jText_Capellido1.getText().toUpperCase()+"', segundo_apellido='"+jText_Capellido2.getText().toUpperCase()+"', direccion_casa='"+jText_Cdireccioncasa.getText().toUpperCase()+"', direccion_oficina='"+jText_Cdireccionoficina.getText().toUpperCase()+"', celular="+jText_Ccelular.getText().toUpperCase()+", fijo="+jText_Cfijo.getText().toUpperCase()+", banco='"+jText_Cbanco.getText().toUpperCase()+"', ncuenta='"+jText_Ccuenta.getText().toUpperCase()+"', email='"+jText_Cemail.getText().toUpperCase()+"',cod_predial='"+jText_Ccodpredial.getText().toUpperCase()+"',  cod_contable='"+jText_Ccodcontable.getText().toUpperCase()+"', cartera="+jText_Ccartera.getText()+" where cod_codeudor = "+Ccod_codeudor;
+            String update = "UPDATE codeudores SET codigo = '"+jText_Ccodigo.getText().toUpperCase()+"', cedula="+jText_Ccedula.getText()+", expedida='"+jText_Cexpedida.getText().toUpperCase()+"', nombres='"+jText_Cnombres.getText().toUpperCase()+"', primer_apellido='"+jText_Capellido1.getText().toUpperCase()+"', segundo_apellido='"+jText_Capellido2.getText().toUpperCase()+"', direccion_casa='"+jText_Cdireccioncasa.getText().toUpperCase()+"', direccion_oficina='"+jText_Cdireccionoficina.getText().toUpperCase()+"', celular="+jText_Ccelular.getText().toUpperCase()+", fijo="+jText_Cfijo.getText().toUpperCase()+", banco='"+jText_Cbanco.getText().toUpperCase()+"', ncuenta='"+jText_Ccuenta.getText().toUpperCase()+"', email='"+jText_Cemail.getText().toUpperCase()+"',cod_predial='"+jText_Ccodpredial.getText().toUpperCase()+"',  cod_contable='"+jText_Ccodcontable.getText().toUpperCase()+"', cartera="+jText_Ccartera.getText()+", nombre_completo = '"+nombre_completo+"' where cod_codeudor = "+Ccod_codeudor;
             System.out.println(update);
             if(validar(datosupdate)==1){
                 if(conn.Dactualizar(update, "Codeudor Actualizado Con Exito")==1){
@@ -2971,6 +3055,7 @@ public void CodeudorBuscar(){
 
     private void jButton_PguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_PguardarActionPerformed
         conn.establecer_conexion();
+        String nombre_completo = jText_Pnombres.getText().toUpperCase()+" "+jText_Papellido1.getText().toUpperCase()+" "+jText_Papellido2.getText().toUpperCase();            
         switch(Paccion){
             case 1:
 
@@ -2980,9 +3065,8 @@ public void CodeudorBuscar(){
             java.util.Date utilDate = new java.util.Date(); //fecha actual
             long lnMilisegundos = utilDate.getTime();
             java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(lnMilisegundos);
-
-            String insert= "insert into propietarios(codigo, cedula, expedida, nombres, primer_apellido, segundo_apellido, direccion_casa, direccion_oficina, celular, fijo, banco, ncuenta , email, cod_predial, cod_contable, saldo, estado_propietario, fecha_reg) "
-            + "VALUES ('"+jText_Pcodigo.getText().toUpperCase()+"', "+jText_Pcedula.getText().toUpperCase()+", '"+jText_Pexpedida.getText().toUpperCase()+"', '"+jText_Pnombres.getText()+"', '"+jText_Papellido1.getText().toUpperCase()+"', '"+jText_Papellido2.getText().toUpperCase()+"', '"+jText_Pdireccioncasa.getText().toUpperCase()+"', '"+jText_Pdireccionoficina.getText().toUpperCase()+"', "+jText_Pcelular.getText().toUpperCase()+", "+jText_Pfijo.getText().toUpperCase()+", '"+jText_Pbanco.getText().toUpperCase()+"' , '"+jText_Pcuenta.getText().toUpperCase()+"', '"+jText_Psaldo.getText().toUpperCase()+"', '"+jText_Pcodpredial.getText().toUpperCase()+"', '"+jText_Pcodcontable.getText().toUpperCase()+"', 0, 1, '"+sqlTimestamp+"')";
+            String insert= "insert into propietarios(codigo, cedula, expedida, nombres, primer_apellido, segundo_apellido, direccion_casa, direccion_oficina, celular, fijo, banco, ncuenta , email, cod_predial, cod_contable, saldo, estado_propietario, fecha_reg, nombre_completo) "
+            + "VALUES ('"+jText_Pcodigo.getText().toUpperCase()+"', "+jText_Pcedula.getText().toUpperCase()+", '"+jText_Pexpedida.getText().toUpperCase()+"', '"+jText_Pnombres.getText().toUpperCase()+"', '"+jText_Papellido1.getText().toUpperCase()+"', '"+jText_Papellido2.getText().toUpperCase()+"', '"+jText_Pdireccioncasa.getText().toUpperCase()+"', '"+jText_Pdireccionoficina.getText().toUpperCase()+"', "+jText_Pcelular.getText().toUpperCase()+", "+jText_Pfijo.getText().toUpperCase()+", '"+jText_Pbanco.getText().toUpperCase()+"' , '"+jText_Pcuenta.getText().toUpperCase()+"', '"+jText_Psaldo.getText().toUpperCase()+"', '"+jText_Pcodpredial.getText().toUpperCase()+"', '"+jText_Pcodcontable.getText().toUpperCase()+"', 0, 1, '"+sqlTimestamp+"', '"+nombre_completo+"')";
             System.out.println(insert);
 
             if(validar(datos)==1){
@@ -2994,7 +3078,7 @@ public void CodeudorBuscar(){
             }
             break;
             case 3:
-            String update = "UPDATE propietarios SET codigo = '"+jText_Pcodigo.getText().toUpperCase()+"', cedula="+jText_Pcedula.getText()+", expedida='"+jText_Pexpedida.getText().toUpperCase()+"', nombres='"+jText_Pnombres.getText().toUpperCase()+"', primer_apellido='"+jText_Papellido1.getText().toUpperCase()+"', segundo_apellido='"+jText_Papellido2.getText().toUpperCase()+"', direccion_casa='"+jText_Pdireccioncasa.getText().toUpperCase()+"', direccion_oficina='"+jText_Pdireccionoficina.getText().toUpperCase()+"', celular="+jText_Pcelular.getText().toUpperCase()+", fijo="+jText_Pfijo.getText().toUpperCase()+", banco='"+jText_Pbanco.getText().toUpperCase()+"', ncuenta='"+jText_Pcuenta.getText().toUpperCase()+"', email='"+jText_Pemail.getText().toUpperCase()+"',cod_predial='"+jText_Pcodpredial.getText().toUpperCase()+"',  cod_contable='"+jText_Pcodcontable.getText().toUpperCase()+"', saldo="+jText_Psaldo.getText()+" where cod_propietario = "+Pcod_propietario;
+            String update = "UPDATE propietarios SET codigo = '"+jText_Pcodigo.getText().toUpperCase()+"', cedula="+jText_Pcedula.getText()+", expedida='"+jText_Pexpedida.getText().toUpperCase()+"', nombres='"+jText_Pnombres.getText().toUpperCase()+"', primer_apellido='"+jText_Papellido1.getText().toUpperCase()+"', segundo_apellido='"+jText_Papellido2.getText().toUpperCase()+"', direccion_casa='"+jText_Pdireccioncasa.getText().toUpperCase()+"', direccion_oficina='"+jText_Pdireccionoficina.getText().toUpperCase()+"', celular="+jText_Pcelular.getText().toUpperCase()+", fijo="+jText_Pfijo.getText().toUpperCase()+", banco='"+jText_Pbanco.getText().toUpperCase()+"', ncuenta='"+jText_Pcuenta.getText().toUpperCase()+"', email='"+jText_Pemail.getText().toUpperCase()+"',cod_predial='"+jText_Pcodpredial.getText().toUpperCase()+"',  cod_contable='"+jText_Pcodcontable.getText().toUpperCase()+"', saldo="+jText_Psaldo.getText()+", nombre_completo='"+nombre_completo+"' where cod_propietario = "+Pcod_propietario;
             System.out.println(update);
             if(Pvalidarcampos()==1){
                 if(conn.Dactualizar(update, "Propietario Actualizado Con Exito")==1){
@@ -3523,21 +3607,21 @@ public void CodeudorBuscar(){
         jText_ADM_barrio.setText(jTable_ADM.getValueAt(row, 4).toString());
         
         if(!jText_ADM_codinm.getText().equals("")){
-            String consulta = "select pro.codigo as procodigo, inq.codigo as inqcodigo, inq.cedula as inqcedula,(inq.nombres|| ' ' || inq.primer_apellido || ' ' || inq.segundo_apellido) AS inqnombrecompleto, inm.municipio, inm.dia_causacion, inm.regimen, inm.inmueble_disponible from propietarios as pro inner join  inmuebles as inm on pro.cod_propietario = inm.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  where inm.codigo= '"+jText_ADM_codinm.getText()+"' and arr.estado=1 and inm.estado = 1;";
+//            String consulta = "select pro.codigo as procodigo, inq.codigo as inqcodigo, inq.cedula as inqcedula,(inq.nombres|| ' ' || inq.primer_apellido || ' ' || inq.segundo_apellido) AS inqnombrecompleto, inm.municipio, inm.dia_causacion, inm.regimen, inm.inmueble_disponible from propietarios as pro inner join  inmuebles as inm on pro.cod_propietario = inm.cod_propietario INNER JOIN arrienda as arr on inm.codinmueble = arr.cod_inmueble INNER JOIN inquilinos as inq on arr.cod_inquilino = inq.cod_inquilino  where inm.codigo= '"+jText_ADM_codinm.getText()+"' and arr.estado=1 and inm.estado = 1;";
+            String consulta = "select pro.codigo, inm.municipio, inm.dia_causacion, inm.canon, inmueble_disponible, codinmueble from inmuebles as inm INNER JOIN propietarios as pro on inm.cod_propietario = pro.cod_propietario where inm.codigo= '"+jText_ADM_codinm.getText()+"'" ;
             System.out.println(consulta);
             ResultSet query = conn.consulta(consulta);
             try {
                 int vinmdisponible = 0;
+                int cod_inmueble = 0;
                 String inmdisponible= "";
                 while (query.next()) {
-                    jText_ADM_codpro.setText(query.getString("procodigo"));        
-                    jText_ADM_cedinq.setText(query.getString("inqcedula"));
-                    jText_ADM_codinq.setText(query.getString("inqcodigo"));
-                    jText_ADM_nominq.setText(query.getString("inqnombrecompleto"));
+                    jText_ADM_codpro.setText(query.getString(1));        
                     jText_ADM_municipio.setText(query.getString("municipio"));
                     jText_ADM_diacausacion.setText(query.getString("dia_causacion"));
-                    jText_ADM_regimen.setText(query.getString("regimen"));
+                    jText_ADM_regimen.setText(query.getString("canon"));
                     vinmdisponible= (query.getInt("inmueble_disponible"));  
+                    cod_inmueble=query.getInt("codinmueble");        
                     switch (vinmdisponible){
                         case 1:
                             jText_ADM_inmdisponible.setText("Disponible");                            
@@ -3549,6 +3633,19 @@ public void CodeudorBuscar(){
                             jText_ADM_inmdisponible.setText("Error, contacte con soporte tecnico.");
                             break;                            
                     }
+                    if(vinmdisponible==2){
+                        String consulta2= "select inq.cedula, inq.codigo, inq.nombre_completo from inmuebles as inm INNER JOIN arrienda as arr on  inm.codinmueble = arr.cod_inmueble \n" +
+                        "INNER JOIN inquilinos as inq  on arr.cod_inquilino = inq.cod_inquilino  where inm.codinmueble  = "+inmdisponible;
+                        ResultSet n= conn.consulta(consulta2);
+                        while (n.next()) {                            
+                            jText_ADM_cedinq.setText(query.getString(1));
+                            jText_ADM_codinq.setText(query.getString(2));
+                            jText_ADM_nominq.setText(query.getString(3));	
+                        }
+                        
+                    }
+                    
+                    
                     
                     //activando el boton eliminar
                     ADMBTN_iniciales(falso, falso, verdadero, falso);
@@ -3565,36 +3662,7 @@ public void CodeudorBuscar(){
     }//GEN-LAST:event_jTable_ADMMouseClicked
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        switch(jComboBox1.getSelectedIndex()){
-            case 0:
-                ADM_jcombobuscar= "";
-                break;
-            case 1:
-                ADM_jcombobuscar= "inm.codigo";
-                break;
-            case 2:
-                ADM_jcombobuscar= "pro.codigo";
-                break;
-            case 3:
-                ADM_jcombobuscar= "pro.cedula";
-                break;                
-            case 4:
-                ADM_jcombobuscar= "inq.codigo";
-                break;
-            case 5:
-                ADM_jcombobuscar= "inq.cedula";
-                break;
-            case 6:
-                ADM_jcombobuscar= "inm.barrio";
-                break;                
-            case 7:
-                ADM_jcombobuscar= "todo";
-                break;                                
-            default:
-                JOptionPane.showMessageDialog(rootPane, "Contacte con Soporte tecnico: Error Combo ADM inmuebles");
-                break;
-                
-        }
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jText_ADM_cedproActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_ADM_cedproActionPerformed
@@ -3679,6 +3747,59 @@ public void CodeudorBuscar(){
     private void jText_INMdiacausacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_INMdiacausacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jText_INMdiacausacionActionPerformed
+
+    private void jText_PcelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_PcelularKeyTyped
+        char car = evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_jText_PcelularKeyTyped
+
+    private void jText_PfijoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_PfijoKeyTyped
+        char car = evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_jText_PfijoKeyTyped
+
+    private void jText_PcedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_PcedulaKeyTyped
+        char car = evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_jText_PcedulaKeyTyped
+
+    private void jText_CcedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_CcedulaKeyTyped
+        char car = evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_jText_CcedulaKeyTyped
+
+    private void jText_CcelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_CcelularKeyTyped
+        char car = evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_jText_CcelularKeyTyped
+
+    private void jText_IfijoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_IfijoKeyTyped
+        char car = evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_jText_IfijoKeyTyped
+
+    private void jText_IcelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_IcelularKeyTyped
+        char car = evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_jText_IcelularKeyTyped
+
+    private void jText_IcedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_IcedulaKeyTyped
+        char car = evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_jText_IcedulaKeyTyped
+
+    private void jText_CfijoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jText_CfijoKeyTyped
+                char car = evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_jText_CfijoKeyTyped
+
+    private void jText_IcodpredialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_IcodpredialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_IcodpredialActionPerformed
+
+    private void jText_IcodcontableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_IcodcontableActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_IcodcontableActionPerformed
 
     /**
      * @param args the command line arguments

@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package Administrativo;
+package Contabilidad;
 
+import Administrativo.*;
 import Cartera_y_caja.Crear_Otros_Usuarios;
 import Cartera_y_caja.Notas;
 import inmobiliaria_fase01.Conexion;
@@ -14,12 +15,12 @@ import inmobiliaria_fase01.Conexion;
  *
  * @author Dialfoar
  */
-public class Index_ADM extends javax.swing.JDialog {
+public class Index_CONTABILIDAD extends javax.swing.JDialog {
 
     /**
      * Creates new form Index_ADM
      */
-    public Index_ADM(java.awt.Frame parent, boolean modal) {
+    public Index_CONTABILIDAD(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setSize(950,650);
@@ -39,63 +40,67 @@ public class Index_ADM extends javax.swing.JDialog {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton20 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jButton18 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
         jButton22 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Procesos Administrativos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Procesos Contables", 0, 0, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.setLayout(null);
 
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton4.setText("Informe Propietarios");
+        jButton4.setText("Cuadre Caja General");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton4);
-        jButton4.setBounds(30, 70, 240, 80);
+        jButton4.setBounds(40, 60, 250, 100);
 
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton5.setText("Usuarios");
+        jButton5.setText("Cuadre Caja Interna");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton5);
-        jButton5.setBounds(20, 200, 250, 80);
+        jButton5.setBounds(310, 60, 250, 100);
 
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton6.setText("Informe Inquilinos");
+        jButton6.setText("Comisiones");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton6);
-        jButton6.setBounds(330, 70, 240, 80);
+        jButton6.setBounds(40, 210, 250, 100);
 
-        jButton20.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton20.setText("Buscador Facturas");
-        jButton20.addActionListener(new java.awt.event.ActionListener() {
+        jButton7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton7.setText("Conceptos");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton20ActionPerformed(evt);
+                jButton7ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton20);
-        jButton20.setBounds(330, 200, 240, 80);
+        jPanel1.add(jButton7);
+        jButton7.setBounds(310, 210, 250, 100);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(20, 40, 610, 350);
+        jPanel1.setBounds(20, 40, 610, 360);
         jPanel1.getAccessibleContext().setAccessibleName("Usuarios");
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/LOGO2.png"))); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(490, 380, 450, 220);
 
         jButton18.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/home.png"))); // NOI18N
@@ -131,32 +136,50 @@ public class Index_ADM extends javax.swing.JDialog {
         getContentPane().add(jButton22);
         jButton22.setBounds(650, 280, 270, 80);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/LOGO2.png"))); // NOI18N
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(490, 380, 450, 220);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Conexion.dialog();
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+                Conexion.dialog();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Informe_Propietarios dialog = new Informe_Propietarios(new javax.swing.JFrame(), true);
+                informes_recibos_interno dialog = new informes_recibos_interno(new javax.swing.JFrame(), true);
                 dialog.setVisible(true);
             }
-        });
+        });        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+                Conexion.dialog();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                informes_recibos dialog = new informes_recibos(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });        
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Conexion.dialog();
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+                        Conexion.dialog();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Usuario_adm dialog = new Usuario_adm(new javax.swing.JFrame(), true);
+                Comisiones dialog = new Comisiones(new javax.swing.JFrame(), true);
                 dialog.setVisible(true);
             }
-        });
-    }//GEN-LAST:event_jButton5ActionPerformed
+        });        
+
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+                        Conexion.dialog();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Conceptos dialog = new Conceptos(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });        
+
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         this.dispose();
@@ -175,26 +198,6 @@ public class Index_ADM extends javax.swing.JDialog {
             }
         });
     }//GEN-LAST:event_jButton22ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        Conexion.dialog();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Informe_Inquilinos dialog = new Informe_Inquilinos(new javax.swing.JFrame(), true);
-                dialog.setVisible(true);
-            }
-        });
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        Conexion.dialog();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Buscador_Facutras dialog = new Buscador_Facutras(new javax.swing.JFrame(), true);
-                dialog.setVisible(true);
-            }
-        });
-    }//GEN-LAST:event_jButton20ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,11 +244,11 @@ public class Index_ADM extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

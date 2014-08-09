@@ -33,12 +33,12 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author Usuario
  */
-public class Facturas extends javax.swing.JFrame {
+public class Facturas extends javax.swing.JDialog {
 
    private DefaultTableModel modeloDeMiJTable; 
     
-    public Facturas() {
- 
+    public Facturas(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
         setSize(950,650);
         setLocationRelativeTo(rootPane);
@@ -160,7 +160,7 @@ public class Facturas extends javax.swing.JFrame {
     private void llenarcombocodigo(){
         conn.establecer_conexion();
         jComboBox_codigo.removeAllItems();
-        String sql ="select nombres from conceptos;";
+        String sql ="select nombres from conceptos2 where cod_referencia='INGRESO'";
         //String sql ="select DISTINCT fecha::date from factura_caja";
         ResultSet query = conn.consulta(sql);
         try {
@@ -483,7 +483,8 @@ public class Facturas extends javax.swing.JFrame {
         jPanel2.add(jTextField_codigo);
         jTextField_codigo.setBounds(90, 90, 210, 30);
 
-        jComboBox_destino.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Inquilino", "Propietario", "Otros Usuarios" }));
+        jComboBox_destino.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jComboBox_destino.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "INQUILINO", "PROPIETARIO", "Otros Usuarios" }));
         jComboBox_destino.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_destinoItemStateChanged(evt);
@@ -756,7 +757,6 @@ jv.setTitle("FORMATO DE ACEPTACION");
                     Conexion.JOptionShowMessage("+1", null, "NO HA GENERADO NINGUN RECIBO");
                 }
             } catch (JRException ex) {
-                Logger.getLogger(Informes_Recibos_Caja.class.getName()).log(Level.SEVERE, null, ex);
             }    
     }//GEN-LAST:event_jButton_imprimirActionPerformed
 
@@ -769,7 +769,7 @@ jv.setTitle("FORMATO DE ACEPTACION");
         }        
         else{
         conn.establecer_conexion();
-        String Consulta = "select cod_concepto from conceptos where nombres = '"+jComboBox_codigo.getSelectedItem()+"';";
+        String Consulta = "select cod_concepto from conceptos2 where nombres = '"+jComboBox_codigo.getSelectedItem()+"';";
         ResultSet query = conn.consulta(Consulta);
         int codigo = 0;
             try {

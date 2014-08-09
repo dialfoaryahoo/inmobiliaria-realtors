@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Cartera_y_caja;
+package Contabilidad;
 
 import inmobiliaria_fase01.Conexion;
 import java.sql.ResultSet;
@@ -45,11 +45,12 @@ public class Conceptos extends javax.swing.JDialog {
 
         };
         
-        modeloDeMiJTable.addColumn("Cod");
-        modeloDeMiJTable.addColumn("Concepto");
-        modeloDeMiJTable.addColumn("Cod Contable");
+        modeloDeMiJTable.addColumn("CODIGO");
+        modeloDeMiJTable.addColumn("CONCEPTO");
+        modeloDeMiJTable.addColumn("TIPO");
+        modeloDeMiJTable.addColumn("ORIGEN");
         jTable1.setModel(modeloDeMiJTable);
-        int[] anchos = {40, 200, 50};
+        int[] anchos = {40, 200, 50,50};
         for(int i = 0; i < jTable1.getColumnCount(); i++) {
 
             //Sacamos el modelo de columnas de nuestra tabla
@@ -82,12 +83,12 @@ public class Conceptos extends javax.swing.JDialog {
        public void llenartabla(){
 
         conn.establecer_conexion();
-        String consulta="select * from conceptos";
+        String consulta="select * from conceptos2";
         ResultSet n=conn.consulta(consulta);
         try{
         while(n.next()){
             System.out.println("a");
-        modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3)});
+        modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3),n.getString(4)});
         }
         }
         catch(Exception e){}
@@ -105,22 +106,7 @@ public class Conceptos extends javax.swing.JDialog {
             }
         }       
        
-       public void combo(){
-       //limpio el combobox
-        jCombo_contable.removeAllItems();
-           try {
-               conn.establecer_conexion();
-                String consulta = "select detalle_cuenta from cuentas_contables";
-                ResultSet query = conn.consulta(consulta);
-                while(query.next()){
-                jCombo_contable.addItem(query.getObject("detalle_cuenta"));
-                }
-                
-               
-           } catch (Exception e) {
-               JOptionPane.showMessageDialog(null,"Error sql no se pueden leer datos");
-           }
-       }
+       
 
        
     public void buscar_operador(){
@@ -165,6 +151,8 @@ public class Conceptos extends javax.swing.JDialog {
         jButton_confirmar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jCombo_contable1 = new javax.swing.JComboBox();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -205,9 +193,9 @@ public class Conceptos extends javax.swing.JDialog {
         jTextField_buscar.setBounds(90, 60, 340, 30);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("Cod Contable");
+        jLabel3.setText("Tipo de Concepto");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(440, 190, 100, 30);
+        jLabel3.setBounds(440, 190, 120, 30);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Buscar");
@@ -228,7 +216,7 @@ public class Conceptos extends javax.swing.JDialog {
         getContentPane().add(jTextField_cod);
         jTextField_cod.setBounds(510, 110, 170, 30);
 
-        jCombo_contable.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione Codigo" }));
+        jCombo_contable.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "INGRESO", "EGRESO" }));
         jCombo_contable.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jCombo_contableItemStateChanged(evt);
@@ -240,7 +228,7 @@ public class Conceptos extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jCombo_contable);
-        jCombo_contable.setBounds(540, 190, 140, 30);
+        jCombo_contable.setBounds(560, 190, 120, 30);
 
         jButton_confirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/confirm.png"))); // NOI18N
         jButton_confirmar.setText("sin texto");
@@ -250,7 +238,7 @@ public class Conceptos extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButton_confirmar);
-        jButton_confirmar.setBounds(490, 240, 170, 50);
+        jButton_confirmar.setBounds(490, 280, 170, 50);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514185_Add.png"))); // NOI18N
         jButton2.setText("Agregar");
@@ -272,6 +260,25 @@ public class Conceptos extends javax.swing.JDialog {
         getContentPane().add(jButton3);
         jButton3.setBounds(580, 60, 120, 40);
 
+        jCombo_contable1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "INTERNO", "EXTERNO" }));
+        jCombo_contable1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCombo_contable1ItemStateChanged(evt);
+            }
+        });
+        jCombo_contable1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCombo_contable1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jCombo_contable1);
+        jCombo_contable1.setBounds(560, 230, 120, 30);
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setText("Origen");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(440, 230, 120, 30);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -281,7 +288,7 @@ public class Conceptos extends javax.swing.JDialog {
        jButton_confirmar.setVisible(true);
        jButton_confirmar.setText("GUARDAR");
        
-       String select = "select max(cod_concepto)+1 from conceptos";
+       String select = "select max(cod_concepto)+1 from conceptos2";
        ResultSet query = conn.consulta(select);
         try {
             while (query.next()) {                
@@ -342,19 +349,19 @@ public class Conceptos extends javax.swing.JDialog {
     private void jButton_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_confirmarActionPerformed
         int validar =1;
         if(jButton_confirmar.getText().equals("GUARDAR")){
-            String insrt="insert into conceptos (nombRes,cod_referencia) values ('"+jTextField_nombre.getText().toUpperCase()+"','"+jCombo_contable.getSelectedItem()+"')";
+            String insrt="insert into conceptos2 (nombRes,cod_referencia,TIPO) values ('"+jTextField_nombre.getText().toUpperCase()+"','"+jCombo_contable.getSelectedItem()+"','"+jCombo_contable1.getSelectedItem()+"')";
             conn.insertar(insrt);
             validar=1;
         }else if(jButton_confirmar.getText().equals("ELIMINAR")){
             int opcion= JOptionPane.showConfirmDialog(rootPane,"SEGURO DESEA ELIMINAR ESTE CODIGO?","ADVERTENCIA",JOptionPane.OK_CANCEL_OPTION);
             if(opcion== JOptionPane.YES_OPTION){
-                String delete="delete from conceptos where cod_concepto="+jTextField_cod.getText();
+                String delete="delete from conceptos2 where cod_concepto="+jTextField_cod.getText();
                 conn.actualizar(delete, "CONCEPTO ELIMINADO CON EXITO");
                 validar=1;
             }
         }
         else if(jButton_confirmar.getText().equals("ACTUALIZAR")){
-            String update = "update conceptos set nombres='"+jTextField_nombre.getText().toUpperCase()+"', cod_referencia ='"+jCombo_contable.getSelectedItem()+"' where cod_concepto = 1";
+            String update = "update conceptos2 set nombres='"+jTextField_nombre.getText().toUpperCase()+"', cod_referencia ='"+jCombo_contable.getSelectedItem()+"' where cod_concepto = 1";
             System.out.println(update);
             conn.Dactualizar(update, "CONCEPTO "+jTextField_nombre.getText()+"se actualizo Correctamente");
             validar=1;            
@@ -396,6 +403,14 @@ public class Conceptos extends javax.swing.JDialog {
         
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void jCombo_contable1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCombo_contable1ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCombo_contable1ItemStateChanged
+
+    private void jCombo_contable1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_contable1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCombo_contable1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -408,11 +423,13 @@ public class Conceptos extends javax.swing.JDialog {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton_confirmar;
     private javax.swing.JComboBox jCombo_contable;
+    private javax.swing.JComboBox jCombo_contable1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField_buscar;

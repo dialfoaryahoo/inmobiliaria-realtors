@@ -32,7 +32,9 @@ public class Notas extends javax.swing.JDialog {
         setTitle("Notas");
         conn.establecer_conexion();
         buscar_operador();
+        
         jButton_eliminar.setVisible(false);
+        jButton_actualizar.setVisible(false);
         modeloDeMiJTable = new DefaultTableModel() { 
         @Override 
         public Class getColumnClass(int c) { 
@@ -47,10 +49,10 @@ public class Notas extends javax.swing.JDialog {
 
         };
         
-        modeloDeMiJTable.addColumn("Nota");
-        modeloDeMiJTable.addColumn("Usuario");
-        modeloDeMiJTable.addColumn("Fecha");
-        modeloDeMiJTable.addColumn("Selecionar");
+        modeloDeMiJTable.addColumn("NOTA");
+        modeloDeMiJTable.addColumn("USUARIO");
+        modeloDeMiJTable.addColumn("FECHA");
+        modeloDeMiJTable.addColumn("SELECCIONAR");
         jTable1.setModel(modeloDeMiJTable);
         int[] anchos = {400, 10, 10, 10};
         for(int i = 0; i < jTable1.getColumnCount(); i++) {
@@ -82,13 +84,11 @@ public class Notas extends javax.swing.JDialog {
    
    }
        public void llenartabla(){
-
         conn.establecer_conexion();
-        String consulta="select nota, usuario, fecha::date from notas";
+        String consulta="select nota, usuario, fecha::date from notas where estado = 1 order by fecha desc";
         ResultSet n=conn.consulta(consulta);
         try{
         while(n.next()){
-            System.out.println("a");
         modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3), ""});
         }
         }
@@ -167,7 +167,7 @@ public class Notas extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Notas");
         getContentPane().add(jLabel1);
@@ -194,12 +194,12 @@ public class Notas extends javax.swing.JDialog {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(20, 100, 700, 210);
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Buscar");
         getContentPane().add(jLabel4);
         jLabel4.setBounds(20, 60, 50, 30);
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setText("Nota");
         getContentPane().add(jLabel6);
         jLabel6.setBounds(40, 320, 60, 30);
@@ -274,10 +274,38 @@ public class Notas extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton_agregarActionPerformed
 
     private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
-       inicializar(true);
-       botones_iniciales(false, true, false);
-       jButton_confirmar.setVisible(true);
-       jButton_confirmar.setText("ELIMINAR");
+        int row=jTable1.getSelectedRow();
+        if(jTable1.getValueAt(row, 1).toString().equals(acc.usuario)){
+            conn.establecer_conexion();
+            String consulta ="select cod_nota from notas where nota = '"+jTable1.getValueAt(row, 0).toString()+"'";
+            ResultSet n = conn.consulta(consulta);
+            try {
+             while (n.next()) {
+                 codigo=n.getInt(1);
+             }
+            } catch (Exception e) {}
+            String update = "update notas set estado = 2 where cod_nota = "+codigo+" ";
+            System.out.println(update);
+            conn.Dactualizar(update, "LA NOTA SE ELIMINO CON CORRECTAMENTE");
+            validar=1;
+            inicializar(false);
+        if (validar==1){
+            limpiarTabla(jTable1);
+            llenartabla();
+            jButton_confirmar.setVisible(false);
+            jTextField_nota.setVisible(false);
+            jTextField_nota.setText("");
+            jTextField_nota.setVisible(false);
+            jButton_actualizar.setVisible(false);
+            jButton_eliminar.setVisible(false);
+            codigo = 0;
+            accion=0;
+            botones_iniciales(false, false, false);
+        }
+            
+    }else{
+            conn.JOptionShowMessage("+1", "", "NOTAS DE OTROS USUARIOS, NO SE PUEDEN ELIMINAR");
+    }
     }//GEN-LAST:event_jButton_eliminarActionPerformed
 
     private void jButton_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_confirmarActionPerformed
@@ -295,28 +323,27 @@ public class Notas extends javax.swing.JDialog {
             conn.insertar(insrt);
             System.out.println(acc.getUsuario());
             validar=1;
-//        }else if(jButton_confirmar.getText().equals("FINALIZAR")){
-//            int opcion= JOptionPane.showConfirmDialog(rootPane,"SEGURO DESEA ELIMINAR ESTA NOTA?","ADVERTENCIA",JOptionPane.OK_CANCEL_OPTION);
-//            if(opcion== JOptionPane.YES_OPTION){
-//                String delete="update notas set estado = 2 where nota = '";
-//                conn.actualizar(delete, "CONCEPTO ELIMINADO CON EXITO");
-//                validar=1;
-//            }
-//        }
         }else if(jButton_confirmar.getText().equals("ACTUALIZAR")){
-            String update = "update notas set notas ='"+jTextField_nota.getText().toUpperCase()+"' where nota = '"+nota+"' and estado = 1";
-            conn.Dactualizar(update, "La NOTA SE: "+jTextField_nota.getText().toUpperCase()+" SE ACTUALIZO CON EXITO");
+            String update = "update notas set nota ='"+jTextField_nota.getText().toUpperCase()+"' where cod_nota = "+codigo+" ";
+            System.out.println(update);
+            conn.Dactualizar(update, "LA NOTA SE ACTUALIZO CON CORRECTAMENTE");
+            validar=1;
+            inicializar(false);
+        }else if(jButton_confirmar.getText().equals("ELIMINAR")){
+            String update = "update notas set estado = 2 where cod_nota = "+codigo+" ";
+            System.out.println(update);
+            conn.Dactualizar(update, "LA NOTA SE ELIMINO CON CORRECTAMENTE");
             validar=1;
             inicializar(false);
         }
         if (validar==1){
             limpiarTabla(jTable1);
             llenartabla();
-            botones_iniciales(false, false, false);
             jButton_confirmar.setVisible(false);
             jTextField_nota.setVisible(false);
             jTextField_nota.setText("");
-            
+            codigo = 0;
+            accion=0;
         }
         
     }//GEN-LAST:event_jButton_confirmarActionPerformed
@@ -326,21 +353,40 @@ public class Notas extends javax.swing.JDialog {
     }//GEN-LAST:event_jCombo_usuariosActionPerformed
 
     private void jCombo_usuariosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCombo_usuariosItemStateChanged
-
+        conn.establecer_conexion();
+        limpiarTabla(jTable1);
+        if(jCombo_usuarios.getSelectedIndex()!=0){
+            String consulta="select nota, usuario, fecha::date from notas where estado = 1 and usuario = '"+jCombo_usuarios.getSelectedItem()+"'order by fecha desc";
+            ResultSet n=conn.consulta(consulta);
+            try{
+            while(n.next()){
+            modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3), ""});
+            }
+            }
+            catch(Exception e){}                
+        }else{
+            String consulta="select nota, usuario, fecha::date from notas where estado = 1 order by fecha desc";
+            ResultSet n=conn.consulta(consulta);
+            try{
+            while(n.next()){
+            modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3), ""});
+            }
+            }
+            catch(Exception e){}                
+        }
     }//GEN-LAST:event_jCombo_usuariosItemStateChanged
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         int row=jTable1.getSelectedRow();
         if(validar==1){
             if(jTable1.getValueAt(row2, 3).equals("X")){
-                
                 jTable1.setValueAt("", row2, 3);
-                
-            }        
+            }
         }
         if(jTable1.getValueAt(row, 3).equals("")){
             jTable1.setValueAt("X", row, 3);
-            //cod_inmueble_sel=jTable1.getValueAt(row, 0).toString()  ;
+            jButton_eliminar.setVisible(true);
+            jButton_actualizar.setVisible(true);            
             if(accion==2){
                 jTextField_nota.setText(jTable1.getValueAt(row, 0).toString());
             }
@@ -352,13 +398,26 @@ public class Notas extends javax.swing.JDialog {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarActionPerformed
-       inicializar(true);
-       botones_iniciales(false, true, false);
-       jTextField_nota.setVisible(true);       
-       jButton_confirmar.setVisible(true);
-       jButton_confirmar.setText("ACTUALIZAR");        
-       accion =2;
-            
+        botones_iniciales(false, true, false);
+        int row=jTable1.getSelectedRow();
+            if(jTable1.getValueAt(row, 1).toString().equals(acc.getUsuario())){
+            jTextField_nota.setText(jTable1.getValueAt(row, 0).toString());
+             inicializar(true);
+            conn.establecer_conexion();
+            jTextField_nota.setVisible(true);       
+            jButton_confirmar.setVisible(true);
+            jButton_confirmar.setText("ACTUALIZAR");
+            String consulta ="select cod_nota from notas where nota = '"+jTable1.getValueAt(row, 0).toString()+"'";
+            ResultSet n = conn.consulta(consulta);
+             try {
+                 while (n.next()) {
+                     codigo=n.getInt(1);
+                 }
+             } catch (Exception e) {}
+            accion =2;
+       }else{
+                conn.JOptionShowMessage("+1", "", "NOTAS DE OTROS USUARIOS, NO SE PUEDEN EDITAR");
+        }
     }//GEN-LAST:event_jButton_actualizarActionPerformed
 
     /**
@@ -369,7 +428,8 @@ public class Notas extends javax.swing.JDialog {
     int row2=-1, validar = 0;
     Conexion conn = new Conexion();
     acceso acc = new acceso();
-    int accion = 0;
+    int accion = 0, codigo =0;
+    Boolean falso = false, verdadero = true;    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_actualizar;
     private javax.swing.JButton jButton_agregar;

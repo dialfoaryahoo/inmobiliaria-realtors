@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Cartera_y_caja;
+package Contabilidad;
 
 import Administrativo.*;
 import inmobiliaria_fase01.Conexion;
@@ -19,14 +19,13 @@ import org.jvnet.substance.SubstanceLookAndFeel;
  *
  * @author Usuario
  */
-public class Saldos extends javax.swing.JDialog {
+public class informes_recibos_interno extends javax.swing.JDialog {
 private DefaultTableModel modeloDeMiJTable; 
     
-    public Saldos(java.awt.Frame parent, boolean modal) {
+    public informes_recibos_interno(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setSize(850,600);
-        setTitle("Saldo Deudores");
         this.setLocationRelativeTo(null);
         JDialog.setDefaultLookAndFeelDecorated(true);
         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.NebulaSkin");
@@ -49,18 +48,16 @@ private DefaultTableModel modeloDeMiJTable;
         }
 
         };
-        modeloDeMiJTable.addColumn("NOMBRE INQ"); 
-        modeloDeMiJTable.addColumn("NOMBRE PRO");
-        modeloDeMiJTable.addColumn("MES"); 
-        modeloDeMiJTable.addColumn("CANTIDAD");
-        modeloDeMiJTable.addColumn("PAGO INQ");
-        modeloDeMiJTable.addColumn("PAGO PRO");
+        modeloDeMiJTable.addColumn("CODIGO FACTURA"); 
+        modeloDeMiJTable.addColumn("TIPO MOVIMIENTO");
+        modeloDeMiJTable.addColumn("USUARIO"); 
+        modeloDeMiJTable.addColumn("VALOR");
         modeloDeMiJTable.addColumn("FECHA");
         
         jTable1.setModel(modeloDeMiJTable);
         
         
-        int[] anchos = {100, 100, 30,80, 50, 25, 25};
+        int[] anchos = {30, 100, 150,80, 50};
         for(int i = 0; i < jTable1.getColumnCount(); i++) {
 
             //Sacamos el modelo de columnas de nuestra tabla
@@ -73,7 +70,7 @@ private DefaultTableModel modeloDeMiJTable;
 
             jTable1.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }        
-    modeloDeMiJTable.addRow(new Object[]{"","","","","","",""});        
+    modeloDeMiJTable.addRow(new Object[]{"","","","",""});        
     }
     
 
@@ -115,30 +112,30 @@ private DefaultTableModel modeloDeMiJTable;
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel_egresos = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         dateChooserCombo2 = new datechooser.beans.DateChooserCombo();
-        jComboBox_Mes = new javax.swing.JComboBox();
+        jComboBox1 = new javax.swing.JComboBox();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel_vlrtotal = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel_diferencia = new javax.swing.JLabel();
-        jComboBox_Tipo = new javax.swing.JComboBox();
-        jLabel11 = new javax.swing.JLabel();
-        jTextField_Cedula = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
         getContentPane().add(dateChooserCombo1);
-        dateChooserCombo1.setBounds(20, 90, 110, 30);
+        dateChooserCombo1.setBounds(20, 90, 180, 30);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setText("Saldos");
+        jLabel7.setText("Informe Recibos");
         getContentPane().add(jLabel7);
         jLabel7.setBounds(20, 20, 160, 30);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel8.setText("Cedula");
+        jLabel8.setText("Hasta");
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(530, 70, 60, 20);
+        jLabel8.setBounds(220, 70, 160, 20);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -154,42 +151,42 @@ private DefaultTableModel modeloDeMiJTable;
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(20, 130, 830, 350);
+        jScrollPane1.setBounds(20, 130, 790, 290);
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514242_Search.png"))); // NOI18N
+        jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(710, 80, 80, 40);
+        jButton1.setBounds(670, 90, 140, 30);
 
         jLabel_egresos.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel_egresos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         getContentPane().add(jLabel_egresos);
         jLabel_egresos.setBounds(200, 470, 160, 40);
-        getContentPane().add(dateChooserCombo2);
-        dateChooserCombo2.setBounds(140, 90, 110, 30);
 
-        jComboBox_Mes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jComboBox_Mes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "MES", "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO" }));
-        jComboBox_Mes.addItemListener(new java.awt.event.ItemListener() {
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setText("TOTAL EGRESOS");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(20, 470, 180, 40);
+        getContentPane().add(dateChooserCombo2);
+        dateChooserCombo2.setBounds(220, 90, 180, 30);
+
+        jComboBox1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione Tipo de Informe", "Ingreso", "Egreso", "Asiento" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox_MesItemStateChanged(evt);
+                jComboBox1ItemStateChanged(evt);
             }
         });
-        jComboBox_Mes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_MesActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jComboBox_Mes);
-        jComboBox_Mes.setBounds(260, 90, 110, 30);
+        getContentPane().add(jComboBox1);
+        jComboBox1.setBounds(410, 90, 240, 30);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setText("Fecha Mes");
+        jLabel9.setText("Fecha Registro");
         getContentPane().add(jLabel9);
         jLabel9.setBounds(20, 50, 160, 20);
 
@@ -203,27 +200,20 @@ private DefaultTableModel modeloDeMiJTable;
         getContentPane().add(jLabel_vlrtotal);
         jLabel_vlrtotal.setBounds(200, 430, 160, 40);
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setText("TOTAL INGRESOS");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(20, 430, 180, 40);
+
         jLabel_diferencia.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel_diferencia.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         getContentPane().add(jLabel_diferencia);
         jLabel_diferencia.setBounds(200, 510, 160, 40);
 
-        jComboBox_Tipo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jComboBox_Tipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "INQUILINO", "PROPIETARIO" }));
-        jComboBox_Tipo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox_TipoItemStateChanged(evt);
-            }
-        });
-        getContentPane().add(jComboBox_Tipo);
-        jComboBox_Tipo.setBounds(390, 90, 130, 30);
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel11.setText("Hasta");
-        getContentPane().add(jLabel11);
-        jLabel11.setBounds(140, 70, 160, 20);
-        getContentPane().add(jTextField_Cedula);
-        jTextField_Cedula.setBounds(530, 90, 160, 30);
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel6.setText("DIFERENCIA");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(20, 510, 180, 40);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -231,88 +221,64 @@ private DefaultTableModel modeloDeMiJTable;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         vlrtotal=0;
         egresos=0;
-        String buscar1= "",buscar2= "", consulta="", pago_i="", pago_p="";
+        String consulta="";
+        if(validador==0){
+            if(jComboBox1.getSelectedIndex()==1){
+                consulta="select DISTINCT fc.serial,fc.tipo_factura, fc.usuario, fc.total, fc.fecha::Date from facturas as fc INNER JOIN detalle_factura_caja as det on fc.cod_factura = det.cod_factura INNER JOIN conceptos2 as con2 on det.cod_concepto = con2.cod_concepto   "
+                        + "where fc.fecha::Date between '"+dateChooserCombo1.getText()+"' and '"+dateChooserCombo2.getText()+"' and fc.tipo_factura in ('"+buscar+"', '"+buscar2+"') and con2.tipo='INTERNO'" ;
+            }
+            if(jComboBox1.getSelectedIndex()==2){
+                consulta="select DISTINCT fc.serial,fc.tipo_factura, fc.usuario, fc.total, fc.fecha::Date from facturas as fc INNER JOIN detalle_factura_caja as det on fc.cod_factura = det.cod_factura INNER JOIN conceptos2 as con2 on det.cod_concepto = con2.cod_concepto   "
+                        + "where fc.fecha::Date between '"+dateChooserCombo1.getText()+"' and '"+dateChooserCombo2.getText()+"' and fc.tipo_factura in ('"+buscar+"') and con2.tipo='INTERNO'" ;
+            }            
         
-//        if(validador==0){
-        consulta="select inq.nombres, pro.nombres, ca.mes, ca.cantidad, ca.pago_i, ca.pago_p, ca.fecha "
-                + "from propietarios as pro INNER JOIN  causacion as ca on ca.cod_propietario = pro.cod_propietario INNER JOIN inquilinos as inq on  ca.cod_inquilino = inq.cod_inquilino   "
-                + "where ca.fecha::Date between '"+dateChooserCombo1.getText()+"' and '"+dateChooserCombo2.getText()+"' " ;
-        if(!mes.equals("")){
-           buscar1=" and ca.mes = '"+mes+"'";
+        }else{
+         consulta="select DISTINCT fc.serial,fc.tipo_factura, fc.usuario, fc.total, fc.fecha::Date from facturas as fc INNER JOIN detalle_factura_caja as det on fc.cod_factura = det.cod_factura INNER JOIN conceptos2 as con2 on det.cod_concepto = con2.cod_concepto  "
+                 + "where fc.fecha::Date between '"+dateChooserCombo1.getText()+"' and '"+dateChooserCombo2.getText()+"' and con2.tipo='INTERNO'";
+           
         }
-        if(!usuario.equals("")){
-            if(jTextField_Cedula.getText().equals("")){
-                conn.JOptionShowMessage("+1", "", "Ingrese la Cedula del "+jComboBox_Tipo.getSelectedItem());
-            }
-            else{
-                buscar2=" and "+usuario+" = "+jTextField_Cedula.getText()+"";
-            }
-           
-           
-        }        
-        consulta = consulta+buscar1+buscar2;
-        System.out.println(consulta);
         limpiartabla();
+        
+        System.out.println(consulta);
         ResultSet n=conn.consulta(consulta);
         try{
-            while(n.next()){
-                if(n.getInt(5)==2){
-                    pago_i="DEBE";
-                }
-                else if(n.getInt(5)==1){
-                    pago_i="PAGO";
-                }
-                if(n.getInt(6)==2){
-                    pago_p="DEBE";
-                }
-                else if(n.getInt(6)==1){
-                    pago_p="PAGO";
-                }                
-                modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3),n.getString(4),pago_i,pago_p,n.getString(7)});
+        while(n.next()){
+            if(n.getString(2).equals("FACTURA") ){
+                vlrtotal+=Integer.parseInt(n.getString(4));
+            }
+            if(n.getString(2).equals("RECIBO_CAJA") ){
+                vlrtotal+=Integer.parseInt(n.getString(4));
+            }else if(n.getString(2).equals("EGRESO")){
+                egresos+=Integer.parseInt(n.getString(4));
+            }
+            if(validador==0){
+            modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3),n.getString(4),n.getString(5)});
+            }else{
+             modeloDeMiJTable.addRow(new Object[]{n.getString(1),n.getString(2),n.getString(3),n.getString(4),n.getString(5)});
             }
         }
+        }
         catch(Exception e){}
+        if(validador==1){
+        diferencia=vlrtotal-egresos;
+        }
+        jLabel_vlrtotal.setText("$"+vlrtotal);
+        jLabel_egresos.setText("$"+egresos);
+        jLabel_diferencia.setText("$"+diferencia);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jComboBox_MesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_MesItemStateChanged
-      if(jComboBox_Mes.getSelectedIndex()==0){
-          mes="";
-      }        
-      else if(jComboBox_Mes.getSelectedIndex()==1){
-          mes="ENERO";
-      }  
-      else if(jComboBox_Mes.getSelectedIndex()==2){
-          mes="FEBRERO";
-      }  
-      else if(jComboBox_Mes.getSelectedIndex()==3){
-          mes="MARZO";
-      }  
-      else if(jComboBox_Mes.getSelectedIndex()==4){
-          mes="ABRIL";
-      }  
-      else if(jComboBox_Mes.getSelectedIndex()==5){
-          mes="JUNIO";
-      }  
-      else if(jComboBox_Mes.getSelectedIndex()==6){
-          mes="JULIO";
-      }        
-    }//GEN-LAST:event_jComboBox_MesItemStateChanged
-
-    private void jComboBox_TipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_TipoItemStateChanged
-        if(jComboBox_Tipo.getSelectedIndex()==0){
-          usuario="";
-        } 
-        else if(jComboBox_Tipo.getSelectedIndex()==1){
-        usuario="inq.cedula";
-        }  
-        else if(jComboBox_Tipo.getSelectedIndex()==2){
-          usuario="pro.cedula";
-        }
-    }//GEN-LAST:event_jComboBox_TipoItemStateChanged
-
-    private void jComboBox_MesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_MesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox_MesActionPerformed
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+     if(jComboBox1.getSelectedItem().equals("Ingreso")){
+         buscar="RECIBO_CAJA";
+         buscar2 = "FACTURA";
+         validador=0;
+     }else if(jComboBox1.getSelectedItem().equals("Egreso")){
+         buscar="EGRESO";
+         validador=0;         
+     }else if(jComboBox1.getSelectedItem().equals("Asiento")){
+         validador=1;
+     }
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -322,17 +288,18 @@ int vlrtotal=0;
 int egresos=0;
 int diferencia=0;
 Conexion conn = new Conexion();
-String buscar="", buscar2="",mes = "", usuario="";
+String buscar="", buscar2="";
 int validador =0;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private datechooser.beans.DateChooserCombo dateChooserCombo1;
     private datechooser.beans.DateChooserCombo dateChooserCombo2;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox_Mes;
-    private javax.swing.JComboBox jComboBox_Tipo;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -341,6 +308,5 @@ int validador =0;
     private javax.swing.JLabel jLabel_vlrtotal;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField_Cedula;
     // End of variables declaration//GEN-END:variables
 }

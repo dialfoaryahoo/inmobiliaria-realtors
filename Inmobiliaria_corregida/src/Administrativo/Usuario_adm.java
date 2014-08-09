@@ -354,7 +354,7 @@ public class Usuario_adm extends javax.swing.JDialog {
         char[] passchar = jPasswordField1.getPassword();
         String pass1 = new String(passchar);
         try {
-            pass1 = md5(pass1);
+//            pass1 = md5(pass1);
         } catch (Exception ex) {
             Logger.getLogger(Ingreso_.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="411" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ff6e3e65-cb66-431f-9c68-d7dc7d8caa05">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TIPO_FACTURA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SERIAL" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select fac.serial, fac.tipo_usuario, fac.cod_usuario, fac.total, fac.fecha, descripcion, valor, (us.nombres||' '||us.primer_apellido||' '||us.segundo_apellido) as nombrecompleto, 
+us.cedula, us.fijo, us.direccion_casa, extract(day from fac.fecha)  as dia, extract(MONTH from fac.fecha)  as mes, extract(YEAR from fac.fecha)  as año, fac.usuario
+from detalle_factura_caja as det INNER JOIN facturas as fac on fac.cod_factura = det.cod_factura 
+inner join inquilinos as us on fac.cod_usuario = us.cod_inquilino
+
+where fac.serial = $P{SERIAL} and fac.tipo_factura = $P{TIPO_FACTURA}]]>
+	</queryString>
+	<field name="serial" class="java.math.BigDecimal"/>
+	<field name="tipo_usuario" class="java.lang.String"/>
+	<field name="cod_usuario" class="java.math.BigDecimal"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="fecha" class="java.sql.Timestamp"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="valor" class="java.math.BigDecimal"/>
+	<field name="nombrecompleto" class="java.lang.String"/>
+	<field name="cedula" class="java.math.BigDecimal"/>
+	<field name="fijo" class="java.math.BigDecimal"/>
+	<field name="direccion_casa" class="java.lang.String"/>
+	<field name="dia" class="java.lang.Double"/>
+	<field name="mes" class="java.lang.Double"/>
+	<field name="año" class="java.lang.Double"/>
+	<field name="usuario" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement uuid="9a0ac1ea-9be8-4591-9643-1306ed6b7c9d" x="30" y="37" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="366414fe-d87c-419d-9b92-cbb0cf5f5765" x="486" y="16" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{serial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="faf7823f-2be4-44ec-bb92-5dce4b552958" x="30" y="57" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{direccion_casa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f49c3e04-f494-4bd0-8c14-e7b312a6e0ce" x="0" y="0" width="180" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="15b11962-9d59-447c-a7dc-8f1e839430bb" x="199" y="0" width="140" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5b69937d-1372-4ffd-8297-513b82d8fd87" x="455" y="1" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement uuid="b9f36f97-910f-4432-a86d-cf4ade204081" x="455" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

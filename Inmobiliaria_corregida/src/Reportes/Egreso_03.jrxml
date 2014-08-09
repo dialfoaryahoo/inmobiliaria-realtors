@@ -15,10 +15,10 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select fac.serial, fac.tipo_usuario, fac.cod_usuario, fac.total, fac.fecha, concepto, valor, (us.nombres||' '||us.primer_apellido||' '||us.segundo_apellido) as nombrecompleto, 
-us.cedula, us.fijo, us.direccion_casa, extract(day from fac.fecha)  as dia, extract(MONTH from fac.fecha)  as mes, extract(YEAR from fac.fecha)  as año, fac.usuario
+		<![CDATA[select fac.serial, fac.tipo_usuario, fac.cod_usuario, fac.total, fac.fecha, concepto, valor,nombre_completo, 
+us.cedula, us.direccion, extract(day from fac.fecha)  as dia, extract(MONTH from fac.fecha)  as mes, extract(YEAR from fac.fecha)  as año, fac.usuario
 from detalle_factura_caja as det INNER JOIN facturas as fac on fac.cod_factura = det.cod_factura 
-inner join inquilinos as us on fac.cod_usuario = us.cod_inquilino
+inner join otros_usuarios as us on fac.cod_usuario = us.cod_usuario 
 
 where fac.serial = $P{serial} and fac.tipo_factura = $P{tipo_factura}]]>
 	</queryString>
@@ -29,10 +29,9 @@ where fac.serial = $P{serial} and fac.tipo_factura = $P{tipo_factura}]]>
 	<field name="fecha" class="java.sql.Timestamp"/>
 	<field name="concepto" class="java.lang.String"/>
 	<field name="valor" class="java.math.BigDecimal"/>
-	<field name="nombrecompleto" class="java.lang.String"/>
+	<field name="nombre_completo" class="java.lang.String"/>
 	<field name="cedula" class="java.math.BigDecimal"/>
-	<field name="fijo" class="java.math.BigDecimal"/>
-	<field name="direccion_casa" class="java.lang.String"/>
+	<field name="direccion" class="java.lang.String"/>
 	<field name="dia" class="java.lang.Double"/>
 	<field name="mes" class="java.lang.Double"/>
 	<field name="año" class="java.lang.Double"/>
@@ -147,14 +146,14 @@ where fac.serial = $P{serial} and fac.tipo_factura = $P{tipo_factura}]]>
 				<text><![CDATA[CEDULA]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="bf0484f7-4ef1-4c69-bb19-da79ab54f88d" x="86" y="0" width="292" height="32"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement uuid="38e22653-e0a0-496a-9a0f-7c273e10124f" x="424" y="12" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6de61db2-d111-4d3a-b09b-f1e0a86b3e8f" x="86" y="0" width="291" height="32"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_completo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

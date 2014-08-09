@@ -4,8 +4,13 @@
  */
 package Cartera_y_caja;
 
+import Administrativo.Buscador_Facutras;
+import Contabilidad.Comisiones;
+import Contabilidad.Conceptos;
 import inmobiliaria_fase01.Conexion;
 import inmobiliaria_fase01.Pantalla_Inicial;
+import java.sql.ResultSet;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -15,6 +20,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
 /**
@@ -32,8 +38,21 @@ public class Index extends javax.swing.JDialog {
         setSize(950,650);
         setLocationRelativeTo(rootPane);
         jLabel1.requestFocus();
+        
+        version_beta(true);
+        
     }
-
+    
+    public void version_beta(Boolean a){
+        jButton11.setEnabled(a);
+        jButton7.setEnabled(a);
+        jButton24.setEnabled(a);
+        jButton2.setEnabled(a);
+        jButton5.setEnabled(a);
+        jButton26.setEnabled(a);
+        jButton21.setEnabled(a);
+    
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,33 +63,21 @@ public class Index extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jButton19 = new javax.swing.JButton();
-        jButton22 = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
         jButton23 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jButton21 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        jButton8 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
-        jButton16 = new javax.swing.JButton();
-        jButton20 = new javax.swing.JButton();
+        jButton24 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
+        jButton22 = new javax.swing.JButton();
+        jButton25 = new javax.swing.JButton();
+        jButton26 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -78,19 +85,11 @@ public class Index extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Inmobiliaria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Procesos Inmobiliaria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
         jPanel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.setLayout(null);
 
-        jButton1.setText("Tablas de Conceptos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1);
-        jButton1.setBounds(20, 90, 140, 40);
-
+        jButton19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton19.setText("Tablas Basicas");
         jButton19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,26 +97,9 @@ public class Index extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jButton19);
-        jButton19.setBounds(20, 50, 140, 40);
+        jButton19.setBounds(40, 40, 210, 70);
 
-        jButton22.setText("Notas");
-        jButton22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton22ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton22);
-        jButton22.setBounds(20, 210, 140, 40);
-
-        jButton21.setText("Arrienda");
-        jButton21.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton21ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton21);
-        jButton21.setBounds(20, 130, 140, 40);
-
+        jButton23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton23.setText("Inmuebles En Arriendo");
         jButton23.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,28 +107,50 @@ public class Index extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jButton23);
-        jButton23.setBounds(20, 170, 140, 40);
+        jButton23.setBounds(290, 130, 220, 70);
+
+        jButton11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton11.setText("Causacion");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton11);
+        jButton11.setBounds(40, 130, 210, 70);
+
+        jButton21.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton21.setText("Arrienda");
+        jButton21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton21ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton21);
+        jButton21.setBounds(290, 40, 220, 70);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(30, 30, 180, 410);
+        jPanel1.setBounds(30, 20, 560, 230);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/LOGO2.png"))); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(470, 440, 470, 210);
+        jLabel1.setBounds(530, 380, 470, 210);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Recaudos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Procesos Financieros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
         jPanel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel2.setLayout(null);
 
-        jButton2.setText("Egresos");
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton2.setText("Recibo de Egresos");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
         jPanel2.add(jButton2);
-        jButton2.setBounds(20, 130, 140, 40);
+        jButton2.setBounds(40, 150, 210, 70);
 
+        jButton5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton5.setText("Facturas");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,17 +158,9 @@ public class Index extends javax.swing.JDialog {
             }
         });
         jPanel2.add(jButton5);
-        jButton5.setBounds(20, 90, 140, 40);
+        jButton5.setBounds(280, 150, 220, 70);
 
-        jButton6.setText("Asientos");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton6);
-        jButton6.setBounds(20, 170, 140, 40);
-
+        jButton7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton7.setText("Recibos de Caja");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,113 +168,33 @@ public class Index extends javax.swing.JDialog {
             }
         });
         jPanel2.add(jButton7);
-        jButton7.setBounds(20, 50, 140, 40);
+        jButton7.setBounds(40, 50, 210, 70);
+
+        jButton24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton24.setText("Entrega de Inmuble");
+        jButton24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton24ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton24);
+        jButton24.setBounds(280, 50, 230, 80);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(250, 30, 180, 410);
+        jPanel2.setBounds(30, 260, 550, 270);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Procesos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
-        jPanel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPanel3.setLayout(null);
-
-        jButton4.setText("Saldos/Cartera");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton4);
-        jButton4.setBounds(20, 90, 140, 40);
-
-        jButton9.setText("Facturacion");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton9);
-        jButton9.setBounds(20, 200, 140, 40);
-
-        jButton10.setText("Incrementos");
-        jPanel3.add(jButton10);
-        jButton10.setBounds(20, 240, 140, 40);
-
-        jButton11.setText("Causacion");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton11);
-        jButton11.setBounds(20, 50, 140, 40);
-
-        jButton3.setText("Saldos");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton3);
-        jButton3.setBounds(20, 280, 140, 40);
-
-        getContentPane().add(jPanel3);
-        jPanel3.setBounds(470, 30, 180, 410);
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Informes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
-        jPanel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPanel4.setLayout(null);
-
-        jButton8.setText("Recibos de Caja");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButton8);
-        jButton8.setBounds(20, 290, 140, 40);
-
-        jButton12.setText("Ingresos");
-        jPanel4.add(jButton12);
-        jButton12.setBounds(20, 50, 140, 40);
-
-        jButton13.setText("Servicios Publicos");
-        jPanel4.add(jButton13);
-        jButton13.setBounds(20, 90, 140, 40);
-
-        jButton14.setText("Municipios");
-        jPanel4.add(jButton14);
-        jButton14.setBounds(20, 130, 140, 40);
-
-        jButton15.setText("Alcaldia");
-        jPanel4.add(jButton15);
-        jButton15.setBounds(20, 170, 140, 40);
-
-        jButton16.setText("Directorio");
-        jPanel4.add(jButton16);
-        jButton16.setBounds(20, 210, 140, 40);
-
-        jButton20.setText("Facturas");
-        jButton20.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton20ActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButton20);
-        jButton20.setBounds(20, 250, 140, 40);
-
-        getContentPane().add(jPanel4);
-        jPanel4.setBounds(690, 30, 180, 410);
-
+        jButton17.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir.png"))); // NOI18N
-        jButton17.setText("Salir");
+        jButton17.setText("Salir del Programa");
         jButton17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton17ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton17);
-        jButton17.setBounds(240, 490, 190, 70);
+        jButton17.setBounds(650, 190, 270, 80);
 
+        jButton18.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/home.png"))); // NOI18N
         jButton18.setText("Menu Principal");
         jButton18.setHideActionText(true);
@@ -288,7 +204,38 @@ public class Index extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButton18);
-        jButton18.setBounds(40, 490, 190, 70);
+        jButton18.setBounds(650, 80, 270, 80);
+
+        jButton22.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tarea.png"))); // NOI18N
+        jButton22.setText("Notas      ");
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton22ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton22);
+        jButton22.setBounds(650, 300, 270, 60);
+
+        jButton25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton25.setText("Arrienda");
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton25ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton25);
+        jButton25.setBounds(290, 40, 220, 70);
+
+        jButton26.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton26.setText("Pagos Administracion");
+        jButton26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton26ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton26);
+        jButton26.setBounds(650, 10, 270, 60);
 
         jMenu1.setText("Archivo");
         jMenuBar1.add(jMenu1);
@@ -309,24 +256,22 @@ public class Index extends javax.swing.JDialog {
       System.exit(1);
     }//GEN-LAST:event_jButton17ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Conexion.dialog();
-        java.awt.EventQueue.invokeLater(new Runnable() {
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    Conexion.dialog();
+       java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Conceptos dialog = new Conceptos(new javax.swing.JFrame(), true);
+                Recibos_Caja dialog = new Recibos_Caja(new javax.swing.JFrame(), true);
                 dialog.setVisible(true);
             }
         });
-    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Recibos_Caja().setVisible(true);
-            }
-        });
-//        Conexion.dialog();
+        //        this.setVisible(false);
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Recibos_Caja().setVisible(true);
+//            }
+//        });
+////        Conexion.dialog();
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
 //                Recibos_Caja dialog = new Recibos_Caja(new javax.swing.JFrame(), true);
@@ -336,40 +281,45 @@ public class Index extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Facturas().setVisible(true);
-                
-                
-            }
-        });
-
-        
-        
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-       Conexion.dialog();
+    Conexion.dialog();
        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Asientos dialog = new Asientos(new javax.swing.JFrame(), true);
+                Facturas dialog = new Facturas(new javax.swing.JFrame(), true);
                 dialog.setVisible(true);
             }
         });
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        Conexion.dialog();
+       java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Egresos_D().setVisible(true);
+                Egresos dialog = new Egresos(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
             }
         });
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-    Conexion.dialog();
+      String consulta = "SELECT fecha::date FROM causacion ORDER BY fecha desc limit 1";
+      String fecha="";
+      Conexion conn= new Conexion();
+      conn.establecer_conexion();
+        ResultSet n = conn.consulta(consulta);
+        try {
+            while (n.next()) {                
+                fecha=n.getString(1);
+            }
+            if(!fecha.equals("")){
+                Conexion.JOptionShowMessage("+1", "", "LA ULTIMA CAUSACION REALIZADA: <br> <p align=center><b><font face='Arial' size = '+2' color= 'red'>" +fecha+"</font></b></p>") ;
+            }else{
+                Conexion.JOptionShowMessage("+1", "", "NO SE HAN REALIZADO CAUSACIONES") ;
+            }
+        } catch (Exception e) {
+        }
+      
+      
+      Conexion.dialog();
        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Causacion dialog = new Causacion(new javax.swing.JFrame(), true);
@@ -377,34 +327,6 @@ public class Index extends javax.swing.JDialog {
             }
         });
     }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    Conexion.dialog();
-       java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                reportes dialog = new reportes(new javax.swing.JFrame(), true);
-                dialog.setVisible(true);
-            }
-        });
-
-//        Conexion conn = new Conexion();
-//        conn.establecer_conexion();
-//        
-//        String path="D:/Proyecto/Inmobiliaria_corregida/src/Reportes/report1.jasper";
-//        JasperReport jr = null;
-//        try {
-//            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-//            JasperPrint jp = JasperFillManager.fillReport(jr,null,conn.establecer_conexion());
-//            JasperViewer jv = new JasperViewer(jp);
-//            jv.setVisible(true);
-//            jv.setTitle(path);
-//            
-//            
-//            
-//        } catch (JRException ex) {
-//            Logger.getLogger(Index.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         Conexion.dialog();
@@ -415,34 +337,6 @@ public class Index extends javax.swing.JDialog {
             }
         });        
     }//GEN-LAST:event_jButton19ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-                Conexion.dialog();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Informes_Recibos_Caja dialog = new Informes_Recibos_Caja(new javax.swing.JFrame(), true);
-                dialog.setVisible(true);
-            }
-        });
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton20ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Conexion.dialog();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Saldos dialog = new Saldos(new javax.swing.JFrame(), true);
-                dialog.setVisible(true);
-            }
-        });
-    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
         Conexion.dialog();
@@ -474,41 +368,53 @@ public class Index extends javax.swing.JDialog {
         });
     }//GEN-LAST:event_jButton23ActionPerformed
 
+    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+        Conexion.dialog();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Devolucion_Arrienda dialog = new Devolucion_Arrienda(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton24ActionPerformed
+
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+        Conexion.dialog();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Pagos_Administracion dialog = new Pagos_Administracion(new javax.swing.JFrame(), true);
+                dialog.setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jButton26ActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton24;
+    private javax.swing.JButton jButton25;
+    private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     // End of variables declaration//GEN-END:variables
 }

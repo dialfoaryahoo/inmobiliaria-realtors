@@ -41,12 +41,12 @@ import static org.apache.poi.hssf.usermodel.HeaderFooter.date;
  *
  * @author Usuario
  */
-public class Recibos_Caja extends javax.swing.JFrame {
+public class Recibos_Caja_2 extends javax.swing.JDialog {
 
    private DefaultTableModel modeloDeMiJTable; 
     
-    public Recibos_Caja() {
- 
+    public Recibos_Caja_2(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
         setSize(950,650);
         setLocationRelativeTo(rootPane);
@@ -187,25 +187,24 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jButton_nuevo.setSelected(a);
         jButton_bucar.setSelected(b);
         jButton_imprimir.setSelected(c);
-        jButton_informes.setSelected(d);
+        //jButton_informes.setSelected(d);
     }
 
     private void llenarcombocodigo(){
         conn.establecer_conexion();
         jComboBox_codigo.removeAllItems();
-        String sql ="select nombres from conceptos;";
+        jComboBox_codigo.addItem("SELECCIONE");
+        String sql ="select nombres from conceptos2 where cod_referencia='INGRESO';";
         //String sql ="select DISTINCT fecha::date from factura_caja";
         ResultSet query = conn.consulta(sql);
         try {
             while(query.next()){
-                
                 jComboBox_codigo.addItem(query.getObject(1)); 
             }    
         } catch (Exception e) {
         }
         
     }    
-        
         private void serial(){
         conn.establecer_conexion();
         String consultaserial = "select max(serial)+1 from facturas where tipo_factura = 'RECIBO_CAJA'";
@@ -219,8 +218,6 @@ public class Recibos_Caja extends javax.swing.JFrame {
                 }
             } catch (Exception e) {
             }
-        
-        
         }
         private void detallepersonavacio(){
             jTextField_codigo.setText("");
@@ -255,6 +252,35 @@ public class Recibos_Caja extends javax.swing.JFrame {
         mes = mes+1;
         String cadenafecha = ""+dia+"/"+mes+"/"+año+"";
             jLabel9.setText(cadenafecha);
+        }
+        
+        private void reportes(String path){
+            conn.establecer_conexion();
+            contimp++;
+            JasperReport jr = null;
+            try {
+                if(contimp!=0){
+                    JDialog viewer = new JDialog(new javax.swing.JFrame(),"RECIBO DE CAJA", true); 
+                    viewer.setSize(1000,800); 
+                    viewer.setLocationRelativeTo(null);                    
+                    Map parametro = new HashMap();
+                    parametro.put("SERIAL", seriaimp);
+                    parametro.put("TIPO_FACTURA", "RECIBO_CAJA");
+                    jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+                    JasperPrint jp = JasperFillManager.fillReport(jr,parametro,conn.establecer_conexion());
+                    //JasperViewer jv = new JasperViewer(jp);
+                    JasperViewer jv = new JasperViewer(jp);
+                    //nuevo
+                    viewer.getContentPane().add(jv.getContentPane());
+                    viewer.setVisible(true);
+                    jv.setTitle("RECIBO DE CAJA");
+                    botones(false, false, false, false);
+                    serial();
+                }else{
+                    Conexion.JOptionShowMessage("+1", null, "NO HA GENERADO NINGUN RECIBO");
+                }
+            } catch (JRException ex) {
+            }        
         
         }
 //        private void paneldinero(Boolean a){
@@ -282,7 +308,6 @@ public class Recibos_Caja extends javax.swing.JFrame {
         efecheque = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jButton_nuevo = new javax.swing.JButton();
-        jButton_informes = new javax.swing.JButton();
         jButton_bucar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jButton_imprimir = new javax.swing.JButton();
@@ -304,9 +329,9 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jTextField_Ncheque2 = new javax.swing.JTextField();
         jCheck_saldo = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
+        jTextField_codigo = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jTextField_codigo = new javax.swing.JTextField();
         jComboBox_destino = new javax.swing.JComboBox();
         jTextField_nombre = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
@@ -354,18 +379,7 @@ public class Recibos_Caja extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton_nuevo);
-        jButton_nuevo.setBounds(270, 20, 150, 50);
-
-        jButton_informes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton_informes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514254_Copy v2.png"))); // NOI18N
-        jButton_informes.setText("Informes");
-        jButton_informes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_informesActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton_informes);
-        jButton_informes.setBounds(720, 20, 150, 50);
+        jButton_nuevo.setBounds(450, 20, 150, 50);
 
         jButton_bucar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton_bucar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1396514242_Search.png"))); // NOI18N
@@ -376,7 +390,7 @@ public class Recibos_Caja extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton_bucar);
-        jButton_bucar.setBounds(420, 20, 150, 50);
+        jButton_bucar.setBounds(600, 20, 150, 50);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel9.setText("Fecha: 27/04/2014");
@@ -392,13 +406,13 @@ public class Recibos_Caja extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton_imprimir);
-        jButton_imprimir.setBounds(570, 20, 150, 50);
+        jButton_imprimir.setBounds(750, 20, 150, 50);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Detalle Recibo", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 20))); // NOI18N
         jPanel1.setLayout(null);
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel14.setText("Codigo");
+        jLabel14.setText("Concepto");
         jPanel1.add(jLabel14);
         jLabel14.setBounds(10, 150, 130, 30);
 
@@ -407,6 +421,7 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jPanel1.add(jLabel15);
         jLabel15.setBounds(10, 20, 80, 40);
 
+        jTextField_concepto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextField_concepto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_conceptoActionPerformed(evt);
@@ -415,6 +430,7 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jPanel1.add(jTextField_concepto);
         jTextField_concepto.setBounds(90, 90, 360, 30);
 
+        jTextField_valor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextField_valor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField_valorKeyTyped(evt);
@@ -471,6 +487,7 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jPanel1.add(jRadioButton_efectivo2);
         jRadioButton_efectivo2.setBounds(240, 60, 100, 29);
 
+        jComboBox_codigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel1.add(jComboBox_codigo);
         jComboBox_codigo.setBounds(90, 150, 210, 30);
 
@@ -492,9 +509,11 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jLabelN_Recibo.setBounds(90, 20, 140, 40);
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel18.setText("Concepto");
+        jLabel18.setText("Descripcion");
         jPanel1.add(jLabel18);
-        jLabel18.setBounds(10, 90, 60, 30);
+        jLabel18.setBounds(10, 90, 80, 30);
+
+        jTextField_Ncheque2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel1.add(jTextField_Ncheque2);
         jTextField_Ncheque2.setBounds(90, 180, 210, 30);
 
@@ -515,6 +534,15 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Detalle Persona", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 20))); // NOI18N
         jPanel2.setLayout(null);
 
+        jTextField_codigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField_codigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_codigoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jTextField_codigo);
+        jTextField_codigo.setBounds(90, 90, 260, 30);
+
         jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel20.setText("Destino");
         jPanel2.add(jLabel20);
@@ -525,15 +553,8 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jPanel2.add(jLabel21);
         jLabel21.setBounds(10, 90, 80, 30);
 
-        jTextField_codigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_codigoActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jTextField_codigo);
-        jTextField_codigo.setBounds(90, 90, 210, 30);
-
-        jComboBox_destino.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Inquilino", "Propietario", "Otros Usuarios" }));
+        jComboBox_destino.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jComboBox_destino.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "INQUILINO", "PROPIETARIO", "Otros Usuarios" }));
         jComboBox_destino.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_destinoItemStateChanged(evt);
@@ -545,7 +566,9 @@ public class Recibos_Caja extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jComboBox_destino);
-        jComboBox_destino.setBounds(90, 60, 160, 30);
+        jComboBox_destino.setBounds(90, 60, 260, 30);
+
+        jTextField_nombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel2.add(jTextField_nombre);
         jTextField_nombre.setBounds(90, 120, 260, 30);
 
@@ -553,6 +576,8 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jLabel22.setText("Nombre");
         jPanel2.add(jLabel22);
         jLabel22.setBounds(10, 120, 60, 30);
+
+        jTextField_direccion.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel2.add(jTextField_direccion);
         jTextField_direccion.setBounds(90, 150, 260, 30);
 
@@ -560,6 +585,8 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jLabel23.setText("Dirección");
         jPanel2.add(jLabel23);
         jLabel23.setBounds(10, 150, 60, 30);
+
+        jTextField_saldo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel2.add(jTextField_saldo);
         jTextField_saldo.setBounds(90, 180, 260, 30);
 
@@ -606,6 +633,7 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jPanel3.add(jLabel19);
         jLabel19.setBounds(10, 150, 130, 30);
 
+        jTextField_ncheque.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextField_ncheque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_nchequeActionPerformed(evt);
@@ -680,6 +708,7 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jPanel3.add(jLabel3);
         jLabel3.setBounds(440, 30, 90, 30);
 
+        jTextField_total.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextField_total.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_totalActionPerformed(evt);
@@ -693,6 +722,7 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jPanel3.add(jLabel4);
         jLabel4.setBounds(190, 60, 90, 30);
 
+        jTextField_ingreso.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextField_ingreso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_ingresoActionPerformed(evt);
@@ -710,6 +740,8 @@ public class Recibos_Caja extends javax.swing.JFrame {
         jLabel5.setText("$ Vueltos");
         jPanel3.add(jLabel5);
         jLabel5.setBounds(430, 60, 90, 30);
+
+        jTextField_vueltos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanel3.add(jTextField_vueltos);
         jTextField_vueltos.setBounds(490, 60, 170, 30);
 
@@ -740,10 +772,6 @@ public class Recibos_Caja extends javax.swing.JFrame {
     
     }//GEN-LAST:event_jButton_nuevoActionPerformed
 
-    private void jButton_informesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_informesActionPerformed
-botones(false, false, false,true);
-    }//GEN-LAST:event_jButton_informesActionPerformed
-
     private void jButton_bucarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_bucarActionPerformed
         String recibo= JOptionPane.showInputDialog("<html><font='Arial' size=+1>Ingrese el numero del recibo a buscar</font></html>");
         String consulta ="select serial from facturas where serial = "+recibo+" and tipo_factura = 'RECIBO_CAJA'";
@@ -772,60 +800,29 @@ botones(false, false, false,true);
 
     private void jButton_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_imprimirActionPerformed
     botones(false, false, true, false);    // TODO add your handling code here:
-            conn.establecer_conexion();
-            //System.out.println(seriaimp);
-            //seriaimp=24;
-            contimp++;
-            String path="D:/Proyecto/Inmobiliaria_corregida/src/Reportes/recibo_caja.jasper";
-            JasperReport jr = null;
-            try {
-                if(contimp!=0){
-                    Dialog viewer = new JDialog(new javax.swing.JFrame(),"Visualização do Relatório", true); 
-                    viewer.setSize(1000,800); 
-                    viewer.setLocationRelativeTo(null);                    
-                    Map parametro = new HashMap();
-                    parametro.put("cod_serial", seriaimp);
-                    parametro.put("tipo_factura", "RECIBO_CAJA");
-                    //parametro.put("parameter1", jComboBox_usuarios.getSelectedItem());
-                    jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-                    JasperPrint jp = JasperFillManager.fillReport(jr,parametro,conn.establecer_conexion());
-                    //JasperViewer jv = new JasperViewer(jp);
-                    JasperViewer jv = new JasperViewer(jp, false);
-                    //nuevo
-                    //viewer.getContentPane().add(jv.getContentPane());
-                    //viewer.setVisible(true);
-                    jv.toFront();
-                    jv.isActive();
-                    //this.setVisible(true);
-                    jv.setVisible(true);
-                    jv.setTitle("RECIBO DE CAJA");
-                    botones(false, false, false, false);
-                    serial();
-                    
-                    
-//                    
-//Dialog viewer = new JDialog(new javax.swing.JFrame(),"Visualização do Relatório", true); 
-//viewer.setSize(1000,800); 
-//viewer.setLocationRelativeTo(null);
-//Map parametro = new HashMap();
-//System.out.println(nombre);
-//java.util.Date utilDate = new java.util.Date(); 
-//parametro.put("NOMBRE_COMPLETO", nombre); 
-////parametro.put("FECHA", utilDate); 
-////parametro.put("parameter1", jComboBox_usuarios.getSelectedItem());
-//jr = (JasperReport) JRLoader.loadObjectFromFile(path);
-//JasperPrint jp = JasperFillManager.fillReport(jr,parametro,conn.establecer_conexion());
-//JasperViewer jv = new JasperViewer(jp);
-//viewer.getContentPane().add(jv.getContentPane());
-//viewer.setVisible(true);
-//jv.setTitle("FORMATO DE ACEPTACION");                    
-
-                }else{
-                    Conexion.JOptionShowMessage("+1", null, "NO HA GENERADO NINGUN RECIBO");
-                }
-            } catch (JRException ex) {
-                Logger.getLogger(Informes_Recibos_Caja.class.getName()).log(Level.SEVERE, null, ex);
-            }    
+    String consulta = "select tipo_usuario from facturas where tipo_factura = 'RECIBO_CAJA' ORDER BY cod_factura desc limit 1";
+    ResultSet n = conn.consulta(consulta);
+        try {
+            while (n.next()) {                
+                tipo_factura=n.getString(1);
+            }
+        } catch (Exception e) {
+        }
+            String ruta=System.getProperty("user.dir");
+            ruta=ruta.replace("\\", "/");
+            System.out.println(ruta);
+            String path="";
+            if(tipo_factura.equals("INQUILINO")){
+                path=ruta+"/src/Reportes/recibo_caja01.jasper";
+            }
+            else if(tipo_factura.equals("PROPIETARIO")){
+                path=ruta+"/src/Reportes/recibo_caja02.jasper";
+            }
+            else if(tipo_factura.equals("Otros Usuarios")){
+                path=ruta+"/src/Reportes/recibo_caja03.jasper";            
+            }
+            System.out.println(path);
+            reportes(path);
     }//GEN-LAST:event_jButton_imprimirActionPerformed
 
     private void jButton_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_confirmarActionPerformed
@@ -834,10 +831,13 @@ botones(false, false, false,true);
         }
         else if (jTextField_valor.getText().equals("")) {
             Conexion.JOptionShowMessage("+1", "", "Valor a Pagar?");
-        }        
+        }
+        else if(jComboBox_codigo.getSelectedIndex()==0){
+            Conexion.JOptionShowMessage("+1", "", "Seleccione un Concepto");
+        }
         else{
         conn.establecer_conexion();
-        String Consulta = "select cod_concepto from conceptos where nombres = '"+jComboBox_codigo.getSelectedItem()+"';";
+        String Consulta = "select cod_concepto from conceptos2 where cod_referencia='INGRESO' and nombres = '"+jComboBox_codigo.getSelectedItem()+"';";
         ResultSet query = conn.consulta(Consulta);
         int codigo = 0;
             try {
@@ -872,13 +872,8 @@ botones(false, false, false,true);
             jCheck_saldo.setVisible(false);
         }
 
-        //desactivo para que no puedan cambiar aquien se le haga la factura, evitar
         jTextField_codigo.setEnabled(false);
         jComboBox_destino.setEnabled(false);
-        
-        //////////////////
-        //fin  sumatoria//
-        //////////////////          
    
        
        detatallerecivovacio();
@@ -984,6 +979,7 @@ botones(false, false, false,true);
                     jTextField_nombre.setText(n.getString(1));
                     jTextField_direccion.setText(n.getString(2));
                     jTextField_saldo.setText("0");
+                    cod_usuario =  (n.getInt(3));
                     panelrecibo(true);
                     jButton_confirmar.setVisible(true);
                     contador++;
@@ -1066,7 +1062,6 @@ botones(false, false, false,true);
     }//GEN-LAST:event_jCheck_saldoActionPerformed
 
     private void jButton_confirmar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_confirmar1ActionPerformed
-
         if(jTextField_ingreso.getText().equals("")){
             conn.JOptionShowMessage("+1", "", "Ingrese una cantidad de dinero");
         }
@@ -1083,12 +1078,11 @@ botones(false, false, false,true);
         
         else{
             conn.establecer_conexion();
-
             String insertar="INSERT INTO facturas(tipo_factura, serial,tipo_usuario, cod_usuario, tipo_pago, ncheque, interno_externo, total, estado, usuario, fecha) " +
                 "VALUES ('RECIBO_CAJA', "+serial+", '"+jComboBox_destino.getSelectedItem()+"', "+cod_usuario+", '"+forma_pago+"', '"+jTextField_ncheque.getText().toUpperCase()+"', 'INTERNO', "+valor_total+", 1,  '"+acc.getUsuario()+"', now())";
             seriaimp = serial;
             System.out.print(insertar);
-            conn.Dinsertar(insertar);
+            conn.Dinsertar2(insertar);
             //conseguir el numero de la factura.
             String consulta = "select max(cod_factura) from facturas";
             ResultSet rs = conn.consulta(consulta);
@@ -1105,12 +1099,12 @@ botones(false, false, false,true);
                 String insertar2="INSERT INTO detalle_factura_caja (cod_factura, cod_concepto, concepto, valor, fecha) "
                         + "values ("+cod_factura+", "+modeloDeMiJTable.getValueAt(i, 0)+", '"+modeloDeMiJTable.getValueAt(i, 2).toString().toUpperCase()+"', "+modeloDeMiJTable.getValueAt(i, 3)+", now())";
                 System.out.println(insertar2);
-
-                conn.Dinsertar2(insertar2);
+                conn.Dinsertar(insertar2);
                 contimp++;
+                tipo_factura=jComboBox_destino.getSelectedItem().toString();
                 }
                 //imprimir
-                int seletedvalue = JOptionPane.showConfirmDialog(rootPane, "Imprimir Recibo??" , "Imprimir Recibo", JOptionPane.OK_CANCEL_OPTION);
+                int seletedvalue = JOptionPane.showConfirmDialog(rootPane, "Desea Imprimir el Recibo" , "Imprimir Recibo", JOptionPane.OK_CANCEL_OPTION);
                 if(seletedvalue ==JOptionPane.YES_OPTION ){                
                     jButton_imprimirActionPerformed(evt);
                 }
@@ -1118,7 +1112,6 @@ botones(false, false, false,true);
             else{
                 conn.JOptionShowMessage("+1", "", "Error al Guardar la Factura");
             }            
-            
         //verificar si uso, el saldo para descontarlo.
         if(jComboBox_destino.getSelectedIndex()==1){
             String update = "update ";
@@ -1217,7 +1210,7 @@ botones(false, false, false,true);
     int[] anchos = {40, 200, 50};
     int destino=0, serial=0, cod_usuario=0, seriaimp = 0, valor_total=0, saldo_total =0, uso_saldo=0;
     Boolean falso= false, verdadero= true;
-    String forma_pago="";
+    String forma_pago="", tipo_factura="";
     Conexion conn = new Conexion();
     dinero_caja dinero = new dinero_caja();
     acceso acc = new acceso();
@@ -1232,7 +1225,6 @@ botones(false, false, false,true);
     private javax.swing.JButton jButton_confirmar1;
     private javax.swing.JButton jButton_confirmar2;
     private javax.swing.JButton jButton_imprimir;
-    private javax.swing.JButton jButton_informes;
     private javax.swing.JButton jButton_nuevo;
     private javax.swing.JCheckBox jCheck_saldo;
     private javax.swing.JComboBox jComboBox_codigo;
