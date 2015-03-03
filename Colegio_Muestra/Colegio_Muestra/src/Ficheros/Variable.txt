@@ -1,0 +1,4 @@
+localhost
+postgres
+123456
+DB_COLEGIO
