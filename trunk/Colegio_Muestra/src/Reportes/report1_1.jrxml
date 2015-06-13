@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="410" orientation="Landscape" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3aeb7437-9eb7-4a34-851c-d5a1fc043fa7">
+	<property name="ireport.zoom" value="1.100000000000009"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<queryString>
+		<![CDATA[select nombre_completo,identificacion,pension,transporte,lonchera,almuerzo,totalabril,(totalabril+15000) as npension from estudiantes_abril where nombre_completo in (
+'Beltran Ortiz Juan Manuel', 
+'Figueredo Cadavid Alejandro', 
+'Gomez Montaño Ana Sofia', 
+'gonzalez Bolivar Juan Jose', 
+'Gutierrez Pinto Manuela',
+' Nieto Vega Juan Andres',
+'Perea Figueroa Carmen Elisa ',
+'Quintero Barragan Ma Jose ',
+'RamirezBuitrago Juan pablo',
+'Rodriguez Ronderos  Juan Pablo',
+'Santa Serpa Valeria',
+'Uribe Higuita Lukas Mateo',
+'Valero rafael santiago'
+) 
+order by id;]]>
+	</queryString>
+	<field name="nombre_completo" class="java.lang.String"/>
+	<field name="identificacion" class="java.lang.String"/>
+	<field name="pension" class="java.math.BigDecimal"/>
+	<field name="transporte" class="java.math.BigDecimal"/>
+	<field name="lonchera" class="java.math.BigDecimal"/>
+	<field name="almuerzo" class="java.math.BigDecimal"/>
+	<field name="totalabril" class="java.math.BigDecimal"/>
+	<field name="npension" class="java.math.BigDecimal"/>
+	<variable name="nombre_completo_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<group name="cod_propietario">
+		<groupExpression><![CDATA[]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="187" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement uuid="079f2cf5-51bd-48d3-af30-a377a5012350" x="0" y="0" width="272" height="141"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="079f2cf5-51bd-48d3-af30-a377a5012350" x="288" y="0" width="265" height="141"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="079f2cf5-51bd-48d3-af30-a377a5012350" x="-303" y="-9" width="272" height="141"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="079f2cf5-51bd-48d3-af30-a377a5012350" x="0" y="141" width="272" height="46"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="079f2cf5-51bd-48d3-af30-a377a5012350" x="288" y="141" width="265" height="46"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="14" y="155" width="73" height="14"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REFERENCIA 1:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="14" y="141" width="62" height="14"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTUDIANTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="14" y="168" width="242" height="19" forecolor="#0000FF"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[MES: ABRIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="307" y="168" width="242" height="19" forecolor="#0000FF"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[MES: ABRIL]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8917f01a-4df7-46a3-a35d-62fdbd39b5da" x="87" y="141" width="169" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_completo}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8917f01a-4df7-46a3-a35d-62fdbd39b5da" x="87" y="155" width="169" height="14"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{identificacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="110" y="51" width="146" height="16"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<text><![CDATA[MARIA MARGARITA HIGUERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="110" y="67" width="146" height="16"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<text><![CDATA[NIT  63497971-9]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e1ff25e8-1dec-4870-bf00-2e2204852088" x="110" y="83" width="146" height="15"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Century Gothic" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CALLE 73 # 55 - 01 TELEFONO: 6315098]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e1ff25e8-1dec-4870-bf00-2e2204852088" x="110" y="99" width="146" height="17"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONVENIO N° 15703871]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e1ff25e8-1dec-4870-bf00-2e2204852088" x="110" y="116" width="146" height="19"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BANCO CAJA SOCIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f5b760a1-b5f8-49c0-b516-c75bfbb4a286" x="110" y="0" width="146" height="51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COLEGIO KIDS PLANET]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e1ff25e8-1dec-4870-bf00-2e2204852088" x="403" y="115" width="146" height="19"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BANCO CAJA SOCIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="403" y="66" width="146" height="16"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<text><![CDATA[NIT  63497971-9]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e1ff25e8-1dec-4870-bf00-2e2204852088" x="403" y="98" width="146" height="17"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Century Gothic" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONVENIO N° 15703871]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="403" y="50" width="146" height="16"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<text><![CDATA[MARIA MARGARITA HIGUERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f5b760a1-b5f8-49c0-b516-c75bfbb4a286" x="403" y="0" width="146" height="51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COLEGIO KIDS PLANET]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="afddeb37-ae3d-49d1-90f8-f8260e7b86d0" x="280" y="0" width="1" height="187"/>
+			</line>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="307" y="141" width="62" height="14"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTUDIANTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="307" y="155" width="73" height="14"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REFERENCIA 1:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8917f01a-4df7-46a3-a35d-62fdbd39b5da" x="380" y="155" width="169" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8917f01a-4df7-46a3-a35d-62fdbd39b5da" x="380" y="141" width="169" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_completo}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="6eae414c-3196-4384-a2d0-650e33c60cde" x="307" y="14" width="96" height="101"/>
+				<imageExpression><![CDATA["C:\\Proyecto\\Colegio_Muestra\\Colegio_Muestra\\src\\Imagenes\\logo_nuevo.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="6eae414c-3196-4384-a2d0-650e33c60cde" x="14" y="15" width="96" height="101"/>
+				<imageExpression><![CDATA["C:\\Proyecto\\Colegio_Muestra\\Colegio_Muestra\\src\\Imagenes\\logo_nuevo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="e1ff25e8-1dec-4870-bf00-2e2204852088" x="403" y="84" width="146" height="15"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Century Gothic" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CALLE 73 # 55 - 01 TELEFONO: 6315098]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="14" y="1" width="160" height="19" forecolor="#0000FF"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="184" y="1" width="88" height="19" forecolor="#0000FF"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="292" y="1" width="160" height="19" forecolor="#0000FF"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54d7bcde-1e2c-41e5-954e-ce641714a3e6" x="462" y="1" width="88" height="19" forecolor="#0000FF"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="afddeb37-ae3d-49d1-90f8-f8260e7b86d0" x="280" y="0" width="1" height="20"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="129" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement uuid="503c25f6-3710-4896-95e4-1e4415a7d99a" x="14" y="0" width="160" height="61"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="503c25f6-3710-4896-95e4-1e4415a7d99a" x="184" y="1" width="88" height="61"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="14" y="10" width="160" height="11"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  PENSION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="14" y="61" width="160" height="21"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR HASTA EL 17 ABRIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="14" y="21" width="160" height="11"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  TRANSPORTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="14" y="32" width="160" height="11"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  LONCHERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="14" y="43" width="160" height="11"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  ALMUERZO]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement uuid="dbaef3a6-92b8-4210-b1f2-0f516bf42f8b" x="184" y="62" width="88" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="186" y="82" width="86" height="21"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[$1,000,000  ]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement uuid="dbaef3a6-92b8-4210-b1f2-0f516bf42f8b" x="184" y="83" width="88" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="14" y="82" width="160" height="21"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR HASTA EL 30 ABRIL]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement uuid="503c25f6-3710-4896-95e4-1e4415a7d99a" x="467" y="1" width="88" height="61"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="dbaef3a6-92b8-4210-b1f2-0f516bf42f8b" x="467" y="63" width="88" height="20"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="dbaef3a6-92b8-4210-b1f2-0f516bf42f8b" x="467" y="83" width="88" height="20"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="503c25f6-3710-4896-95e4-1e4415a7d99a" x="292" y="0" width="160" height="61"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="292" y="82" width="160" height="21"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR HASTA EL 30 ABRIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="292" y="61" width="160" height="21"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR HASTA EL 17 ABRIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="292" y="43" width="160" height="11"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  ALMUERZO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="292" y="10" width="160" height="11"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  PENSION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="292" y="32" width="160" height="11"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  LONCHERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="292" y="21" width="160" height="11"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  TRANSPORTE]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="afddeb37-ae3d-49d1-90f8-f8260e7b86d0" x="280" y="0" width="1" height="113"/>
+			</line>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="0" y="113" width="282" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[***PADRE DE FAMILIA***]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="47ff4ceb-10d7-42d7-8067-eaee0f178917" x="292" y="113" width="261" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[***COLEGIO KIDS PLANET***]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="9e2958d6-d493-4e76-bd9c-dca32b53312a" x="0" y="113" width="554" height="1"/>
+			</line>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="8a28f9f1-b57e-4490-87c5-189cf91f625d" x="192" y="10" width="64" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pension}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="8a28f9f1-b57e-4490-87c5-189cf91f625d" x="192" y="33" width="64" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lonchera}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="8a28f9f1-b57e-4490-87c5-189cf91f625d" x="192" y="22" width="64" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transporte}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="8a28f9f1-b57e-4490-87c5-189cf91f625d" x="192" y="44" width="64" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{almuerzo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="8a28f9f1-b57e-4490-87c5-189cf91f625d" x="192" y="63" width="64" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalabril}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="8a28f9f1-b57e-4490-87c5-189cf91f625d" x="485" y="33" width="64" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lonchera}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="8a28f9f1-b57e-4490-87c5-189cf91f625d" x="485" y="22" width="64" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transporte}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="8a28f9f1-b57e-4490-87c5-189cf91f625d" x="485" y="10" width="64" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pension}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="8a28f9f1-b57e-4490-87c5-189cf91f625d" x="485" y="44" width="64" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{almuerzo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="8a28f9f1-b57e-4490-87c5-189cf91f625d" x="485" y="64" width="64" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalabril}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="8a28f9f1-b57e-4490-87c5-189cf91f625d" x="485" y="82" width="64" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{npension}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement uuid="8a28f9f1-b57e-4490-87c5-189cf91f625d" x="192" y="82" width="64" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{npension}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="d755de39-a3d8-4740-84c1-872d857f1f77" x="292" y="82" width="160" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="d755de39-a3d8-4740-84c1-872d857f1f77" x="14" y="82" width="160" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
